@@ -3,3 +3,4 @@ seaborn
 matplotlib
 requests
 tqdm
+urllib3
