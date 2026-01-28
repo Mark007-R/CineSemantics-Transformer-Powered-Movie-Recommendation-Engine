@@ -1,20 +1,4 @@
-"""
-Movie Poster Similarity Search using CLIP
-==========================================
 
-This script extracts visual features from movie posters and enables 
-finding similar movies based on visual similarity.
-
-Usage:
-    # Extract embeddings and create database
-    python image_processor.py --extract --folder posters
-    
-    # Search for similar movies
-    python image_processor.py --search "Avengers" --top_k 10
-    
-    # List all movies
-    python image_processor.py --list
-"""
 
 import torch
 import numpy as np
@@ -48,19 +32,7 @@ def extract_clip_embeddings(
     batch_size: int = 32,
     device: str = 'cuda'
 ) -> Tuple[np.ndarray, List[Dict]]:
-    """
-    Extract embeddings from images using CLIP.
-    
-    Args:
-        image_folder: Path to folder containing images
-        model_name: HuggingFace model name
-        batch_size: Number of images to process at once
-        device: 'cuda' or 'cpu'
-    
-    Returns:
-        embeddings: Numpy array of shape (n_images, embedding_dim)
-        metadata: List of dicts containing image info
-    """
+
     print(f"Loading model: {model_name}...")
     model = CLIPModel.from_pretrained(model_name).to(device)
     processor = CLIPProcessor.from_pretrained(model_name)
@@ -151,18 +123,7 @@ def save_to_vector_db(
     db_path: str = './vector_db',
     index_name: str = 'movie_index'
 ) -> Dict:
-    """
-    Save embeddings to FAISS vector database.
-    
-    Args:
-        embeddings: Numpy array of embeddings
-        metadata: List of metadata dicts
-        db_path: Path to save database
-        index_name: Name for the index file
-    
-    Returns:
-        db_info: Dictionary with database information
-    """
+
     Path(db_path).mkdir(parents=True, exist_ok=True)
     
     # Ensure embeddings are normalized for cosine similarity
@@ -206,17 +167,7 @@ def find_similar_movies(
     db_path: str = './vector_db',
     top_k: int = 10
 ) -> List[Dict]:
-    """
-    Find movies similar to the query movie.
-    
-    Args:
-        query: Movie title (str) or index (int)
-        db_path: Path to vector database
-        top_k: Number of similar movies to return
-    
-    Returns:
-        List of similar movies with similarity scores
-    """
+
     # Load database info and metadata
     with open(Path(db_path) / 'db_info.json', 'r') as f:
         db_info = json.load(f)
@@ -282,16 +233,7 @@ def get_movie_image(
     movie_id: Union[str, int],
     db_path: str = './vector_db'
 ) -> Image.Image:
-    """
-    Get the poster image for a movie.
-    
-    Args:
-        movie_id: Movie title (str) or index (int)
-        db_path: Path to vector database
-    
-    Returns:
-        PIL Image object
-    """
+
     with open(Path(db_path) / 'metadata.json', 'r', encoding='utf-8') as f:
         metadata = json.load(f)
     
@@ -306,15 +248,7 @@ def get_movie_image(
 
 
 def list_all_movies(db_path: str = './vector_db') -> List[str]:
-    """
-    List all movies in the database.
-    
-    Args:
-        db_path: Path to vector database
-    
-    Returns:
-        List of movie titles
-    """
+
     with open(Path(db_path) / 'metadata.json', 'r', encoding='utf-8') as f:
         metadata = json.load(f)
     
@@ -322,7 +256,7 @@ def list_all_movies(db_path: str = './vector_db') -> List[str]:
 
 
 def main():
-    """Main execution function"""
+
     
     parser = argparse.ArgumentParser(description='Movie Poster Similarity Search')
     parser.add_argument('--extract', action='store_true', help='Extract embeddings from images')
