@@ -10,6 +10,9 @@ import faiss
 import warnings
 import argparse
 
+import logging
+logging.basicConfig(level=logging.INFO, format='%(message)s')
+
 warnings.filterwarnings('ignore')
 
 CONFIG = {
@@ -28,7 +31,7 @@ def extract_clip_embeddings(
     device: str = 'cuda'
 ) -> Tuple[np.ndarray, List[Dict]]:
 
-    print(f"Loading model: {model_name}...")
+    logging.info(f"Loading model: {model_name}...")
     model = CLIPModel.from_pretrained(model_name).to(device)
     processor = CLIPProcessor.from_pretrained(model_name)
     model.eval()
@@ -49,11 +52,11 @@ def extract_clip_embeddings(
     if len(image_files) == 0:
         raise ValueError(f"No images found in {image_folder}")
     
-    print(f"Found {len(image_files)} unique images")
+    logging.info(f"Found {len(image_files)} unique images")
     
     filenames = [f.name for f in image_files]
     if len(filenames) != len(set(filenames)):
-        print("WARNING: Duplicate filenames detected (case sensitivity issue)")
+        logging.warning("Duplicate filenames detected (case sensitivity issue)")
         
         seen = set()
         unique_files = []
@@ -62,7 +65,7 @@ def extract_clip_embeddings(
                 seen.add(f.name.lower())
                 unique_files.append(f)
         image_files = unique_files
-        print(f"After deduplication: {len(image_files)} unique images")
+        logging.info(f"After deduplication: {len(image_files)} unique images")
     
     
     metadata = []
@@ -75,7 +78,7 @@ def extract_clip_embeddings(
     
     
     all_embeddings = []
-    print("Extracting embeddings...")
+    logging.info("Extracting embeddings...")
     
     with torch.no_grad():
         for i in tqdm(range(0, len(metadata), batch_size)):
@@ -88,7 +91,7 @@ def extract_clip_embeddings(
                     img = Image.open(item['image_path']).convert('RGB')
                     images.append(img)
                 except Exception as e:
-                    print(f"Error loading {item['image_path']}: {e}")
+                    logging.error(f"Error loading {item['image_path']}: {e}")
                     continue
             
             if len(images) == 0:
@@ -104,7 +107,7 @@ def extract_clip_embeddings(
             all_embeddings.append(image_features.cpu().numpy())
     
     embeddings = np.vstack(all_embeddings)
-    print(f"Extracted embeddings with shape: {embeddings.shape}")
+    logging.info(f"Extracted embeddings with shape: {embeddings.shape}")
     
     return embeddings, metadata
 
@@ -125,7 +128,7 @@ def extract_single_image_embedding(
     processor = CLIPProcessor.from_pretrained(model_name)
     model.eval()
     
-    print(f"Processing query image: {image_path}")
+    logging.info(f"Processing query image: {image_path}")
     image = Image.open(image_path).convert('RGB')
     
     with torch.no_grad():
@@ -158,13 +161,13 @@ def save_to_vector_db(
     
     index_path = Path(db_path) / f'{index_name}.index'
     faiss.write_index(index, str(index_path))
-    print(f"Saved FAISS index to: {index_path}")
+    logging.info(f"Saved FAISS index to: {index_path}")
     
     
     metadata_path = Path(db_path) / 'metadata.json'
     with open(metadata_path, 'w', encoding='utf-8') as f:
         json.dump(metadata, f, indent=2, ensure_ascii=False)
-    print(f"Saved metadata to: {metadata_path}")
+    logging.info(f"Saved metadata to: {metadata_path}")
     
     
     db_info = {
@@ -179,7 +182,7 @@ def save_to_vector_db(
     info_path = Path(db_path) / 'db_info.json'
     with open(info_path, 'w') as f:
         json.dump(db_info, f, indent=2)
-    print(f"Saved database info to: {info_path}")
+    logging.info(f"Saved database info to: {info_path}")
     
     return db_info
 
@@ -202,7 +205,7 @@ def search_by_image(
     if model_name is None:
         model_name = db_info.get('model_name', CONFIG['model_name'])
     
-    print(f"Using model: {model_name}")
+    logging.info(f"Using model: {model_name}")
     
     
     query_embedding = extract_single_image_embedding(
@@ -267,7 +270,7 @@ def find_similar_movies(
             available = [m['title'] for m in metadata[:10]]
             raise ValueError(f"Movie '{query}' not found. Available movies (first 10): {available}")
         
-        print(f"Found query movie: {metadata[query_idx]['title']}")
+        logging.info(f"Found query movie: {metadata[query_idx]['title']}")
     else:
         query_idx = query
         if query_idx >= len(metadata):
@@ -344,108 +347,108 @@ def main():
     CONFIG['db_path'] = args.db_path
     
     if args.extract:
-        print("=" * 50)
-        print("EXTRACTING EMBEDDINGS FROM IMAGES")
-        print("=" * 50)
+        logging.info("=" * 50)
+        logging.info("EXTRACTING EMBEDDINGS FROM IMAGES")
+        logging.info("=" * 50)
         embeddings, metadata = extract_clip_embeddings(
             image_folder=CONFIG['image_folder'],
             model_name=CONFIG['model_name'],
             batch_size=CONFIG['batch_size'],
             device=CONFIG['device']
         )
-        print(f"\nSuccessfully processed {len(metadata)} movies")
-        print(f"Embedding dimension: {embeddings.shape[1]}")
-        print("\n" + "=" * 50)
-        print("SAVING TO VECTOR DATABASE")
-        print("=" * 50)
+        logging.info(f"\nSuccessfully processed {len(metadata)} movies")
+        logging.info(f"Embedding dimension: {embeddings.shape[1]}")
+        logging.info("\n" + "=" * 50)
+        logging.info("SAVING TO VECTOR DATABASE")
+        logging.info("=" * 50)
         db_info = save_to_vector_db(
             embeddings=embeddings,
             metadata=metadata,
             db_path=CONFIG['db_path'],
             index_name=CONFIG['index_name']
         )
-        print(f"\nDatabase created successfully!")
-        print(f"Location: {CONFIG['db_path']}")
-        print(f"Total vectors: {db_info['num_vectors']}")
+        logging.info(f"\nDatabase created successfully!")
+        logging.info(f"Location: {CONFIG['db_path']}")
+        logging.info(f"Total vectors: {db_info['num_vectors']}")
     elif args.search_image:
-        print("=" * 50)
-        print(f"SEARCHING BY IMAGE: '{args.search_image}'")
-        print("=" * 50)
+        logging.info("=" * 50)
+        logging.info(f"SEARCHING BY IMAGE: '{args.search_image}'")
+        logging.info("=" * 50)
         results = search_by_image(
             query_image_path=args.search_image,
             db_path=CONFIG['db_path'],
             top_k=args.top_k,
             model_name=args.model
         )
-        print(f"\nTop {args.top_k} similar movies:\n")
+        logging.info(f"\nTop {args.top_k} similar movies:\n")
         for i, movie in enumerate(results, 1):
-            print(f"{i}. {movie['title']}")
-            print(f"   Similarity: {movie['similarity_percent']} ({movie['similarity']:.4f})")
-            print(f"   File: {movie['filename']}")
-            print(f"   Path: {movie['image_path']}\n")
+            logging.info(f"{i}. {movie['title']}")
+            logging.info(f"   Similarity: {movie['similarity_percent']} ({movie['similarity']:.4f})")
+            logging.info(f"   File: {movie['filename']}")
+            logging.info(f"   Path: {movie['image_path']}\n")
     elif args.search:
-        print("=" * 50)
-        print(f"SEARCHING FOR MOVIES SIMILAR TO: '{args.search}'")
-        print("=" * 50)
+        logging.info("=" * 50)
+        logging.info(f"SEARCHING FOR MOVIES SIMILAR TO: '{args.search}'")
+        logging.info("=" * 50)
         results = find_similar_movies(
             query=args.search,
             db_path=CONFIG['db_path'],
             top_k=args.top_k
         )
-        print(f"\nTop {args.top_k} similar movies:\n")
+        logging.info(f"\nTop {args.top_k} similar movies:\n")
         for i, movie in enumerate(results, 1):
-            print(f"{i}. {movie['title']}")
-            print(f"   Similarity: {movie['similarity_percent']} ({movie['similarity']:.4f})")
-            print(f"   File: {movie['filename']}\n")
+            logging.info(f"{i}. {movie['title']}")
+            logging.info(f"   Similarity: {movie['similarity_percent']} ({movie['similarity']:.4f})")
+            logging.info(f"   File: {movie['filename']}\n")
     elif args.list:
-        print("=" * 50)
-        print("ALL MOVIES IN DATABASE")
-        print("=" * 50)
+        logging.info("=" * 50)
+        logging.info("ALL MOVIES IN DATABASE")
+        logging.info("=" * 50)
         movies = list_all_movies(CONFIG['db_path'])
-        print(f"\nTotal movies: {len(movies)}\n")
+        logging.info(f"\nTotal movies: {len(movies)}\n")
         for i, title in enumerate(movies, 1):
-            print(f"{i}. {title}")
+            logging.info(f"{i}. {title}")
     else:
-        print("=" * 50)
-        print("MOVIE POSTER SIMILARITY SEARCH")
-        print("=" * 50)
-        print(f"Using device: {CONFIG['device']}")
-        print(f"Model: {CONFIG['model_name']}")
-        print()
-        print("Step 1: Extracting embeddings from images...")
+        logging.info("=" * 50)
+        logging.info("MOVIE POSTER SIMILARITY SEARCH")
+        logging.info("=" * 50)
+        logging.info(f"Using device: {CONFIG['device']}")
+        logging.info(f"Model: {CONFIG['model_name']}")
+        logging.info("")
+        logging.info("Step 1: Extracting embeddings from images...")
         embeddings, metadata = extract_clip_embeddings(
             image_folder=CONFIG['image_folder'],
             model_name=CONFIG['model_name'],
             batch_size=CONFIG['batch_size'],
             device=CONFIG['device']
         )
-        print(f"\nSuccessfully processed {len(metadata)} movies")
-        print(f"Embedding dimension: {embeddings.shape[1]}")
-        print("\nStep 2: Saving to vector database...")
+        logging.info(f"\nSuccessfully processed {len(metadata)} movies")
+        logging.info(f"Embedding dimension: {embeddings.shape[1]}")
+        logging.info("\nStep 2: Saving to vector database...")
         db_info = save_to_vector_db(
             embeddings=embeddings,
             metadata=metadata,
             db_path=CONFIG['db_path'],
             index_name=CONFIG['index_name']
         )
-        print(f"\nDatabase created successfully!")
-        print(f"Location: {CONFIG['db_path']}")
-        print(f"Total vectors: {db_info['num_vectors']}")
-        print("\n" + "=" * 50)
-        print("DONE!")
-        print("=" * 50)
-        print("\nUsage examples:")
-        print("  # Search by IMAGE (recommended for webapp)")
-        print("  python image_processor.py --search_image my_poster.jpg --top_k 10")
-        print()
-        print("  # Search by movie name (fallback)")
-        print("  python image_processor.py --search 'Avengers' --top_k 10")
-        print()
-        print("  # List all movies")
-        print("  python image_processor.py --list")
-        print()
-        print("  # Re-extract with better model")
-        print("  python image_processor.py --extract --model openai/clip-vit-large-patch14")
+        logging.info(f"\nDatabase created successfully!")
+        logging.info(f"Location: {CONFIG['db_path']}")
+        logging.info(f"Total vectors: {db_info['num_vectors']}")
+        logging.info("\n" + "=" * 50)
+        logging.info("DONE!")
+        logging.info("=" * 50)
+        logging.info("\nUsage examples:")
+        logging.info("  # Search by IMAGE (recommended for webapp)")
+        logging.info("  python image_processor.py --search_image my_poster.jpg --top_k 10")
+        logging.info("")
+        logging.info("  # Search by movie name (fallback)")
+        logging.info("  python image_processor.py --search 'Avengers' --top_k 10")
+        logging.info("")
+        logging.info("  # List all movies")
+        logging.info("  python image_processor.py --list")
+        logging.info("")
+        logging.info("  # Re-extract with better model")
+        logging.info("  python image_processor.py --extract --model openai/clip-vit-large-patch14")
 
 if __name__ == "__main__":
     main()
