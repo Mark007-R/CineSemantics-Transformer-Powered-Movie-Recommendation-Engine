@@ -9,7 +9,6 @@ import json
 import faiss
 import warnings
 import argparse
-
 import logging
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 
@@ -44,7 +43,7 @@ def extract_clip_embeddings(
     for ext in ['jpg', 'jpeg', 'png', 'webp']:
         for pattern in [f'*.{ext}', f'*.{ext.upper()}']:
             for path in img_folder.glob(pattern):
-                # Resolve to absolute path to ensure uniqueness
+                
                 image_files.add(path.resolve())
     
     image_files = sorted(list(image_files))
@@ -57,7 +56,6 @@ def extract_clip_embeddings(
     filenames = [f.name for f in image_files]
     if len(filenames) != len(set(filenames)):
         logging.warning("Duplicate filenames detected (case sensitivity issue)")
-        
         seen = set()
         unique_files = []
         for f in image_files:
@@ -135,7 +133,7 @@ def extract_single_image_embedding(
         inputs = processor(images=image, return_tensors="pt").to(device)
         image_features = model.get_image_features(**inputs)
         
-        # Normalize embedding
+        
         image_features = image_features / image_features.norm(dim=-1, keepdim=True)
     
     return image_features.cpu().numpy()
@@ -155,7 +153,7 @@ def save_to_vector_db(
     
     
     dimension = embeddings.shape[1]
-    index = faiss.IndexFlatIP(dimension)  # IP = Inner Product
+    index = faiss.IndexFlatIP(dimension)
     index.add(embeddings_normalized.astype('float32'))
     
     
@@ -289,7 +287,7 @@ def find_similar_movies(
     
     similar = []
     for idx, dist in zip(indices[0], distances[0]):
-        if idx != query_idx:  # Skip the query movie
+        if idx != query_idx:
             similar.append({
                 'index': int(idx),
                 'title': metadata[idx]['title'],
