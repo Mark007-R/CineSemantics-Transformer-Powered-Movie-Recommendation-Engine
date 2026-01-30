@@ -180,10 +180,4 @@ class SimilaritySearch:
         return results
     
     def get_all_movies(self) -> List[Dict[str, str]]:
-        return [
-            {
-                "title": m["title"],
-                "image_path": m["image_path"]
-            }
-            for m in self.db.metadata
-        ]
+        return [{"title": m["title"],"image_path": m["image_path"]} for m in self.db.metadata]
