@@ -30,10 +30,14 @@ class ImageEmbedder:
     def _load_model(self):
         if self.model is None:
             logger.info(f"Loading model: {self.model_name}")
-            self.model = CLIPModel.from_pretrained(self.model_name).to(self.device)
-            self.processor = CLIPProcessor.from_pretrained(self.model_name)
-            self.model.eval()
-            logger.info("Model loaded successfully")
+            try:
+                self.model = CLIPModel.from_pretrained(self.model_name).to(self.device)
+                self.processor = CLIPProcessor.from_pretrained(self.model_name)
+                self.model.eval()
+                logger.info("Model loaded successfully")
+            except Exception as e:
+                logger.error(f"Failed to load model {self.model_name}: {e}")
+                raise RuntimeError(f"Model loading failed: {e}")
     
     def embed_folder(self, folder_path: str, batch_size: int = 32) -> Tuple[np.ndarray, List[Dict]]:
         self._load_model()
