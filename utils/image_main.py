@@ -179,5 +179,11 @@ class SimilaritySearch:
         logger.info(f"Found {len(results)} similar images")
         return results
     
-    def get_all_movies(self) -> List[str]:
-        return [m['title'] for m in self.db.metadata]
+    def get_all_movies(self) -> List[Dict[str, str]]:
+        return [
+            {
+                "title": m["title"],
+                "image_path": m["image_path"]
+            }
+            for m in self.db.metadata
+        ]
