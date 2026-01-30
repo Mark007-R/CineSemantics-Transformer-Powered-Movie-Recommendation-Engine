@@ -83,8 +83,16 @@ class ImageEmbedder:
     
     def embed_image(self, image_path: str) -> np.ndarray:
         self._load_model()
+        img_path = Path(image_path)
+        if not img_path.exists():
+            logger.error(f"Image file not found: {image_path}")
+            raise FileNotFoundError(f"Image file not found: {image_path}")
         logger.info(f"Processing query image: {image_path}")
-        image = Image.open(image_path).convert('RGB')
+        try:
+            image = Image.open(image_path).convert('RGB')
+        except Exception as e:
+            logger.error(f"Error opening image {image_path}: {e}")
+            raise ValueError(f"Failed to open image: {e}")
         with torch.no_grad():
             inputs = self.processor(images=image, return_tensors="pt").to(self.device)
             features = self.model.get_image_features(**inputs)
