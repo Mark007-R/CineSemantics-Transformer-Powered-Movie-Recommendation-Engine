@@ -106,7 +106,7 @@ class ImageEmbedder:
 
 class VectorDB:
     
-    def __init__(self, db_path='./vector_db'):
+    def __init__(self, db_path='../vector_db'):
         self.db_path = Path(db_path)
         self.index = None
         self.metadata = None
@@ -153,7 +153,7 @@ class VectorDB:
 
 class SimilaritySearch:
     
-    def __init__(self, db_path='./vector_db', model_name='openai/clip-vit-base-patch32'):
+    def __init__(self, db_path='../vector_db', model_name='openai/clip-vit-base-patch32'):
         self.db_path = db_path
         self.model_name = model_name
         self.db = VectorDB(db_path)
