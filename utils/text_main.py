@@ -197,7 +197,6 @@ class TextSimilaritySearch:
 
 if __name__ == "__main__":
     search = TextSimilaritySearch(
-        db_path='../movie_vector_db',
         model_name='sentence-transformers/all-MiniLM-L6-v2'
     )
     csv_path = '9000plus.csv'
