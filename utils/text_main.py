@@ -105,7 +105,7 @@ class TextEmbedder:
 
 
 class VectorDB:
-    def __init__(self, db_path='./vector_db_text'):
+    def __init__(self, db_path='../vector_db_text'):
         self.db_path = Path(db_path)
         self.index = None
         self.metadata = None
@@ -151,7 +151,7 @@ class VectorDB:
 
 
 class TextSimilaritySearch:    
-    def __init__(self, db_path='./vector_db_text', model_name='sentence-transformers/all-MiniLM-L6-v2'):
+    def __init__(self, db_path='../vector_db_text', model_name='sentence-transformers/all-MiniLM-L6-v2'):
         self.db_path = db_path
         self.model_name = model_name
         self.db = VectorDB(db_path)
@@ -197,7 +197,7 @@ class TextSimilaritySearch:
 
 if __name__ == "__main__":
     search = TextSimilaritySearch(
-        db_path='./movie_vector_db',
+        db_path='../movie_vector_db',
         model_name='sentence-transformers/all-MiniLM-L6-v2'
     )
     csv_path = '9000plus.csv'
