@@ -151,8 +151,7 @@ class VectorDB:
 
 
 class TextSimilaritySearch:    
-    def __init__(self, db_path='./vector_db_text', 
-                 model_name='sentence-transformers/all-MiniLM-L6-v2'):
+    def __init__(self, db_path='./vector_db_text', model_name='sentence-transformers/all-MiniLM-L6-v2'):
         self.db_path = db_path
         self.model_name = model_name
         self.db = VectorDB(db_path)
@@ -194,15 +193,7 @@ class TextSimilaritySearch:
         return results
     
     def get_all_movies(self) -> List[Dict[str, str]]:
-        return [
-            {
-                "title": m["title"],
-                "overview": m["overview"],
-                "genre": m["genre"],
-                "poster_url": m["poster_url"]
-            }
-            for m in self.db.metadata
-        ]
+        return [{"title": m["title"], "overview": m["overview"], "genre": m["genre"], "poster_url": m["poster_url"]} for m in self.db.metadata]
 
 if __name__ == "__main__":
     search = TextSimilaritySearch(
