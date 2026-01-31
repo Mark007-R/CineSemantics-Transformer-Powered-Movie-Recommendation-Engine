@@ -219,4 +219,3 @@ if __name__ == "__main__":
         print(f"   Similarity: {result['similarity_percent']}")
         print(f"   Genre: {result['genre']}")
         print(f"   Overview: {result['overview'][:150]}...")
-        print()
