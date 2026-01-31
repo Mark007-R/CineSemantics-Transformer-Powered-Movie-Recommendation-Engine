@@ -166,6 +166,7 @@ class TextSimilaritySearch:
         logger.info(f"Building database from {csv_path}")
         embeddings, metadata = self.embedder.embed_csv(csv_path, text_column, batch_size)
         info = self.db.save(embeddings, metadata)
+        self.db.load()
         logger.info("Database built successfully")
         return info
     
@@ -199,7 +200,7 @@ if __name__ == "__main__":
     search = TextSimilaritySearch(
         model_name='sentence-transformers/all-MiniLM-L6-v2'
     )
-    csv_path = '9000plus.csv'
+    csv_path = './data/9000plus.csv'
     search.build_database(csv_path, text_column='Overview', batch_size=32)
     query = "a superhero who fights crime and saves the world"
     results = search.find_similar(query, top_k=5)
