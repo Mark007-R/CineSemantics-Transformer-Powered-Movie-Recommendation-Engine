@@ -195,18 +195,3 @@ class TextSimilaritySearch:
     
     def get_all_movies(self) -> List[Dict[str, str]]:
         return [{"title": m["title"], "overview": m["overview"], "genre": m["genre"], "poster_url": m["poster_url"]} for m in self.db.metadata]
-
-if __name__ == "__main__":
-    search = TextSimilaritySearch(
-        model_name='sentence-transformers/all-MiniLM-L6-v2'
-    )
-    csv_path = './data/9000plus.csv'
-    search.build_database(csv_path, text_column='Overview', batch_size=32)
-    query = "a superhero who fights crime and saves the world"
-    results = search.find_similar(query, top_k=5)
-    print(f"\nTop 5 movies similar to: '{query}'\n")
-    for i, result in enumerate(results, 1):
-        print(f"{i}. {result['title']} ({result['release_date']})")
-        print(f"   Similarity: {result['similarity_percent']}")
-        print(f"   Genre: {result['genre']}")
-        print(f"   Overview: {result['overview'][:150]}...")
