@@ -269,4 +269,13 @@ class TextSimilaritySearch:
         return results
     
     def get_all_movies(self) -> List[Dict[str, str]]:
-        return [{"title": m["title"], "overview": m["overview"], "genre": m["genre"], "poster_url": m["poster_url"]} for m in self.db.metadata]
+        entities = self.db.get_all_entities()
+        return [
+            {
+                "title": e.get("title", ""),
+                "overview": e.get("overview", ""),
+                "genre": e.get("genre", ""),
+                "poster_url": e.get("poster_url", "")
+            }
+            for e in entities
+        ]
