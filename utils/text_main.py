@@ -5,8 +5,6 @@ from pathlib import Path
 from typing import List, Dict, Tuple
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
-import json
-import faiss
 import warnings
 import logging
 from pymilvus import (connections, utility, FieldSchema, CollectionSchema, DataType, Collection, )
@@ -160,14 +158,14 @@ class MilvusDB:
         entities = [ids, embeddings.tolist(), titles, overviews, release_dates, genres, 
             popularities, vote_averages,vote_counts, original_languages,poster_urls
         ]
-        insert_result = self.collection.insert(entities)
+        self.collection.insert(entities)
         logger.info(f"Inserted {len(ids)} entities into collection")
         index_params = {
             "metric_type": "IP",
             "index_type": "IVF_FLAT",
             "params": {"nlist": 128}
         }
-        self.collection.create_index( field_name="embedding", index_params=index_params)
+        self.collection.create_index(field_name="embedding", index_params=index_params)
         logger.info("Created index on embedding field")
         self.collection.load()
         logger.info("Collection loaded into memory")
@@ -194,7 +192,6 @@ class MilvusDB:
     def search(self, query_embedding: np.ndarray, top_k: int = 10) -> Tuple[List[int], List[float], List[Dict]]:
         if self.collection is None:
             raise ValueError("Collection not loaded. Call load() first.")
-        query_embedding = query_embedding / np.linalg.norm(query_embedding, keepdims=True)
         search_params = { "metric_type": "IP", "params": {"nprobe": 10} }
         try:
             results = self.collection.search(
