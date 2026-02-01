@@ -9,6 +9,7 @@ import json
 import faiss
 import warnings
 import logging
+from pymilvus import (connections, utility, FieldSchema, CollectionSchema, DataType, Collection, )
 
 warnings.filterwarnings('ignore')
 logging.basicConfig(
