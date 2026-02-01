@@ -9,7 +9,6 @@ import json
 import faiss
 import warnings
 import argparse
-
 import logging
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 
