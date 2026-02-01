@@ -191,6 +191,28 @@ class MilvusDB:
             'collection_name': self.collection_name
         }
 
+    def search(self, query_embedding: np.ndarray, top_k: int = 10) -> Tuple[List[int], List[float], List[Dict]]:
+        if self.collection is None:
+            raise ValueError("Collection not loaded. Call load() first.")
+        query_embedding = query_embedding / np.linalg.norm(query_embedding)
+        search_params = { "metric_type": "IP", "params": {"nprobe": 10} }
+        results = self.collection.search(
+            data=[query_embedding.tolist()],
+            anns_field="embedding",
+            param=search_params,
+            limit=top_k,
+            output_fields=["title", "overview", "release_date", "genre", 
+                          "popularity", "vote_average", "vote_count", "poster_url"]
+        )
+        indices = []
+        distances = []
+        metadata_list = []
+        for hits in results:
+            for hit in hits:
+                indices.append(hit.id)
+                distances.append(hit.distance)
+                metadata_list.append(hit.entity.to_dict())
+        return indices, distances, metadata_list
 
 class TextSimilaritySearch:    
     def __init__(self, db_path='../vector_db_text', model_name='sentence-transformers/all-MiniLM-L6-v2'):
