@@ -194,35 +194,64 @@ class MilvusDB:
     def search(self, query_embedding: np.ndarray, top_k: int = 10) -> Tuple[List[int], List[float], List[Dict]]:
         if self.collection is None:
             raise ValueError("Collection not loaded. Call load() first.")
+        query_embedding = query_embedding / np.linalg.norm(query_embedding, keepdims=True)
         search_params = { "metric_type": "IP", "params": {"nprobe": 10} }
-        results = self.collection.search(
-            data=[query_embedding.tolist()],
-            anns_field="embedding",
-            param=search_params,
-            limit=top_k,
-            output_fields=["title", "overview", "release_date", "genre", 
-                          "popularity", "vote_average", "vote_count", "poster_url"]
-        )
+        try:
+            results = self.collection.search(
+                data=[query_embedding.tolist()],
+                anns_field="embedding",
+                param=search_params,
+                limit=top_k,
+                output_fields=["title", "overview", "release_date", "genre", 
+                    "popularity", "vote_average", "vote_count", "poster_url"]
+            )
+        except Exception as e:
+            logger.error(f"Search failed: {e}")
+            raise RuntimeError(f"Failed to search collection: {e}")
         indices = []
         distances = []
         metadata_list = []
+        if not results or len(results) == 0:
+            logger.warning("No results found for the query")
+            return indices, distances, metadata_list
         for hits in results:
+            if not hits:
+                logger.warning("Empty hits in search results")
+                continue
             for hit in hits:
                 indices.append(hit.id)
                 distances.append(hit.distance)
                 metadata_list.append(hit.entity.to_dict())
+        logger.info(f"Search returned {len(indices)} results")
         return indices, distances, metadata_list
     
     def get_all_entities(self) -> List[Dict]:
         if self.collection is None:
             raise ValueError("Collection not loaded. Call load() first.")
-        query_result = self.collection.query(
-            expr="id >= 0",
-            output_fields=["title", "overview", "genre", "poster_url"],
-            limit=16384
-        )
-        return query_result
-
+        all_entities = []
+        batch_size = 16384
+        offset = 0
+        try:
+            total_entities = self.collection.num_entities
+            logger.info(f"Fetching all {total_entities} entities from collection")
+            while offset < total_entities:
+                query_result = self.collection.query(
+                    expr="id >= 0",
+                    output_fields=["title", "overview", "genre", "poster_url"],
+                    limit=batch_size,
+                    offset=offset
+                )
+                if not query_result:
+                    break
+                all_entities.extend(query_result)
+                offset += batch_size
+                logger.info(f"Fetched {len(all_entities)}/{total_entities} entities")
+            logger.info(f"Successfully fetched all {len(all_entities)} entities")
+            return all_entities
+        except Exception as e:
+            logger.error(f"Failed to fetch entities: {e}")
+            raise RuntimeError(f"Failed to query all entities: {e}")
+    
 class TextSimilaritySearch:
     def __init__(self, collection_name='movie_collection', host='localhost', port='19530',
         model_name='sentence-transformers/all-MiniLM-L6-v2', dimension=384):
