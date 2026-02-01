@@ -106,11 +106,13 @@ class TextEmbedder:
 
 
 class MilvusDB:
-    def __init__(self, db_path='../vector_db_text'):
-        self.db_path = Path(db_path)
-        self.index = None
-        self.metadata = None
-        logger.info(f"VectorDB initialized at: {db_path}")
+    def __init__(self, collection_name='movie_collection', host='localhost', port='19530', dimension=384):
+        self.collection_name = collection_name
+        self.host = host
+        self.port = port
+        self.dimension = dimension
+        self.collection = None
+        logger.info(f"MilvusDB initialized for collection: {collection_name}")
         
     def save(self, embeddings: np.ndarray, metadata: List[Dict], index_name: str = 'text_index'):
         self.db_path.mkdir(parents=True, exist_ok=True)
