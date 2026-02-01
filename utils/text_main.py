@@ -121,7 +121,28 @@ class MilvusDB:
         except Exception as e:
             logger.error(f"Failed to connect to Milvus: {e}")
             raise ConnectionError(f"Milvus connection failed: {e}")
-        
+
+    def _create_collection(self):
+        fields = [
+            FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=False),
+            FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=self.dimension),
+            FieldSchema(name="title", dtype=DataType.VARCHAR, max_length=500),
+            FieldSchema(name="overview", dtype=DataType.VARCHAR, max_length=5000),
+            FieldSchema(name="release_date", dtype=DataType.VARCHAR, max_length=50),
+            FieldSchema(name="genre", dtype=DataType.VARCHAR, max_length=200),
+            FieldSchema(name="popularity", dtype=DataType.DOUBLE),
+            FieldSchema(name="vote_average", dtype=DataType.DOUBLE),
+            FieldSchema(name="vote_count", dtype=DataType.INT64),
+            FieldSchema(name="original_language", dtype=DataType.VARCHAR, max_length=50),
+            FieldSchema(name="poster_url", dtype=DataType.VARCHAR, max_length=500),
+        ]
+        schema = CollectionSchema(fields=fields, description="Movie similarity search collection")
+        if utility.has_collection(self.collection_name):
+            logger.warning(f"Collection {self.collection_name} already exists. Dropping it.")
+            utility.drop_collection(self.collection_name)
+        self.collection = Collection(name=self.collection_name, schema=schema)
+        logger.info(f"Created collection: {self.collection_name}")
+
     def save(self, embeddings: np.ndarray, metadata: List[Dict], index_name: str = 'text_index'):
         self.db_path.mkdir(parents=True, exist_ok=True)
         embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
