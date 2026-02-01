@@ -178,17 +178,18 @@ class MilvusDB:
         }
 
     def load(self):
-        info_path = self.db_path / 'db_info.json'
-        if not info_path.exists():
-            logger.error(f"Database not found at {self.db_path}")
-            raise ValueError(f"Database not found at {self.db_path}")
-        with open(info_path, 'r') as f:
-            info = json.load(f)
-        self.index = faiss.read_index(info['index_path'])
-        with open(info['metadata_path'], 'r', encoding='utf-8') as f:
-            self.metadata = json.load(f)
-        logger.info(f"Loaded {len(self.metadata)} vectors from {self.db_path}")
-        return info
+        self.connect()
+        if not utility.has_collection(self.collection_name):
+            logger.error(f"Collection {self.collection_name} does not exist")
+            raise ValueError(f"Collection {self.collection_name} not found")
+        self.collection = Collection(self.collection_name)
+        self.collection.load()
+        num_entities = self.collection.num_entities
+        logger.info(f"Loaded collection {self.collection_name} with {num_entities} entities")
+        return {
+            'num_vectors': num_entities,
+            'collection_name': self.collection_name
+        }
 
 
 class TextSimilaritySearch:    
