@@ -224,17 +224,19 @@ class MilvusDB:
         )
         return query_result
 
-class TextSimilaritySearch:    
-    def __init__(self, db_path='../vector_db_text', model_name='sentence-transformers/all-MiniLM-L6-v2'):
-        self.db_path = db_path
+class TextSimilaritySearch:
+    def __init__(self, collection_name='movie_collection', host='localhost', port='19530',
+        model_name='sentence-transformers/all-MiniLM-L6-v2', dimension=384):
+        self.collection_name = collection_name
         self.model_name = model_name
-        self.db = VectorDB(db_path)
+        self.db = MilvusDB(collection_name, host, port, dimension)
         self.embedder = TextEmbedder(model_name)
         try:
             self.db.load()
-            logger.info("TextSimilaritySearch initialized and database loaded")
+            logger.info("TextSimilaritySearch initialized and collection loaded")
         except ValueError:
-            logger.warning("No existing database found. Please build the database first.")
+            logger.warning("No existing collection found. Please build the database first.")
+
     
     def build_database(self, csv_path: str, text_column: str = 'Overview', batch_size: int = 32):
         logger.info(f"Building database from {csv_path}")
