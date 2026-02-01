@@ -113,6 +113,14 @@ class MilvusDB:
         self.dimension = dimension
         self.collection = None
         logger.info(f"MilvusDB initialized for collection: {collection_name}")
+
+    def connect(self):
+        try:
+            connections.connect(alias="default", host=self.host, port=self.port )
+            logger.info(f"Connected to Milvus at {self.host}:{self.port}")
+        except Exception as e:
+            logger.error(f"Failed to connect to Milvus: {e}")
+            raise ConnectionError(f"Milvus connection failed: {e}")
         
     def save(self, embeddings: np.ndarray, metadata: List[Dict], index_name: str = 'text_index'):
         self.db_path.mkdir(parents=True, exist_ok=True)
