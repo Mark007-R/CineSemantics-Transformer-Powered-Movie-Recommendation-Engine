@@ -143,31 +143,40 @@ class MilvusDB:
         self.collection = Collection(name=self.collection_name, schema=schema)
         logger.info(f"Created collection: {self.collection_name}")
 
-    def save(self, embeddings: np.ndarray, metadata: List[Dict], index_name: str = 'text_index'):
-        self.db_path.mkdir(parents=True, exist_ok=True)
+    def save(self, embeddings: np.ndarray, metadata: List[Dict]):
+        self.connect()
+        self._create_collection()
         embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
-        dimension = embeddings.shape[1]
-        self.index = faiss.IndexFlatIP(dimension)
-        self.index.add(embeddings.astype('float32'))
-        index_path = self.db_path / f'{index_name}.index'
-        faiss.write_index(self.index, str(index_path))
-        logger.info(f"Saved FAISS index to: {index_path}")
-        metadata_path = self.db_path / 'metadata.json'
-        with open(metadata_path, 'w', encoding='utf-8') as f:
-            json.dump(metadata, f, indent=2, ensure_ascii=False)
-        logger.info(f"Saved metadata to: {metadata_path}")
-        info = {
-            'num_vectors': len(embeddings),
-            'dimension': dimension,
-            'index_path': str(index_path),
-            'metadata_path': str(metadata_path)
+        ids = [m['index'] for m in metadata]
+        titles = [m['title'] for m in metadata]
+        overviews = [m['overview'] for m in metadata]
+        release_dates = [m['release_date'] for m in metadata]
+        genres = [m['genre'] for m in metadata]
+        popularities = [m['popularity'] for m in metadata]
+        vote_averages = [m['vote_average'] for m in metadata]
+        vote_counts = [m['vote_count'] for m in metadata]
+        original_languages = [m['original_language'] for m in metadata]
+        poster_urls = [m['poster_url'] for m in metadata]
+        entities = [ids, embeddings.tolist(), titles, overviews, release_dates, genres, 
+            popularities, vote_averages,vote_counts, original_languages,poster_urls
+        ]
+        insert_result = self.collection.insert(entities)
+        logger.info(f"Inserted {len(ids)} entities into collection")
+        index_params = {
+            "metric_type": "IP",
+            "index_type": "IVF_FLAT",
+            "params": {"nlist": 128}
         }
-        info_path = self.db_path / 'db_info.json'
-        with open(info_path, 'w') as f:
-            json.dump(info, f, indent=2)
-        logger.info(f"Saved {len(embeddings)} vectors to {self.db_path}")
-        return info
-    
+        self.collection.create_index( field_name="embedding", index_params=index_params)
+        logger.info("Created index on embedding field")
+        self.collection.load()
+        logger.info("Collection loaded into memory")
+        return {
+            'num_vectors': len(embeddings),
+            'dimension': embeddings.shape[1],
+            'collection_name': self.collection_name
+        }
+
     def load(self):
         info_path = self.db_path / 'db_info.json'
         if not info_path.exists():
