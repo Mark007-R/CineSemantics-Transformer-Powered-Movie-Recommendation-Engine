@@ -126,15 +126,15 @@ class MilvusDB:
         fields = [
             FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=False),
             FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=self.dimension),
-            FieldSchema(name="title", dtype=DataType.VARCHAR, max_length=500),
-            FieldSchema(name="overview", dtype=DataType.VARCHAR, max_length=5000),
+            FieldSchema(name="title", dtype=DataType.VARCHAR, max_length=1000),
+            FieldSchema(name="overview", dtype=DataType.VARCHAR, max_length=20000),
             FieldSchema(name="release_date", dtype=DataType.VARCHAR, max_length=50),
             FieldSchema(name="genre", dtype=DataType.VARCHAR, max_length=200),
             FieldSchema(name="popularity", dtype=DataType.DOUBLE),
             FieldSchema(name="vote_average", dtype=DataType.DOUBLE),
             FieldSchema(name="vote_count", dtype=DataType.INT64),
             FieldSchema(name="original_language", dtype=DataType.VARCHAR, max_length=50),
-            FieldSchema(name="poster_url", dtype=DataType.VARCHAR, max_length=500),
+            FieldSchema(name="poster_url", dtype=DataType.VARCHAR, max_length=1000),
         ]
         schema = CollectionSchema(fields=fields, description="Movie similarity search collection")
         if utility.has_collection(self.collection_name):
