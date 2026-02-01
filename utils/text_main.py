@@ -249,20 +249,19 @@ class TextSimilaritySearch:
     def find_similar(self, query_text: str, top_k: int = 10) -> List[Dict]:
         logger.info(f"Searching for top {top_k} similar movies to: '{query_text[:100]}...'")
         query_embedding = self.embedder.embed_text(query_text)
-        distances, indices = self.db.index.search(query_embedding.astype('float32'), top_k)
+        indices, distances, metadata_list = self.db.search(query_embedding, top_k)
         results = []
-        for idx, dist in zip(indices[0], distances[0]):
-            metadata = self.db.metadata[idx]
+        for idx, dist, metadata in zip(indices, distances, metadata_list):
             results.append({
                 'index': int(idx),
-                'title': metadata['title'],
-                'overview': metadata['overview'],
-                'release_date': metadata['release_date'],
-                'genre': metadata['genre'],
-                'popularity': metadata['popularity'],
-                'vote_average': metadata['vote_average'],
-                'vote_count': metadata['vote_count'],
-                'poster_url': metadata['poster_url'],
+                'title': metadata.get('title', ''),
+                'overview': metadata.get('overview', ''),
+                'release_date': metadata.get('release_date', ''),
+                'genre': metadata.get('genre', ''),
+                'popularity': metadata.get('popularity', 0),
+                'vote_average': metadata.get('vote_average', 0),
+                'vote_count': metadata.get('vote_count', 0),
+                'poster_url': metadata.get('poster_url', ''),
                 'similarity': float(dist),
                 'similarity_percent': f"{float(dist) * 100:.2f}%"
             })
