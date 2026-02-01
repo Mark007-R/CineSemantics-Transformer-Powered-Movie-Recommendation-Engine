@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO, format='%(message)s')
 warnings.filterwarnings('ignore')
 CONFIG = {
     'image_folder': 'posters',
-    'model_name': 'openai/clip-vit-base-patch32',  # Change to clip-vit-large-patch14 for better quality
+    'model_name': 'openai/clip-vit-base-patch32',
     'batch_size': 32,
     'db_path': './vector_db',
     'index_name': 'movie_index',
@@ -187,8 +187,7 @@ def list_all_movies(db_path: str = './vector_db') -> List[str]:
     return [m['title'] for m in metadata]
 
 def main():
-
-    
+ 
     parser = argparse.ArgumentParser(description='Movie Poster Similarity Search')
     parser.add_argument('--extract', action='store_true', help='Extract embeddings from images')
     parser.add_argument('--search', type=str, help='Search for similar movies')
