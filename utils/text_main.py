@@ -105,7 +105,7 @@ class TextEmbedder:
             raise ValueError(f"Failed to embed text: {e}")
 
 
-class VectorDB:
+class MilvusDB:
     def __init__(self, db_path='../vector_db_text'):
         self.db_path = Path(db_path)
         self.index = None
