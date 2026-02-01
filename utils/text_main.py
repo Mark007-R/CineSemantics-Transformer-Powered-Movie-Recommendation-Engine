@@ -194,7 +194,6 @@ class MilvusDB:
     def search(self, query_embedding: np.ndarray, top_k: int = 10) -> Tuple[List[int], List[float], List[Dict]]:
         if self.collection is None:
             raise ValueError("Collection not loaded. Call load() first.")
-        query_embedding = query_embedding / np.linalg.norm(query_embedding)
         search_params = { "metric_type": "IP", "params": {"nprobe": 10} }
         results = self.collection.search(
             data=[query_embedding.tolist()],
