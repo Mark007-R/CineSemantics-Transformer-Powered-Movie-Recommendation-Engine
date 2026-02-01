@@ -213,6 +213,16 @@ class MilvusDB:
                 distances.append(hit.distance)
                 metadata_list.append(hit.entity.to_dict())
         return indices, distances, metadata_list
+    
+    def get_all_entities(self) -> List[Dict]:
+        if self.collection is None:
+            raise ValueError("Collection not loaded. Call load() first.")
+        query_result = self.collection.query(
+            expr="id >= 0",
+            output_fields=["title", "overview", "genre", "poster_url"],
+            limit=16384
+        )
+        return query_result
 
 class TextSimilaritySearch:    
     def __init__(self, db_path='../vector_db_text', model_name='sentence-transformers/all-MiniLM-L6-v2'):
