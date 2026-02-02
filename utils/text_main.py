@@ -167,7 +167,7 @@ class MilvusDB:
         except Exception as e:
             logger.warning(f"Error during disconnect: {e}")
 
-    def create_collection(self):
+    def _create_collection(self, drop_existing=True):
         fields = [
             FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=False),
             FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=self.dimension),
@@ -182,20 +182,27 @@ class MilvusDB:
             FieldSchema(name="poster_url", dtype=DataType.VARCHAR, max_length=1000),
         ]
         schema = CollectionSchema(fields=fields, description="Movie similarity search collection")
+        
         if utility.has_collection(self.collection_name):
-            logger.warning(f"Collection {self.collection_name} already exists. Dropping it.")
-            utility.drop_collection(self.collection_name)
+            if drop_existing:
+                logger.warning(f"⚠️ DESTRUCTIVE OPERATION: Dropping existing collection '{self.collection_name}' and all its data!")
+                utility.drop_collection(self.collection_name)
+            else:
+                error_msg = f"Collection '{self.collection_name}' already exists. Set drop_existing=True to overwrite or use a different collection name."
+                logger.error(error_msg)
+                raise ValueError(error_msg)
+        
         self.collection = Collection(name=self.collection_name, schema=schema)
         logger.info(f"Created collection: {self.collection_name}")
 
-    def save(self, embeddings: np.ndarray, metadata: List[Dict]):
+    def save(self, embeddings: np.ndarray, metadata: List[Dict], drop_existing=True):
         try:
             self.connect()
         except ConnectionError as e:
             logger.error(f"Failed to connect to Milvus: {e}")
             raise
         try:
-            self._create_collection()
+            self._create_collection(drop_existing=drop_existing)
         except Exception as e:
             logger.error(f"Failed to create collection: {e}")
             raise RuntimeError(f"Collection creation failed: {e}")
@@ -351,10 +358,12 @@ class TextSimilaritySearch:
             logger.warning("No existing collection found. Please build the database first.")
 
     
-    def build_database(self, csv_path: str, text_column: str = 'Overview', batch_size: int = 32):
+    def build_database(self, csv_path: str, text_column: str = 'Overview', batch_size: int = 32, drop_existing=True):
         logger.info(f"Building database from {csv_path}")
+        if drop_existing:
+            logger.warning(f"⚠️ This will DROP and REBUILD the entire collection with data from {csv_path}")
         embeddings, metadata = self.embedder.embed_csv(csv_path, text_column, batch_size)
-        info = self.db.save(embeddings, metadata)
+        info = self.db.save(embeddings, metadata, drop_existing=drop_existing)
         self.db.load()
         logger.info("Database built successfully")
         return info
