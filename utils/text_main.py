@@ -121,6 +121,7 @@ class TextEmbedder:
             logger.error(f"Error embedding text: {e}")
             raise ValueError(f"Failed to embed text: {e}")
 
+
 class MilvusDB:
     def __init__(self, collection_name='movie_collection', host='localhost', port='19530', dimension=384):
         self.collection_name = collection_name
