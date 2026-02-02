@@ -205,6 +205,20 @@ class MilvusDB:
             'collection_name': self.collection_name
         }
 
+    def load(self):
+        self.connect()
+        if not utility.has_collection(self.collection_name):
+            logger.error(f"Collection {self.collection_name} does not exist")
+            raise ValueError(f"Collection {self.collection_name} not found")
+        self.collection = Collection(self.collection_name)
+        self.collection.load()
+        num_entities = self.collection.num_entities
+        logger.info(f"Loaded collection {self.collection_name} with {num_entities} entities")
+        return {
+            'num_vectors': num_entities,
+            'collection_name': self.collection_name
+        }
+
     def search(self, query_embedding: np.ndarray, top_k: int = 10) -> Tuple[List[int], List[float], List[Dict]]:
         if self.collection is None:
             raise ValueError("Collection not loaded. Call load() first.")
