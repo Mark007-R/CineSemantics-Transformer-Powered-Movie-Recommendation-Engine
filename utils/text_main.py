@@ -167,7 +167,7 @@ class MilvusDB:
         except Exception as e:
             logger.warning(f"Error during disconnect: {e}")
 
-    def _create_collection(self):
+    def create_collection(self):
         fields = [
             FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=False),
             FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=self.dimension),
