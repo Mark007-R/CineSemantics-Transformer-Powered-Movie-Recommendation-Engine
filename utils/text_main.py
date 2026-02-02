@@ -129,11 +129,28 @@ class MilvusDB:
         self.port = port
         self.dimension = dimension
         self.collection = None
+        self._connected = False
         logger.info(f"MilvusDB initialized for collection: {collection_name}")
 
     def connect(self):
+        if self._connected:
+            logger.debug(f"Already connected to Milvus at {self.host}:{self.port}")
+            return
         try:
-            connections.connect(alias="default", host=self.host, port=self.port)
+            try:
+                existing_connections = connections.list_connections()
+                if ("default", ) in existing_connections:
+                    logger.info("Reusing existing Milvus connection")
+                    self._connected = True
+                    return
+            except Exception:
+                pass
+            connections.connect(
+                alias="default",
+                host=self.host,
+                port=self.port
+            )
+            self._connected = True
             logger.info(f"Connected to Milvus at {self.host}:{self.port}")
         except Exception as e:
             logger.error(f"Failed to connect to Milvus: {e}")
