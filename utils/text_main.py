@@ -270,28 +270,39 @@ class MilvusDB:
         logger.info(f"Search returned {len(indices)} results")
         return indices, distances, metadata_list
     
-    def get_all_entities(self) -> List[Dict]:
+    def get_all_entities(self, batch_size: int = 1000) -> List[Dict]:
         if self.collection is None:
             raise ValueError("Collection not loaded. Call load() first.")
+        MAX_BATCH_SIZE = 16384
+        if batch_size > MAX_BATCH_SIZE:
+            logger.warning(f"Batch size {batch_size} exceeds Milvus limit. Using {MAX_BATCH_SIZE}")
+            batch_size = MAX_BATCH_SIZE
         all_entities = []
-        batch_size = 16384
         offset = 0
         try:
             total_entities = self.collection.num_entities
-            logger.info(f"Fetching all {total_entities} entities from collection")
+            logger.info(f"Fetching all {total_entities} entities from collection in batches of {batch_size}")
             while offset < total_entities:
+                remaining = total_entities - offset
+                current_batch_size = min(batch_size, remaining)
+                logger.info(f"Fetching batch: offset={offset}, limit={current_batch_size} ({len(all_entities)}/{total_entities} fetched)")
                 query_result = self.collection.query(
                     expr="id >= 0",
                     output_fields=["title", "overview", "genre", "poster_url"],
-                    limit=batch_size,
+                    limit=current_batch_size,
                     offset=offset
                 )
                 if not query_result:
+                    logger.warning(f"No results returned at offset {offset}, stopping pagination")
                     break
                 all_entities.extend(query_result)
-                offset += batch_size
-                logger.info(f"Fetched {len(all_entities)}/{total_entities} entities")
+                offset += len(query_result)
+                if len(query_result) < current_batch_size:
+                    logger.info(f"Received {len(query_result)} results (less than batch size), reached end of collection")
+                    break
             logger.info(f"Successfully fetched all {len(all_entities)} entities")
+            if len(all_entities) != total_entities:
+                logger.warning(f"Expected {total_entities} entities but fetched {len(all_entities)}")
             return all_entities
         except Exception as e:
             logger.error(f"Failed to fetch entities: {e}")
