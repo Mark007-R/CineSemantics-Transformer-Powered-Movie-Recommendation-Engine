@@ -1,4 +1,6 @@
+from email.policy import default
 from importlib.metadata import metadata
+from altair import value
 import torch
 import numpy as np
 import pandas as pd
@@ -53,6 +55,22 @@ class TextEmbedder:
             raise ValueError(f"Column '{text_column}' not found in CSV")
         df = df.fillna('')
         logger.info(f"Found {len(df)} rows in CSV")
+        def safe_float(value, default=0.0):
+            try:
+                return float(value) if value not in [None, '', 'N/A', 'nan'] else default
+            except (ValueError, TypeError):
+                logger.warning(f"Could not convert '{value}' to float, using default {default}")
+                return default
+        def safe_int(value, default=0):
+            try:
+                return int(float(value)) if value not in [None, '', 'N/A', 'nan'] else default
+            except (ValueError, TypeError):
+                logger.warning(f"Could not convert '{value}' to int, using default {default}")
+                return default
+        def safe_str(value, default=''):
+            if value is None or (isinstance(value, float) and pd.isna(value)):
+                return default
+            return str(value).strip()
         metadata = []
         texts = []
         for idx, row in df.iterrows():
@@ -60,15 +78,15 @@ class TextEmbedder:
             texts.append(text)
             metadata.append({
                 'index': int(idx),
-                'title': row.get('Title', ''),
-                'overview': row.get('Overview', ''),
-                'release_date': row.get('Release_Date', ''),
-                'genre': row.get('Genre', ''),
-                'popularity': row.get('Popularity', 0),
-                'vote_average': row.get('Vote_Average', 0),
-                'vote_count': row.get('Vote_Count', 0),
-                'original_language': row.get('Original_Language', ''),
-                'poster_url': row.get('Poster_Url', '')
+                'title': safe_str(row.get('Title', ''), ''),
+                'overview': safe_str(row.get('Overview', ''), ''),
+                'release_date': safe_str(row.get('Release_Date', ''), ''),
+                'genre': safe_str(row.get('Genre', ''), ''),
+                'popularity': safe_float(row.get('Popularity', 0), 0.0),
+                'vote_average': safe_float(row.get('Vote_Average', 0), 0.0),
+                'vote_count': safe_int(row.get('Vote_Count', 0), 0),
+                'original_language': safe_str(row.get('Original_Language', ''), ''),
+                'poster_url': safe_str(row.get('Poster_Url', ''), '')
             })
         logger.info("Extracting embeddings...")
         all_embeddings = []
