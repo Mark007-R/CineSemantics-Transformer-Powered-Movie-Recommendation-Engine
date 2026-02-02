@@ -1,3 +1,4 @@
+from importlib.metadata import metadata
 import torch
 import numpy as np
 import pandas as pd
@@ -142,50 +143,65 @@ class MilvusDB:
         logger.info(f"Created collection: {self.collection_name}")
 
     def save(self, embeddings: np.ndarray, metadata: List[Dict]):
-        self.connect()
-        self._create_collection()
-        embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
-        ids = [m['index'] for m in metadata]
-        titles = [m['title'] for m in metadata]
-        overviews = [m['overview'] for m in metadata]
-        release_dates = [m['release_date'] for m in metadata]
-        genres = [m['genre'] for m in metadata]
-        popularities = [m['popularity'] for m in metadata]
-        vote_averages = [m['vote_average'] for m in metadata]
-        vote_counts = [m['vote_count'] for m in metadata]
-        original_languages = [m['original_language'] for m in metadata]
-        poster_urls = [m['poster_url'] for m in metadata]
-        entities = [ids, embeddings.tolist(), titles, overviews, release_dates, genres, 
-            popularities, vote_averages,vote_counts, original_languages,poster_urls
-        ]
-        self.collection.insert(entities)
-        logger.info(f"Inserted {len(ids)} entities into collection")
-        index_params = {
-            "metric_type": "IP",
-            "index_type": "IVF_FLAT",
-            "params": {"nlist": 128}
-        }
-        self.collection.create_index(field_name="embedding", index_params=index_params)
-        logger.info("Created index on embedding field")
-        self.collection.load()
-        logger.info("Collection loaded into memory")
+        try:
+            self.connect()
+        except ConnectionError as e:
+            logger.error(f"Failed to connect to Milvus: {e}")
+            raise
+        try:
+            self._create_collection()
+        except Exception as e:
+            logger.error(f"Failed to create collection: {e}")
+            raise RuntimeError(f"Collection creation failed: {e}")
+        try:
+            ids = [m['index'] for m in metadata]
+            titles = [m['title'] for m in metadata]
+            overviews = [m['overview'] for m in metadata]
+            release_dates = [m['release_date'] for m in metadata]
+            genres = [m['genre'] for m in metadata]
+            popularities = [m['popularity'] for m in metadata]
+            vote_averages = [m['vote_average'] for m in metadata]
+            vote_counts = [m['vote_count'] for m in metadata]
+            original_languages = [m['original_language'] for m in metadata]
+            poster_urls = [m['poster_url'] for m in metadata]
+            entities = [ids, embeddings.tolist(), titles, overviews, release_dates, genres, 
+                popularities, vote_averages, vote_counts, original_languages, poster_urls
+            ]
+            self.collection.insert(entities)
+            logger.info(f"Inserted {len(ids)} entities into collection")
+        except Exception as e:
+            logger.error(f"Failed to insert entities: {e}")
+            try:
+                utility.drop_collection(self.collection_name)
+                logger.info(f"Dropped collection {self.collection_name} due to insertion failure")
+            except:
+                pass
+            raise RuntimeError(f"Data insertion failed: {e}")
+        try:
+            index_params = {
+                "metric_type": "IP",
+                "index_type": "IVF_FLAT",
+                "params": {"nlist": 128}
+            }
+            self.collection.create_index(field_name="embedding", index_params=index_params)
+            logger.info("Created index on embedding field")
+        except Exception as e:
+            logger.error(f"Failed to create index: {e}")
+            try:
+                utility.drop_collection(self.collection_name)
+                logger.info(f"Dropped collection {self.collection_name} due to indexing failure")
+            except:
+                pass
+            raise RuntimeError(f"Index creation failed: {e}")
+        try:
+            self.collection.load()
+            logger.info("Collection loaded into memory")
+        except Exception as e:
+            logger.error(f"Failed to load collection: {e}")
+            raise RuntimeError(f"Collection loading failed: {e}")
         return {
             'num_vectors': len(embeddings),
             'dimension': embeddings.shape[1],
-            'collection_name': self.collection_name
-        }
-
-    def load(self):
-        self.connect()
-        if not utility.has_collection(self.collection_name):
-            logger.error(f"Collection {self.collection_name} does not exist")
-            raise ValueError(f"Collection {self.collection_name} not found")
-        self.collection = Collection(self.collection_name)
-        self.collection.load()
-        num_entities = self.collection.num_entities
-        logger.info(f"Loaded collection {self.collection_name} with {num_entities} entities")
-        return {
-            'num_vectors': num_entities,
             'collection_name': self.collection_name
         }
 
