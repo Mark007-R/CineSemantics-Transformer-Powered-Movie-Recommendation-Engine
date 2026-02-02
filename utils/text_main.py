@@ -133,7 +133,7 @@ class MilvusDB:
 
     def connect(self):
         try:
-            connections.connect(alias="default", host=self.host, port=self.port )
+            connections.connect(alias="default", host=self.host, port=self.port)
             logger.info(f"Connected to Milvus at {self.host}:{self.port}")
         except Exception as e:
             logger.error(f"Failed to connect to Milvus: {e}")
@@ -247,8 +247,9 @@ class MilvusDB:
                 anns_field="embedding",
                 param=search_params,
                 limit=top_k,
-                output_fields=["title", "overview", "release_date", "genre", 
-                    "popularity", "vote_average", "vote_count", "poster_url"]
+                output_fields=["title", "overview", "release_date", "genre",
+                          "popularity", "vote_average", "vote_count", "poster_url",
+                          "original_language"]
             )
         except Exception as e:
             logger.error(f"Search failed: {e}")
@@ -288,7 +289,7 @@ class MilvusDB:
                 logger.info(f"Fetching batch: offset={offset}, limit={current_batch_size} ({len(all_entities)}/{total_entities} fetched)")
                 query_result = self.collection.query(
                     expr="id >= 0",
-                    output_fields=["title", "overview", "genre", "poster_url"],
+                    output_fields=["title", "overview", "genre", "poster_url", "original_language"],
                     limit=current_batch_size,
                     offset=offset
                 )
