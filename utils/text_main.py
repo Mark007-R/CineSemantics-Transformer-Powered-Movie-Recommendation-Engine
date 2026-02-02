@@ -352,8 +352,8 @@ class TextSimilaritySearch:
         logger.info(f"Found {len(results)} similar movies")
         return results
     
-    def get_all_movies(self) -> List[Dict[str, str]]:
-        entities = self.db.get_all_entities()
+    def get_all_movies(self, batch_size: int = 1000) -> List[Dict[str, str]]:
+        entities = self.db.get_all_entities(batch_size=batch_size)
         return [
             {
                 "title": e.get("title", ""),
