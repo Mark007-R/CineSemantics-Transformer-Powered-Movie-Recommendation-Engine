@@ -156,6 +156,17 @@ class MilvusDB:
             logger.error(f"Failed to connect to Milvus: {e}")
             raise ConnectionError(f"Milvus connection failed: {e}")
 
+    def disconnect(self):
+        if not self._connected:
+            logger.debug("Not connected to Milvus, nothing to disconnect")
+            return
+        try:
+            connections.disconnect(alias="default")
+            self._connected = False
+            logger.info("Disconnected from Milvus")
+        except Exception as e:
+            logger.warning(f"Error during disconnect: {e}")
+
     def _create_collection(self):
         fields = [
             FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=False),
