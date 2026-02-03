@@ -6,5 +6,6 @@ volumes/
 .env
 venv/
 .venv/
+utils/__pycache__/
 __pycache__/
 *.pyc
