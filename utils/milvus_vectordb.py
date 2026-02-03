@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
-from text_embedding import embed_text
+from text_embedder import embed_text
 from pymilvus import connections, utility, FieldSchema, CollectionSchema, DataType, Collection
 
 logging.basicConfig(
