@@ -18,9 +18,10 @@ def milvus_connect(host='localhost', port='19530'):
             port=port
         )
         logger.info("Connected to Milvus successfully")
+        return True
     except Exception as e:
         logger.error(f"Failed to connect to Milvus: {e}")
-        return None
+        return False
 
 
 def milvus_disconnect():
