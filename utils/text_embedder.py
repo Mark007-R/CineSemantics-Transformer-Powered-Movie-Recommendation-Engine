@@ -12,7 +12,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def _safe_float(value, default=0.0):
-    """Safely convert a value to float, returning default on failure."""
     try:
         return float(value)
     except (ValueError, TypeError):
@@ -20,9 +19,8 @@ def _safe_float(value, default=0.0):
 
 
 def _safe_int(value, default=0):
-    """Safely convert a value to int, returning default on failure."""
     try:
-        return int(float(value))  # float() first handles cases like "7.0"
+        return int(float(value))
     except (ValueError, TypeError):
         return default
 
