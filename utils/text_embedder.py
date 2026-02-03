@@ -11,6 +11,20 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+def _safe_float(value, default=0.0):
+    """Safely convert a value to float, returning default on failure."""
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return default
+
+
+def _safe_int(value, default=0):
+    """Safely convert a value to int, returning default on failure."""
+    try:
+        return int(float(value))  # float() first handles cases like "7.0"
+    except (ValueError, TypeError):
+        return default
 
 def load_model(model_name='sentence-transformers/all-MiniLM-L6-v2'):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -36,6 +50,7 @@ def embed_csv(model, csv_path: str, text_column: str = 'Overview', batch_size: i
         logger.error(f"Failed to read CSV file: {e}")
         return None, None
     df = df.fillna('')
+    logger.info(f"CSV columns detected: {df.columns.tolist()}")
     if text_column not in df.columns:
         logger.error(f"Column '{text_column}' not found. Available columns: {df.columns.tolist()}")
         return None, None
