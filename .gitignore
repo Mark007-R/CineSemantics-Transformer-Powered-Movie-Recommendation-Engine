@@ -1,4 +1,8 @@
-\data
-\posters
-\vector_db
-\vector_db_text
+data/
+posters/
+vector_db/
+vector_db_text/
+volumes/
+.env
+venv/
+.venv/
