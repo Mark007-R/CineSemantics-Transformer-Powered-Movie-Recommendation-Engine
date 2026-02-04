@@ -162,11 +162,9 @@ def search(collection, model, query_text: str, top_k: int = 10, min_rating: floa
             filter_parts.append(f"vote_average <= {max_rating}")
         if min_popularity is not None:
             filter_parts.append(f"popularity >= {min_popularity}")
-        if genre_filter:
-            filter_parts.append(f'genre like "%{genre_filter}%"')
         if year_filter is not None:
             if min_year is not None or max_year is not None:
-                logger.warning("Both provided, ignoring min_year/max_year and using year_filter only.")
+                logger.warning("Both year_filter and min_year/max_year provided, using year_filter only.")
             try:
                 year_int = int(year_filter)
                 if year_int < 0:
@@ -193,13 +191,16 @@ def search(collection, model, query_text: str, top_k: int = 10, min_rating: floa
                     logger.warning(f"Ignoring invalid max_year value: {max_year!r}")
         filter_expr = " and ".join(filter_parts) if filter_parts else None
         if filter_expr:
-            logger.info(f"Applying filter: {filter_expr}")
+            logger.info(f"Applying database filter: {filter_expr}")
+        if genre_filter:
+            logger.info(f"Will apply genre post-filter in Python: '{genre_filter}'")
+        fetch_limit = top_k * 3 if genre_filter else top_k  
         search_params = {"metric_type": "IP", "params": {"nprobe": 10}}
         results = collection.search(
             data=query_embedding.tolist(),
             anns_field="embedding",
             param=search_params,
-            limit=top_k,
+            limit=fetch_limit,
             expr=filter_expr,
             output_fields=["title", "overview", "release_date", "genre",
                            "popularity", "vote_average", "vote_count",
@@ -208,7 +209,7 @@ def search(collection, model, query_text: str, top_k: int = 10, min_rating: floa
         movies = []
         for hits in results:
             for hit in hits:
-                movies.append({
+                movie_data = {
                     'id': hit.id,
                     'title': hit.entity.get('title', ''),
                     'overview': hit.entity.get('overview', ''),
@@ -221,7 +222,17 @@ def search(collection, model, query_text: str, top_k: int = 10, min_rating: floa
                     'original_language': hit.entity.get('original_language', ''),
                     'similarity': float(hit.distance),
                     'similarity_percent': f"{float(hit.distance) * 100:.2f}%"
-                })
+                }
+                if genre_filter:
+                    if genre_filter.lower() in movie_data['genre'].lower():
+                        movies.append(movie_data)
+                else:
+                    movies.append(movie_data)
+                if len(movies) >= top_k:
+                    break
+            if len(movies) >= top_k:
+                break
+        movies = movies[:top_k]
         logger.info(f"Found {len(movies)} similar movies")
         return movies
     except Exception as e:
