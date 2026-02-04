@@ -141,7 +141,10 @@ def save_text_embedding(collection, id: int, text: str, embedding, metadata: dic
         return False
 
 
-def search(collection, model, query_text: str, top_k: int = 10):
+def search(collection, model, query_text: str, top_k: int = 10, 
+           min_rating: float = None, max_rating: float = None,
+           min_popularity: float = None, genre_filter: str = None,
+           year_filter: int = None, min_year: int = None, max_year: int = None):
     try:
         if collection is None:
             logger.error("Collection is not loaded")
@@ -153,12 +156,31 @@ def search(collection, model, query_text: str, top_k: int = 10):
         if query_embedding is None:
             logger.error("Failed to get query embedding")
             return []
+        filter_parts = []
+        if min_rating is not None:
+            filter_parts.append(f"vote_average >= {min_rating}")
+        if max_rating is not None:
+            filter_parts.append(f"vote_average <= {max_rating}")
+        if min_popularity is not None:
+            filter_parts.append(f"popularity >= {min_popularity}")
+        if genre_filter:
+            filter_parts.append(f'genre like "%{genre_filter}%"')
+        if year_filter is not None:
+            filter_parts.append(f'release_date like "{year_filter}-%"')
+        if min_year is not None:
+            filter_parts.append(f'release_date >= "{min_year}-01-01"')
+        if max_year is not None:
+            filter_parts.append(f'release_date <= "{max_year}-12-31"')
+        filter_expr = " and ".join(filter_parts) if filter_parts else None
+        if filter_expr:
+            logger.info(f"Applying filter: {filter_expr}")
         search_params = {"metric_type": "IP", "params": {"nprobe": 10}}
         results = collection.search(
             data=query_embedding.tolist(),
             anns_field="embedding",
             param=search_params,
             limit=top_k,
+            expr=filter_expr,
             output_fields=["title", "overview", "release_date", "genre",
                            "popularity", "vote_average", "vote_count",
                            "poster_url", "original_language"]
