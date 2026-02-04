@@ -11,18 +11,26 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+
 def _safe_float(value, default=0.0):
+    if pd.isna(value) or value == '':
+        return default
     try:
         return float(value)
     except (ValueError, TypeError):
+        logger.warning(f"Could not convert '{value}' to float, using default {default}")
         return default
 
 
 def _safe_int(value, default=0):
+    if pd.isna(value) or value == '':
+        return default
     try:
         return int(float(value))
     except (ValueError, TypeError):
+        logger.warning(f"Could not convert '{value}' to int, using default {default}")
         return default
+
 
 def load_model(model_name='sentence-transformers/all-MiniLM-L6-v2'):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -34,6 +42,7 @@ def load_model(model_name='sentence-transformers/all-MiniLM-L6-v2'):
     except Exception as e:
         logger.error(f"Failed to load model: {e}")
         return None
+
 
 def embed_csv(model, csv_path: str, text_column: str = 'Overview', batch_size: int = 32):
     if model is None:
@@ -55,19 +64,33 @@ def embed_csv(model, csv_path: str, text_column: str = 'Overview', batch_size: i
     texts = []
     metadata = []
     for idx, row in df.iterrows():
-        text = f"{row.get('Title', '')}. {row.get(text_column, '')}".strip()
+        title = row.get('Title', '')
+        overview = row.get(text_column, '')
+        genre = row.get('Genre', '')
+        release_date = row.get('Release_Date', '')
+        year = ''
+        if release_date and len(release_date) >= 4:
+            year = release_date[:4]
+        text_parts = [title]
+        if genre:
+            text_parts.append(f"Genre: {genre}")
+        if year:
+            text_parts.append(f"Released: {year}")
+        if overview:
+            text_parts.append(overview)
+        text = ". ".join(text_parts).strip()
         texts.append(text)
         metadata.append({
             'index': int(idx),
-            'title': str(row.get('Title', '')).strip(),
-            'overview': str(row.get('Overview', '')).strip(),
-            'release_date': str(row.get('Release_Date', '')).strip(),
-            'genre': str(row.get('Genre', '')).strip(),
-            'popularity': float(row.get('Popularity', 0) or 0),
-            'vote_average': float(row.get('Vote_Average', 0) or 0),
-            'vote_count': int(row.get('Vote_Count', 0) or 0),
-            'original_language': str(row.get('Original_Language', '')).strip(),
-            'poster_url': str(row.get('Poster_Url', '')).strip()
+            'title': str(row.get('Title', ''))[:1000].strip(),
+            'overview': str(row.get('Overview', ''))[:20000].strip(),
+            'release_date': str(row.get('Release_Date', ''))[:50].strip(),
+            'genre': str(row.get('Genre', ''))[:200].strip(),
+            'popularity': _safe_float(row.get('Popularity', 0)),
+            'vote_average': _safe_float(row.get('Vote_Average', 0)),
+            'vote_count': _safe_int(row.get('Vote_Count', 0)),
+            'original_language': str(row.get('Original_Language', ''))[:200].strip(),
+            'poster_url': str(row.get('Poster_Url', ''))[:1000].strip()
         })
     logger.info(f"Found {len(texts)} rows, extracting embeddings...")
     try:
@@ -88,6 +111,7 @@ def embed_csv(model, csv_path: str, text_column: str = 'Overview', batch_size: i
     except Exception as e:
         logger.error(f"Failed to extract embeddings: {e}")
         return None, None
+
 
 def embed_text(model, text: str):
     if model is None:

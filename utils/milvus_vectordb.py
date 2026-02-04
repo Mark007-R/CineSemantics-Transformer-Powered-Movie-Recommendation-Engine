@@ -11,16 +11,14 @@ logger = logging.getLogger(__name__)
 
 def milvus_connect(host='localhost', port='19530'):
     try:
-        logger.info(f"Connecting to Milvus at {host}:{port}...")
-        connections.connect(
-            alias="default",
-            host=host,
-            port=port
-        )
-        logger.info("Connected to Milvus successfully")
+        logger.info(f"Using Milvus Lite (embedded mode)...")
+        from milvus import default_server
+        default_server.start()
+        connections.connect(alias="default", host="127.0.0.1", port=default_server.listen_port)
+        logger.info("Connected to Milvus Lite successfully")
         return True
     except Exception as e:
-        logger.error(f"Failed to connect to Milvus: {e}")
+        logger.error(f"Failed to start Milvus Lite: {e}")
         return False
 
 
@@ -50,7 +48,7 @@ def create_collection(dimension=384):
             FieldSchema(name="popularity", dtype=DataType.DOUBLE),
             FieldSchema(name="vote_average", dtype=DataType.DOUBLE),
             FieldSchema(name="vote_count", dtype=DataType.INT64),
-            FieldSchema(name="original_language", dtype=DataType.VARCHAR, max_length=50),
+            FieldSchema(name="original_language", dtype=DataType.VARCHAR, max_length=200),
             FieldSchema(name="poster_url", dtype=DataType.VARCHAR, max_length=1000),
         ]
         schema = CollectionSchema(fields=fields, description="Movie similarity search collection")
@@ -124,15 +122,15 @@ def save_text_embedding(collection, id: int, text: str, embedding, metadata: dic
         entities = [
             [id],
             embedding.tolist(),
-            [metadata.get('title', '')],
-            [metadata.get('overview', text)],
-            [metadata.get('release_date', '')],
-            [metadata.get('genre', '')],
+            [metadata.get('title', '')[:1000]],
+            [metadata.get('overview', text)[:20000]],
+            [metadata.get('release_date', '')[:50]],
+            [metadata.get('genre', '')[:200]],
             [metadata.get('popularity', 0.0)],
             [metadata.get('vote_average', 0.0)],
             [metadata.get('vote_count', 0)],
-            [metadata.get('original_language', '')],
-            [metadata.get('poster_url', '')]
+            [metadata.get('original_language', '')[:200]],
+            [metadata.get('poster_url', '')[:1000]]
         ]
         collection.insert(entities)
         collection.flush()
@@ -159,7 +157,7 @@ def search(collection, model, query_text: str, top_k: int = 10):
         results = collection.search(
             data=query_embedding.tolist(),
             anns_field="embedding",
-            params=search_params,
+            param=search_params,
             limit=top_k,
             output_fields=["title", "overview", "release_date", "genre",
                            "popularity", "vote_average", "vote_count",
