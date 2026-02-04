@@ -166,11 +166,29 @@ def search(collection, model, query_text: str, top_k: int = 10,
         if genre_filter:
             filter_parts.append(f'genre like "%{genre_filter}%"')
         if year_filter is not None:
-            filter_parts.append(f'release_date like "{year_filter}-%"')
+            try:
+                year_int = int(year_filter)
+                if year_int < 0:
+                    raise ValueError("year_filter must be non-negative")
+                filter_parts.append(f'release_date like "{year_int}-%"')
+            except (ValueError, TypeError):
+                logger.warning(f"Ignoring invalid year_filter value: {year_filter!r}")
         if min_year is not None:
-            filter_parts.append(f'release_date >= "{min_year}-01-01"')
+            try:
+                min_year_int = int(min_year)
+                if min_year_int < 0:
+                    raise ValueError("min_year must be non-negative")
+                filter_parts.append(f'release_date >= "{min_year_int}-01-01"')
+            except (ValueError, TypeError):
+                logger.warning(f"Ignoring invalid min_year value: {min_year!r}")
         if max_year is not None:
-            filter_parts.append(f'release_date <= "{max_year}-12-31"')
+            try:
+                max_year_int = int(max_year)
+                if max_year_int < 0:
+                    raise ValueError("max_year must be non-negative")
+                filter_parts.append(f'release_date <= "{max_year_int}-12-31"')
+            except (ValueError, TypeError):
+                logger.warning(f"Ignoring invalid max_year value: {max_year!r}")
         filter_expr = " and ".join(filter_parts) if filter_parts else None
         if filter_expr:
             logger.info(f"Applying filter: {filter_expr}")
