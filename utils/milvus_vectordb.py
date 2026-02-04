@@ -166,7 +166,7 @@ def search(collection, model, query_text: str, top_k: int = 10, min_rating: floa
             filter_parts.append(f'genre like "%{genre_filter}%"')
         if year_filter is not None:
             if min_year is not None or max_year is not None:
-                logger.warning("Both year_filter and min_year/max_year provided, ignoring min_year/max_year and using year_filter only.")
+                logger.warning("Both provided, ignoring min_year/max_year and using year_filter only.")
             try:
                 year_int = int(year_filter)
                 if year_int < 0:
