@@ -25,7 +25,7 @@ def main():
         milvus_disconnect()
         sys.exit(1)
 
-    embeddings, metadata = embed_csv(model, "./data/9000plus.csv")
+    embeddings, metadata = embed_csv(model, "../data/9000plus.csv")
     if embeddings is None or metadata is None:
         logging.error("Failed to embed CSV data. Check the CSV path and column names.")
         milvus_disconnect()
@@ -34,7 +34,7 @@ def main():
     save_csv_embeddings(collection, embeddings, metadata)
     logging.info("CSV embeddings saved successfully.")
 
-    results = search(collection, model, "a movie about space adventure", top_k=5)
+    results = search(collection, model, "classic 90s thriller", top_k=5)
     logging.info("Search completed. Top results:")
     for movie in results:
         logging.info(f"{movie['title']} - {movie['similarity_percent']}")
