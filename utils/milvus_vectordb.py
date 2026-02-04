@@ -141,10 +141,9 @@ def save_text_embedding(collection, id: int, text: str, embedding, metadata: dic
         return False
 
 
-def search(collection, model, query_text: str, top_k: int = 10, 
-           min_rating: float = None, max_rating: float = None,
-           min_popularity: float = None, genre_filter: str = None,
-           year_filter: int = None, min_year: int = None, max_year: int = None):
+def search(collection, model, query_text: str, top_k: int = 10, min_rating: float = None,
+        max_rating: float = None, min_popularity: float = None, genre_filter: str = None, 
+        year_filter: int = None, min_year: int = None, max_year: int = None):
     try:
         if collection is None:
             logger.error("Collection is not loaded")
