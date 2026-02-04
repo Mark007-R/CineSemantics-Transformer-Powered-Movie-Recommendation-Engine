@@ -166,6 +166,8 @@ def search(collection, model, query_text: str, top_k: int = 10,
         if genre_filter:
             filter_parts.append(f'genre like "%{genre_filter}%"')
         if year_filter is not None:
+            if min_year is not None or max_year is not None:
+                logger.warning("Both year_filter and min_year/max_year provided, ignoring min_year/max_year and using year_filter only.")
             try:
                 year_int = int(year_filter)
                 if year_int < 0:
@@ -173,22 +175,23 @@ def search(collection, model, query_text: str, top_k: int = 10,
                 filter_parts.append(f'release_date like "{year_int}-%"')
             except (ValueError, TypeError):
                 logger.warning(f"Ignoring invalid year_filter value: {year_filter!r}")
-        if min_year is not None:
-            try:
-                min_year_int = int(min_year)
-                if min_year_int < 0:
-                    raise ValueError("min_year must be non-negative")
-                filter_parts.append(f'release_date >= "{min_year_int}-01-01"')
-            except (ValueError, TypeError):
-                logger.warning(f"Ignoring invalid min_year value: {min_year!r}")
-        if max_year is not None:
-            try:
-                max_year_int = int(max_year)
-                if max_year_int < 0:
-                    raise ValueError("max_year must be non-negative")
-                filter_parts.append(f'release_date <= "{max_year_int}-12-31"')
-            except (ValueError, TypeError):
-                logger.warning(f"Ignoring invalid max_year value: {max_year!r}")
+        else:
+            if min_year is not None:
+                try:
+                    min_year_int = int(min_year)
+                    if min_year_int < 0:
+                        raise ValueError("min_year must be non-negative")
+                    filter_parts.append(f'release_date >= "{min_year_int}-01-01"')
+                except (ValueError, TypeError):
+                    logger.warning(f"Ignoring invalid min_year value: {min_year!r}")
+            if max_year is not None:
+                try:
+                    max_year_int = int(max_year)
+                    if max_year_int < 0:
+                        raise ValueError("max_year must be non-negative")
+                    filter_parts.append(f'release_date <= "{max_year_int}-12-31"')
+                except (ValueError, TypeError):
+                    logger.warning(f"Ignoring invalid max_year value: {max_year!r}")
         filter_expr = " and ".join(filter_parts) if filter_parts else None
         if filter_expr:
             logger.info(f"Applying filter: {filter_expr}")
