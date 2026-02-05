@@ -109,7 +109,6 @@ def create_image_collection(collection_name='movie_posters', dimension=512):
 
 
 def delete_image_collection(collection_name='movie_posters'):
-    """Delete a Milvus collection."""
     try:
         if utility.has_collection(collection_name):
             utility.drop_collection(collection_name)
@@ -118,6 +117,37 @@ def delete_image_collection(collection_name='movie_posters'):
             logger.warning(f"Collection '{collection_name}' does not exist")
     except Exception as e:
         logger.error(f"Failed to delete collection: {e}")
+
+
+def save_image_embeddings(collection, embeddings, metadata):
+    try:
+        if collection is None:
+            logger.error("Collection is not loaded")
+            return False
+        if embeddings is None or metadata is None:
+            logger.error("Embeddings or metadata is None")
+            return False
+        if len(embeddings) != len(metadata):
+            logger.error(f"Embeddings ({len(embeddings)}) and metadata ({len(metadata)}) length mismatch")
+            return False
+        ids = list(range(len(metadata)))
+        titles = [m['title'][:500] for m in metadata]
+        filenames = [m['filename'][:500] for m in metadata]
+        image_paths = [m['image_path'][:1000] for m in metadata]
+        entities = [
+            ids,
+            embeddings.tolist(),
+            titles,
+            filenames,
+            image_paths
+        ]
+        collection.insert(entities)
+        collection.flush()
+        logger.info(f"Saved {len(ids)} image embeddings to collection")
+        return True
+    except Exception as e:
+        logger.error(f"Failed to save image embeddings: {e}")
+        return False
 
 
 def save_csv_embeddings(collection, embeddings, metadata):
@@ -334,6 +364,46 @@ def search(collection, model, query_text: str, top_k: int = 10, min_rating: floa
                 break
         movies = movies[:top_k]
         logger.info(f"Found {len(movies)} similar movies")
+        return movies
+    except Exception as e:
+        logger.error(f"Search failed: {e}")
+        return []
+
+def search_similar_images(collection, model, processor, device, query_image_path: str, top_k: int = 10):
+    try:
+        if collection is None:
+            logger.error("Collection is not loaded")
+            return []
+        from image_embedder import embed_image
+        if top_k < 1:
+            logger.warning(f"Invalid top_k {top_k}, using 1")
+            top_k = 1
+        logger.info(f"Extracting query image embedding...")
+        query_embedding = embed_image(model, processor, device, query_image_path)
+        if query_embedding is None:
+            logger.error("Failed to get query embedding")
+            return []
+        search_params = {"metric_type": "IP", "params": {"nprobe": 10}}
+        results = collection.search(
+            data=query_embedding.tolist(),
+            anns_field="embedding",
+            param=search_params,
+            limit=top_k,
+            output_fields=["title", "filename", "image_path"]
+        )
+        movies = []
+        for hits in results:
+            for hit in hits:
+                movies.append({
+                    'id': hit.id,
+                    'title': hit.entity.get('title', ''),
+                    'filename': hit.entity.get('filename', ''),
+                    'image_path': hit.entity.get('image_path', ''),
+                    'similarity': float(hit.distance),
+                    'similarity_percent': f"{float(hit.distance) * 100:.2f}%"
+                })
+        
+        logger.info(f"Found {len(movies)} similar images")
         return movies
     except Exception as e:
         logger.error(f"Search failed: {e}")
