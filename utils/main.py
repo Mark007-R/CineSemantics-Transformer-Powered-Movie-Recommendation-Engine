@@ -1,13 +1,11 @@
 import sys
 import logging
 from text_embedder import load_model
-from milvus_vectordb import milvus_connect, milvus_disconnect, create_collection, search
+from milvus_vectordb import milvus_connect, milvus_disconnect, create_collection, search, format_genre
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-def format_genre(genre, max_len=30):
-    return genre if len(genre) <= max_len else genre[:max_len] + "..."
 
 def main():
     try:

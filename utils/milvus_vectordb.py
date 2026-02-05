@@ -172,6 +172,12 @@ def _is_valid_date_format(date_str):
     return bool(re.match(r'^\d{4}-\d{2}-\d{2}$', date_str))
 
 
+def format_genre(genre, max_len=30):
+    if not genre:
+        return "N/A"
+    return genre if len(genre) <= max_len else genre[:max_len] + "..."
+
+
 def search(collection, model, query_text: str, top_k: int = 10, min_rating: float = None,
         max_rating: float = None, min_popularity: float = None, genre_filter: str = None, 
         year_filter: int = None, min_year: int = None, max_year: int = None):
