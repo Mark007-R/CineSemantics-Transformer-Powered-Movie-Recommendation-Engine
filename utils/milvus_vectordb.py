@@ -1,4 +1,5 @@
 import logging
+import re
 from text_embedder import embed_text
 from pymilvus import connections, utility, FieldSchema, CollectionSchema, DataType, Collection
 
@@ -141,6 +142,36 @@ def save_text_embedding(collection, id: int, text: str, embedding, metadata: dic
         return False
 
 
+def _validate_year(year_value, param_name):
+    try:
+        year_int = int(year_value)
+        if year_int < 1800 or year_int > 2100:
+            logger.warning(f"{param_name}={year_int} is outside reasonable range [1800, 2100], ignoring")
+            return None
+        return year_int
+    except (ValueError, TypeError):
+        logger.warning(f"Invalid {param_name} value: {year_value!r}, ignoring")
+        return None
+
+
+def _validate_rating(rating_value, param_name):
+    try:
+        rating_float = float(rating_value)
+        if rating_float < 0 or rating_float > 10:
+            logger.warning(f"{param_name}={rating_float} is outside valid range [0, 10], ignoring")
+            return None
+        return rating_float
+    except (ValueError, TypeError):
+        logger.warning(f"Invalid {param_name} value: {rating_value!r}, ignoring")
+        return None
+
+
+def _is_valid_date_format(date_str):
+    if not date_str or not isinstance(date_str, str):
+        return False
+    return bool(re.match(r'^\d{4}-\d{2}-\d{2}$', date_str))
+
+
 def search(collection, model, query_text: str, top_k: int = 10, min_rating: float = None,
         max_rating: float = None, min_popularity: float = None, genre_filter: str = None, 
         year_filter: int = None, min_year: int = None, max_year: int = None):
@@ -151,50 +182,69 @@ def search(collection, model, query_text: str, top_k: int = 10, min_rating: floa
         if model is None:
             logger.error("Model is not loaded")
             return []
+        if top_k < 1:
+            logger.warning(f"top_k must be >= 1, got {top_k}, using 1")
+            top_k = 1
         query_embedding = embed_text(model, query_text)
         if query_embedding is None:
             logger.error("Failed to get query embedding")
             return []
         filter_parts = []
         if min_rating is not None:
-            filter_parts.append(f"vote_average >= {min_rating}")
+            validated_min = _validate_rating(min_rating, "min_rating")
+            if validated_min is not None:
+                filter_parts.append(f"vote_average >= {validated_min}")
         if max_rating is not None:
-            filter_parts.append(f"vote_average <= {max_rating}")
+            validated_max = _validate_rating(max_rating, "max_rating")
+            if validated_max is not None:
+                filter_parts.append(f"vote_average <= {validated_max}")
+        if min_rating is not None and max_rating is not None:
+            val_min = _validate_rating(min_rating, "min_rating")
+            val_max = _validate_rating(max_rating, "max_rating")
+            if val_min is not None and val_max is not None and val_min > val_max:
+                logger.warning(f"min_rating ({val_min}) > max_rating ({val_max}), swapping values")
+                min_rating, max_rating = max_rating, min_rating
+                filter_parts = [f for f in filter_parts if not f.startswith("vote_average")]
+                filter_parts.append(f"vote_average >= {max_rating}")
+                filter_parts.append(f"vote_average <= {min_rating}")
         if min_popularity is not None:
-            filter_parts.append(f"popularity >= {min_popularity}")
+            try:
+                pop_float = float(min_popularity)
+                if pop_float < 0:
+                    logger.warning(f"min_popularity must be >= 0, got {pop_float}, ignoring")
+                else:
+                    filter_parts.append(f"popularity >= {pop_float}")
+            except (ValueError, TypeError):
+                logger.warning(f"Invalid min_popularity value: {min_popularity!r}, ignoring")
         if year_filter is not None:
             if min_year is not None or max_year is not None:
-                logger.warning("Both year_filter and min_year/max_year provided, using year_filter only.")
-            try:
-                year_int = int(year_filter)
-                if year_int < 0:
-                    raise ValueError("year_filter must be non-negative")
-                filter_parts.append(f'release_date like "{year_int}-%"')
-            except (ValueError, TypeError):
-                logger.warning(f"Ignoring invalid year_filter value: {year_filter!r}")
+                logger.warning("Both year_filter and min_year/max_year provided, using year_filter only")
+            validated_year = _validate_year(year_filter, "year_filter")
+            if validated_year is not None:
+                filter_parts.append(f'release_date like "{validated_year}-%"')
         else:
+            validated_min_year = None
+            validated_max_year = None
             if min_year is not None:
-                try:
-                    min_year_int = int(min_year)
-                    if min_year_int < 0:
-                        raise ValueError("min_year must be non-negative")
-                    filter_parts.append(f'release_date >= "{min_year_int}-01-01"')
-                except (ValueError, TypeError):
-                    logger.warning(f"Ignoring invalid min_year value: {min_year!r}")
+                validated_min_year = _validate_year(min_year, "min_year")
+                if validated_min_year is not None:
+                    filter_parts.append(f'release_date >= "{validated_min_year}-01-01"')
             if max_year is not None:
-                try:
-                    max_year_int = int(max_year)
-                    if max_year_int < 0:
-                        raise ValueError("max_year must be non-negative")
-                    filter_parts.append(f'release_date <= "{max_year_int}-12-31"')
-                except (ValueError, TypeError):
-                    logger.warning(f"Ignoring invalid max_year value: {max_year!r}")
+                validated_max_year = _validate_year(max_year, "max_year")
+                if validated_max_year is not None:
+                    filter_parts.append(f'release_date <= "{validated_max_year}-12-31"')
+            if validated_min_year is not None and validated_max_year is not None:
+                if validated_min_year > validated_max_year:
+                    logger.warning(f"min_year ({validated_min_year}) > max_year ({validated_max_year}), swapping values")
+                    filter_parts = [f for f in filter_parts if not f.startswith("release_date")]
+                    filter_parts.append(f'release_date >= "{validated_max_year}-01-01"')
+                    filter_parts.append(f'release_date <= "{validated_min_year}-12-31"')
         filter_expr = " and ".join(filter_parts) if filter_parts else None
         if filter_expr:
             logger.info(f"Applying database filter: {filter_expr}")
         if genre_filter:
-            logger.info(f"Will apply genre post-filter in Python: '{genre_filter}'")
-        fetch_limit = top_k * 3 if genre_filter else top_k  
+            logger.info(f"Will apply genre post-filter: '{genre_filter}'")
+        fetch_limit = top_k * 3 if genre_filter else top_k
         search_params = {"metric_type": "IP", "params": {"nprobe": 10}}
         results = collection.search(
             data=query_embedding.tolist(),
@@ -209,11 +259,14 @@ def search(collection, model, query_text: str, top_k: int = 10, min_rating: floa
         movies = []
         for hits in results:
             for hit in hits:
+                release_date = hit.entity.get('release_date', '')
+                if release_date and not _is_valid_date_format(release_date):
+                    logger.debug(f"Movie {hit.id} has invalid date format: {release_date}")
                 movie_data = {
                     'id': hit.id,
                     'title': hit.entity.get('title', ''),
                     'overview': hit.entity.get('overview', ''),
-                    'release_date': hit.entity.get('release_date', ''),
+                    'release_date': release_date,
                     'genre': hit.entity.get('genre', ''),
                     'popularity': hit.entity.get('popularity', 0),
                     'vote_average': hit.entity.get('vote_average', 0),
