@@ -408,3 +408,28 @@ def search_similar_images(collection, model, processor, device, query_image_path
     except Exception as e:
         logger.error(f"Search failed: {e}")
         return []
+
+def get_all_images(collection):
+    try:
+        if collection is None:
+            logger.error("Collection is not loaded")
+            return []
+        results = collection.query(
+            expr="id >= 0",
+            output_fields=["id", "title", "filename", "image_path"],
+            limit=16384
+        )
+        images = [
+            {
+                'id': r.get('id'),
+                'title': r.get('title', ''),
+                'filename': r.get('filename', ''),
+                'image_path': r.get('image_path', '')
+            }
+            for r in results
+        ]
+        logger.info(f"Retrieved {len(images)} images from collection")
+        return images
+    except Exception as e:
+        logger.error(f"Failed to get all images: {e}")
+        return []
