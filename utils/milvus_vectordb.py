@@ -433,3 +433,21 @@ def get_all_images(collection):
     except Exception as e:
         logger.error(f"Failed to get all images: {e}")
         return []
+
+def get_collection_stats(collection_name):
+    try:
+        if not utility.has_collection(collection_name):
+            logger.warning(f"Collection '{collection_name}' does not exist")
+            return None
+        collection = Collection(name=collection_name)
+        collection.load()
+        stats = {
+            'name': collection_name,
+            'num_entities': collection.num_entities,
+            'description': collection.description
+        }
+        logger.info(f"Collection '{collection_name}' has {stats['num_entities']} entities")
+        return stats
+    except Exception as e:
+        logger.error(f"Failed to get collection stats: {e}")
+        return None
