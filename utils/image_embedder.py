@@ -117,3 +117,31 @@ def embed_folder(model, processor, device, folder_path: str, batch_size: int = 3
         logger.warning(f"Failed to process {failed_count} images")
     logger.info(f"Extracted {len(embeddings)} embeddings with dimension {embeddings.shape[1]}")
     return embeddings, successful_metadata
+
+
+def embed_image(model, processor, device, image_path: str) -> np.ndarray:
+    if model is None or processor is None:
+        logger.error("Model not loaded")
+        raise ValueError("Model not loaded. Call load_clip_model() first.")
+    img_path = Path(image_path)
+    if not img_path.exists():
+        logger.error(f"Image file not found: {image_path}")
+        raise FileNotFoundError(f"Image file not found: {image_path}")
+    if not _validate_image_file(img_path):
+        logger.error(f"Unsupported image format: {img_path.suffix}")
+        raise ValueError(f"Unsupported image format. Supported: .jpg, .jpeg, .png, .webp, .bmp, .gif")
+    logger.info(f"Processing query image: {img_path.name}")
+    try:
+        image = _safe_open_image(img_path)
+    except Exception as e:
+        logger.error(f"Failed to open image {image_path}: {e}")
+        raise ValueError(f"Failed to open image: {e}")
+    try:
+        with torch.no_grad():
+            inputs = processor(images=image, return_tensors="pt").to(device)
+            features = model.get_image_features(**inputs)
+            features = features / features.norm(dim=-1, keepdim=True)
+        return features.cpu().numpy()
+    except Exception as e:
+        logger.error(f"Failed to extract embedding: {e}")
+        raise RuntimeError(f"Embedding extraction failed: {e}")
