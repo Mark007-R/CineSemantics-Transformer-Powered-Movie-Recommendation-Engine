@@ -78,6 +78,34 @@ def delete_collection(collection_name='movie_collection'):
     except Exception as e:
         logger.error(f"Failed to delete collection: {e}")
 
+def create_image_collection(collection_name='movie_posters', dimension=512):
+    try:
+        if utility.has_collection(collection_name):
+            logger.info(f"Collection '{collection_name}' already exists, loading it...")
+            collection = Collection(name=collection_name)
+            collection.load()
+            return collection
+        fields = [
+            FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=False),
+            FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=dimension),
+            FieldSchema(name="title", dtype=DataType.VARCHAR, max_length=500),
+            FieldSchema(name="filename", dtype=DataType.VARCHAR, max_length=500),
+            FieldSchema(name="image_path", dtype=DataType.VARCHAR, max_length=1000),
+        ]
+        schema = CollectionSchema(fields=fields, description="Movie poster image similarity search")
+        collection = Collection(name=collection_name, schema=schema)
+        index_params = {
+            "metric_type": "IP",  # Inner Product for normalized vectors = cosine similarity
+            "index_type": "IVF_FLAT",
+            "params": {"nlist": 128}
+        }
+        collection.create_index(field_name="embedding", index_params=index_params)
+        collection.load()
+        logger.info(f"Collection '{collection_name}' created successfully")
+        return collection
+    except Exception as e:
+        logger.error(f"Failed to create collection: {e}")
+        return None
 
 def save_csv_embeddings(collection, embeddings, metadata):
     try:
