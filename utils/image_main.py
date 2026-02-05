@@ -2,10 +2,10 @@ import sys
 import logging
 from pathlib import Path
 from image_embedder import load_clip_model, embed_folder
-from milvus_image_vectordb import (
+from milvus_vectordb import (
     milvus_connect, milvus_disconnect, create_image_collection,
     save_image_embeddings, search_similar_images, get_collection_stats,
-    delete_collection
+    delete_image_collection,
 )
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -13,14 +13,6 @@ logger = logging.getLogger(__name__)
 
 
 def build_database(images_folder: str, collection_name: str = 'movie_posters', batch_size: int = 32):
-    """
-    Build Milvus vector database from a folder of images.
-    
-    Args:
-        images_folder: Path to folder containing movie poster images
-        collection_name: Name for the Milvus collection
-        batch_size: Number of images to process at once
-    """
     try:
         logger.info("=" * 80)
         logger.info("Building Image Vector Database with Milvus")
@@ -85,17 +77,6 @@ def build_database(images_folder: str, collection_name: str = 'movie_posters', b
 
 
 def search_similar_movies(query_image: str, collection_name: str = 'movie_posters', top_k: int = 10):
-    """
-    Search for similar movie posters.
-    
-    Args:
-        query_image: Path to query image
-        collection_name: Name of Milvus collection
-        top_k: Number of similar results to return
-        
-    Returns:
-        List of similar movie results
-    """
     try:
         logger.info("=" * 80)
         logger.info("Searching for Similar Movies")
@@ -158,14 +139,6 @@ def search_similar_movies(query_image: str, collection_name: str = 'movie_poster
 
 
 def rebuild_database(images_folder: str, collection_name: str = 'movie_posters', batch_size: int = 32):
-    """
-    Delete existing collection and rebuild from scratch.
-    
-    Args:
-        images_folder: Path to folder containing movie poster images
-        collection_name: Name for the Milvus collection
-        batch_size: Number of images to process at once
-    """
     try:
         logger.info("Rebuilding database - deleting existing collection...")
         
@@ -173,7 +146,7 @@ def rebuild_database(images_folder: str, collection_name: str = 'movie_posters',
             logger.error("Failed to connect to Milvus")
             sys.exit(1)
         
-        delete_collection(collection_name)
+        delete_image_collection(collection_name)
         milvus_disconnect()
         
         logger.info("Building new database...")
@@ -185,21 +158,16 @@ def rebuild_database(images_folder: str, collection_name: str = 'movie_posters',
 
 
 def main():
-    """
-    Main pipeline - demonstrates both building and searching.
-    """
     try:
         logger.info("Image-Based Movie Recommendation System (Milvus)")
         logger.info("=" * 80)
         
-        # Configuration
         IMAGES_FOLDER = "./data/movie_posters"  # Change this to your folder
         COLLECTION_NAME = "movie_posters"
         QUERY_IMAGE = "./data/query_poster.jpg"  # Change this to your query image
         TOP_K = 5
         BATCH_SIZE = 32
         
-        # Check if we need to build database
         milvus_connect()
         collection_exists = get_collection_stats(COLLECTION_NAME) is not None
         milvus_disconnect()
@@ -207,18 +175,15 @@ def main():
         if not collection_exists:
             logger.info("Collection not found. Building new database...")
             
-            # Validate images folder exists
             if not Path(IMAGES_FOLDER).exists():
                 logger.error(f"Images folder not found: {IMAGES_FOLDER}")
                 logger.info("Please create the folder and add movie poster images.")
                 sys.exit(1)
             
-            # Build database
             build_database(IMAGES_FOLDER, COLLECTION_NAME, BATCH_SIZE)
         else:
             logger.info(f"Collection '{COLLECTION_NAME}' already exists")
-        
-        # Search for similar movies
+
         if Path(QUERY_IMAGE).exists():
             results = search_similar_movies(QUERY_IMAGE, COLLECTION_NAME, top_k=TOP_K)
         else:
