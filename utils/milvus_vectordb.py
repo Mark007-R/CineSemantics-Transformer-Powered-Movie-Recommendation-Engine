@@ -32,7 +32,7 @@ def milvus_disconnect():
         logger.error(f"Failed to disconnect from Milvus: {e}")
 
 
-def create_collection(dimension=384):
+def create_text_collection(dimension=384):
     try:
         if utility.has_collection('movie_collection'):
             logger.info("Collection already exists, loading it...")
@@ -68,7 +68,7 @@ def create_collection(dimension=384):
         return None
 
 
-def delete_collection(collection_name='movie_collection'):
+def delete_text_collection(collection_name='movie_collection'):
     try:
         if utility.has_collection(collection_name):
             utility.drop_collection(collection_name)
@@ -95,7 +95,7 @@ def create_image_collection(collection_name='movie_posters', dimension=512):
         schema = CollectionSchema(fields=fields, description="Movie poster image similarity search")
         collection = Collection(name=collection_name, schema=schema)
         index_params = {
-            "metric_type": "IP",  # Inner Product for normalized vectors = cosine similarity
+            "metric_type": "IP",
             "index_type": "IVF_FLAT",
             "params": {"nlist": 128}
         }
@@ -106,6 +106,19 @@ def create_image_collection(collection_name='movie_posters', dimension=512):
     except Exception as e:
         logger.error(f"Failed to create collection: {e}")
         return None
+
+
+def delete_image_collection(collection_name='movie_posters'):
+    """Delete a Milvus collection."""
+    try:
+        if utility.has_collection(collection_name):
+            utility.drop_collection(collection_name)
+            logger.info(f"Collection '{collection_name}' deleted successfully")
+        else:
+            logger.warning(f"Collection '{collection_name}' does not exist")
+    except Exception as e:
+        logger.error(f"Failed to delete collection: {e}")
+
 
 def save_csv_embeddings(collection, embeddings, metadata):
     try:
