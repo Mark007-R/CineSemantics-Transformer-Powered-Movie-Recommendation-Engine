@@ -18,28 +18,23 @@ def build_database(images_folder: str, collection_name: str = 'movie_posters', b
         logger.info("Building Image Vector Database with Milvus")
         logger.info("=" * 80)
         
-        # Step 1: Connect to Milvus
         logger.info("[1/5] Connecting to Milvus...")
         if not milvus_connect():
             logger.error("Failed to connect to Milvus")
             sys.exit(1)
         logger.info("✓ Connected to Milvus")
         
-        # Step 2: Load CLIP model
         logger.info("[2/5] Loading CLIP model...")
         model, processor, device = load_clip_model()
         logger.info("✓ Model loaded successfully")
         
-        # Step 3: Extract embeddings from images
         logger.info(f"[3/5] Extracting embeddings from: {images_folder}")
         embeddings, metadata = embed_folder(model, processor, device, images_folder, batch_size)
         logger.info(f"✓ Extracted {len(embeddings)} embeddings")
         
-        # Get embedding dimension
         dimension = embeddings.shape[1]
         logger.info(f"Embedding dimension: {dimension}")
         
-        # Step 4: Create collection
         logger.info(f"[4/5] Creating Milvus collection: {collection_name}")
         collection = create_image_collection(collection_name, dimension)
         if collection is None:
@@ -48,7 +43,6 @@ def build_database(images_folder: str, collection_name: str = 'movie_posters', b
             sys.exit(1)
         logger.info("✓ Collection created")
         
-        # Step 5: Save embeddings
         logger.info("[5/5] Saving embeddings to Milvus...")
         if not save_image_embeddings(collection, embeddings, metadata):
             logger.error("Failed to save embeddings")
@@ -82,19 +76,16 @@ def search_similar_movies(query_image: str, collection_name: str = 'movie_poster
         logger.info("Searching for Similar Movies")
         logger.info("=" * 80)
         
-        # Step 1: Connect to Milvus
         logger.info("[1/4] Connecting to Milvus...")
         if not milvus_connect():
             logger.error("Failed to connect to Milvus")
             sys.exit(1)
         logger.info("✓ Connected")
         
-        # Step 2: Load model
         logger.info("[2/4] Loading CLIP model...")
         model, processor, device = load_clip_model()
         logger.info("✓ Model loaded")
         
-        # Step 3: Load collection
         logger.info(f"[3/4] Loading collection: {collection_name}")
         collection = create_image_collection(collection_name)
         if collection is None:
@@ -106,7 +97,6 @@ def search_similar_movies(query_image: str, collection_name: str = 'movie_poster
         if stats:
             logger.info(f"✓ Collection loaded with {stats['num_entities']} images")
         
-        # Step 4: Search
         logger.info(f"[4/4] Searching for similar images...")
         results = search_similar_images(collection, model, processor, device, query_image, top_k)
         
@@ -162,9 +152,9 @@ def main():
         logger.info("Image-Based Movie Recommendation System (Milvus)")
         logger.info("=" * 80)
         
-        IMAGES_FOLDER = "./data/movie_posters"  # Change this to your folder
+        IMAGES_FOLDER = "../posters"
         COLLECTION_NAME = "movie_posters"
-        QUERY_IMAGE = "./data/query_poster.jpg"  # Change this to your query image
+        QUERY_IMAGE = "../posters/#Alive.jpg"
         TOP_K = 5
         BATCH_SIZE = 32
         
