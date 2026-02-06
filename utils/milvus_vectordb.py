@@ -134,9 +134,10 @@ def save_image_embeddings(collection, embeddings, metadata):
         titles = [m['title'][:500] for m in metadata]
         filenames = [m['filename'][:500] for m in metadata]
         image_paths = [m['image_path'][:1000] for m in metadata]
+        embedding_list = [embedding.tolist() for embedding in embeddings]
         entities = [
             ids,
-            embeddings.tolist(),
+            embedding_list,
             titles,
             filenames,
             image_paths
