@@ -335,11 +335,6 @@ def search_similar_movies(collection, query_text: str, top_k: int = 10,
         return []
 
 def search_similar_images(collection, model, processor, device, query_image_path: str, top_k: int = 10):
-    """
-    Search for similar images in the Milvus collection.
-    
-    FIXED: Properly formats query embedding for Milvus search.
-    """
     try:
         if collection is None:
             logger.error("Collection is not loaded")
