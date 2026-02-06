@@ -174,53 +174,30 @@ def save_csv_embeddings(collection, embeddings, metadata):
             genres, popularities, vote_averages, vote_counts,
             original_languages, poster_urls
         ]
-
         collection.insert(entities)
         collection.flush()
-        logger.info(f"Saved {len(ids)} embeddings to collection")
+        logger.info(f"Saved {len(ids)} movie embeddings to collection")
         return True
     except Exception as e:
-        logger.error(f"Failed to save CSV embeddings: {e}")
+        logger.error(f"Failed to save embeddings: {e}")
         return False
 
 
-def save_text_embedding(collection, id: int, text: str, embedding, metadata: dict):
-    try:
-        if collection is None:
-            logger.error("Collection is not loaded")
-            return False
-        if embedding is None:
-            logger.error("Embedding is None")
-            return False
-        entities = [
-            [id],
-            embedding.tolist(),
-            [metadata.get('title', '')[:1000]],
-            [metadata.get('overview', text)[:20000]],
-            [metadata.get('release_date', '')[:50]],
-            [metadata.get('genre', '')[:200]],
-            [metadata.get('popularity', 0.0)],
-            [metadata.get('vote_average', 0.0)],
-            [metadata.get('vote_count', 0)],
-            [metadata.get('original_language', '')[:200]],
-            [metadata.get('poster_url', '')[:1000]]
-        ]
-        collection.insert(entities)
-        collection.flush()
-        logger.info(f"Saved single text embedding with id {id}")
-        return True
-    except Exception as e:
-        logger.error(f"Failed to save text embedding: {e}")
+def _is_valid_date_format(date_str):
+    if not date_str:
         return False
+    pattern = r'^\d{4}-\d{2}-\d{2}$'
+    return bool(re.match(pattern, date_str))
 
 
 def _validate_year(year_value, param_name):
     try:
         year_int = int(year_value)
-        if year_int < 1800 or year_int > 2100:
-            logger.warning(f"{param_name}={year_int} is outside reasonable range [1800, 2100], ignoring")
+        if 1800 <= year_int <= 2100:
+            return year_int
+        else:
+            logger.warning(f"{param_name} must be between 1800 and 2100, got {year_int}, ignoring")
             return None
-        return year_int
     except (ValueError, TypeError):
         logger.warning(f"Invalid {param_name} value: {year_value!r}, ignoring")
         return None
@@ -229,54 +206,41 @@ def _validate_year(year_value, param_name):
 def _validate_rating(rating_value, param_name):
     try:
         rating_float = float(rating_value)
-        if rating_float < 0 or rating_float > 10:
-            logger.warning(f"{param_name}={rating_float} is outside valid range [0, 10], ignoring")
+        if 0 <= rating_float <= 10:
+            return rating_float
+        else:
+            logger.warning(f"{param_name} must be between 0 and 10, got {rating_float}, ignoring")
             return None
-        return rating_float
     except (ValueError, TypeError):
         logger.warning(f"Invalid {param_name} value: {rating_value!r}, ignoring")
         return None
 
 
-def _is_valid_date_format(date_str):
-    if not date_str or not isinstance(date_str, str):
-        return False
-    return bool(re.match(r'^\d{4}-\d{2}-\d{2}$', date_str))
-
-
-def format_genre(genre, max_len=30):
-    if not genre:
-        return "N/A"
-    return genre if len(genre) <= max_len else genre[:max_len] + "..."
-
-
-def search(collection, model, query_text: str, top_k: int = 10, min_rating: float = None,
-        max_rating: float = None, min_popularity: float = None, genre_filter: str = None, 
-        year_filter: int = None, min_year: int = None, max_year: int = None):
+def search_similar_movies(collection, query_text: str, top_k: int = 10,
+                         genre_filter=None, min_rating=None, max_rating=None,
+                         year_filter=None, min_year=None, max_year=None, min_popularity=None):
     try:
         if collection is None:
             logger.error("Collection is not loaded")
             return []
-        if model is None:
-            logger.error("Model is not loaded")
-            return []
         if top_k < 1:
-            logger.warning(f"top_k must be >= 1, got {top_k}, using 1")
+            logger.warning(f"Invalid top_k {top_k}, using 1")
             top_k = 1
-        query_embedding = embed_text(model, query_text)
+        logger.info(f"Generating embedding for query: '{query_text}'")
+        query_embedding = embed_text(query_text)
         if query_embedding is None:
             logger.error("Failed to get query embedding")
             return []
         filter_parts = []
-        if min_rating is not None:
+        if min_rating is not None and max_rating is None:
             validated_min = _validate_rating(min_rating, "min_rating")
             if validated_min is not None:
                 filter_parts.append(f"vote_average >= {validated_min}")
-        if max_rating is not None:
+        elif max_rating is not None and min_rating is None:
             validated_max = _validate_rating(max_rating, "max_rating")
             if validated_max is not None:
                 filter_parts.append(f"vote_average <= {validated_max}")
-        if min_rating is not None and max_rating is not None:
+        elif min_rating is not None and max_rating is not None:
             val_min = _validate_rating(min_rating, "min_rating")
             val_max = _validate_rating(max_rating, "max_rating")
             if val_min is not None and val_max is not None and val_min > val_max:
@@ -371,6 +335,11 @@ def search(collection, model, query_text: str, top_k: int = 10, min_rating: floa
         return []
 
 def search_similar_images(collection, model, processor, device, query_image_path: str, top_k: int = 10):
+    """
+    Search for similar images in the Milvus collection.
+    
+    FIXED: Properly formats query embedding for Milvus search.
+    """
     try:
         if collection is None:
             logger.error("Collection is not loaded")
@@ -384,9 +353,13 @@ def search_similar_images(collection, model, processor, device, query_image_path
         if query_embedding is None:
             logger.error("Failed to get query embedding")
             return []
+        if query_embedding.ndim == 2:
+            query_list = query_embedding[0].tolist()
+        else:
+            query_list = query_embedding.tolist()
         search_params = {"metric_type": "IP", "params": {"nprobe": 10}}
         results = collection.search(
-            data=query_embedding.tolist(),
+            data=[query_list],
             anns_field="embedding",
             param=search_params,
             limit=top_k,
