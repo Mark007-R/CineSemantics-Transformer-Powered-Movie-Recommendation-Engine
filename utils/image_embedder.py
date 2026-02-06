@@ -1,5 +1,6 @@
 import logging
 import torch
+import torch.nn.functional as F
 import numpy as np
 from PIL import Image
 from pathlib import Path
@@ -102,7 +103,7 @@ def embed_folder(model, processor, device, folder_path: str, batch_size: int = 3
             try:
                 inputs = processor(images=images, return_tensors="pt", padding=True).to(device)
                 features = model.get_image_features(**inputs)
-                features = features / features.norm(dim=-1, keepdim=True)
+                features = F.normalize(features, p=2, dim=-1)
                 all_embeddings.append(features.cpu().numpy())
                 successful_metadata.extend(batch_meta)
             except Exception as e:
@@ -140,7 +141,7 @@ def embed_image(model, processor, device, image_path: str) -> np.ndarray:
         with torch.no_grad():
             inputs = processor(images=image, return_tensors="pt").to(device)
             features = model.get_image_features(**inputs)
-            features = features / features.norm(dim=-1, keepdim=True)
+            features = F.normalize(features, p=2, dim=-1)
         return features.cpu().numpy()
     except Exception as e:
         logger.error(f"Failed to extract embedding: {e}")
