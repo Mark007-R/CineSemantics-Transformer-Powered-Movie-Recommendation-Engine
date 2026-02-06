@@ -134,7 +134,7 @@ def save_image_embeddings(collection, embeddings, metadata):
         titles = [m['title'][:500] for m in metadata]
         filenames = [m['filename'][:500] for m in metadata]
         image_paths = [m['image_path'][:1000] for m in metadata]
-        embedding_list = [embedding.tolist() for embedding in embeddings]
+        embedding_list = [embedding.astype("float32").flatten().tolist() for embedding in embeddings]
         entities = [
             ids,
             embedding_list,
@@ -348,10 +348,7 @@ def search_similar_images(collection, model, processor, device, query_image_path
         if query_embedding is None:
             logger.error("Failed to get query embedding")
             return []
-        if query_embedding.ndim == 2:
-            query_list = query_embedding[0].tolist()
-        else:
-            query_list = query_embedding.tolist()
+        query_list = query_embedding.astype("float32").flatten().tolist()
         search_params = {"metric_type": "IP", "params": {"nprobe": 10}}
         results = collection.search(
             data=[query_list],
