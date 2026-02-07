@@ -7,12 +7,17 @@ from milvus_vectordb import (
     save_image_embeddings, search_similar_images, get_collection_stats,
     delete_image_collection,
 )
+import config
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=config.LOG_LEVEL, format=config.LOG_FORMAT)
 logger = logging.getLogger(__name__)
 
 
-def build_database(images_folder: str, collection_name: str = 'movie_posters', batch_size: int = 32):
+def build_database(images_folder: str, collection_name: str = None, batch_size: int = None):
+    if collection_name is None:
+        collection_name = config.IMAGE_COLLECTION_NAME
+    if batch_size is None:
+        batch_size = config.DEFAULT_BATCH_SIZE
     try:
         logger.info("=" * 80)
         logger.info("Building Image Vector Database with Milvus")
@@ -70,7 +75,11 @@ def build_database(images_folder: str, collection_name: str = 'movie_posters', b
         milvus_disconnect()
 
 
-def search_similar_movies(query_image: str, collection_name: str = 'movie_posters', top_k: int = 10):
+def search_similar_movies(query_image: str, collection_name: str = None, top_k: int = None):
+    if collection_name is None:
+        collection_name = config.IMAGE_COLLECTION_NAME
+    if top_k is None:
+        top_k = config.DEFAULT_TOP_K
     try:
         logger.info("=" * 80)
         logger.info("Searching for Similar Movies")
@@ -128,7 +137,11 @@ def search_similar_movies(query_image: str, collection_name: str = 'movie_poster
         milvus_disconnect()
 
 
-def rebuild_database(images_folder: str, collection_name: str = 'movie_posters', batch_size: int = 32):
+def rebuild_database(images_folder: str, collection_name: str = None, batch_size: int = None):
+    if collection_name is None:
+        collection_name = config.IMAGE_COLLECTION_NAME
+    if batch_size is None:
+        batch_size = config.DEFAULT_BATCH_SIZE
     try:
         logger.info("Rebuilding database - deleting existing collection...")
         
@@ -152,11 +165,11 @@ def main():
         logger.info("Image-Based Movie Recommendation System (Milvus)")
         logger.info("=" * 80)
         
-        IMAGES_FOLDER = "../posters"
-        COLLECTION_NAME = "movie_posters"
+        IMAGES_FOLDER = config.DEFAULT_IMAGES_FOLDER
+        COLLECTION_NAME = config.IMAGE_COLLECTION_NAME
         QUERY_IMAGE = "../posters/#Alive.jpg"
         TOP_K = 5
-        BATCH_SIZE = 32
+        BATCH_SIZE = config.DEFAULT_BATCH_SIZE
         
         milvus_connect()
         stats = get_collection_stats(COLLECTION_NAME)

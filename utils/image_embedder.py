@@ -8,17 +8,20 @@ from typing import List, Dict, Tuple
 from transformers import CLIPModel, CLIPProcessor
 from tqdm import tqdm
 import warnings
+import config
 
 warnings.filterwarnings('ignore')
 
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    level=config.LOG_LEVEL,
+    format=config.LOG_FORMAT
 )
 logger = logging.getLogger(__name__)
 
 
-def load_clip_model(model_name='openai/clip-vit-base-patch32', device=None):
+def load_clip_model(model_name=None, device=None):
+    if model_name is None:
+        model_name = config.IMAGE_MODEL_NAME
     if device is None:
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
     logger.info(f"Loading CLIP model: {model_name} on {device}")
@@ -34,7 +37,7 @@ def load_clip_model(model_name='openai/clip-vit-base-patch32', device=None):
 
 
 def _validate_image_file(file_path: Path) -> bool:
-    valid_extensions = {'.jpg', '.jpeg', '.png', '.webp', '.bmp', '.gif'}
+    valid_extensions = config.VALID_IMAGE_EXTENSIONS
     return file_path.suffix.lower() in valid_extensions
 
 
@@ -49,7 +52,9 @@ def _safe_open_image(image_path: Path) -> Image.Image:
         raise
 
 
-def embed_folder(model, processor, device, folder_path: str, batch_size: int = 32) -> Tuple[np.ndarray, List[Dict]]:
+def embed_folder(model, processor, device, folder_path: str, batch_size: int = None) -> Tuple[np.ndarray, List[Dict]]:
+    if batch_size is None:
+        batch_size = config.DEFAULT_BATCH_SIZE
     if model is None or processor is None:
         logger.error("Model not loaded")
         raise ValueError("Model not loaded. Call load_clip_model() first.")
@@ -69,10 +74,10 @@ def embed_folder(model, processor, device, folder_path: str, batch_size: int = 3
         logger.error(f"No valid images found in {folder_path}")
         raise ValueError(f"No valid images found in {folder_path}")
     logger.info(f"Found {len(image_files)} valid images")
-    if batch_size < 1:
-        logger.warning(f"Invalid batch_size {batch_size}, using 1")
-        batch_size = 1
-    elif batch_size > 128:
+    if batch_size < config.MIN_BATCH_SIZE:
+        logger.warning(f"Invalid batch_size {batch_size}, using {config.MIN_BATCH_SIZE}")
+        batch_size = config.MIN_BATCH_SIZE
+    elif batch_size > config.MAX_BATCH_SIZE:
         logger.warning(f"Large batch_size {batch_size} may cause OOM, consider reducing")
     metadata = []
     for img_path in image_files:

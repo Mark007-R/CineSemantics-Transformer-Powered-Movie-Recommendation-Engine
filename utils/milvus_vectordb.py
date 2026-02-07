@@ -2,20 +2,25 @@ import logging
 import re
 from text_embedder import embed_text
 from pymilvus import connections, utility, FieldSchema, CollectionSchema, DataType, Collection
+import config
 
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    level=config.LOG_LEVEL,
+    format=config.LOG_FORMAT
 )
 logger = logging.getLogger(__name__)
 
 
-def milvus_connect(host='localhost', port='19530'):
+def milvus_connect(host=None, port=None):
+    if host is None:
+        host = config.MILVUS_HOST
+    if port is None:
+        port = config.MILVUS_PORT
     try:
         logger.info(f"Using Milvus Lite (embedded mode)...")
         from milvus import default_server
         default_server.start()
-        connections.connect(alias="default", host="127.0.0.1", port=default_server.listen_port)
+        connections.connect(alias="default", host=config.MILVUS_DEFAULT_SERVER_HOST, port=default_server.listen_port)
         logger.info("Connected to Milvus Lite successfully")
         return True
     except Exception as e:
@@ -32,32 +37,34 @@ def milvus_disconnect():
         logger.error(f"Failed to disconnect from Milvus: {e}")
 
 
-def create_text_collection(dimension=384):
+def create_text_collection(dimension=None):
+    if dimension is None:
+        dimension = config.TEXT_EMBEDDING_DIMENSION
     try:
-        if utility.has_collection('movie_collection'):
+        if utility.has_collection(config.TEXT_COLLECTION_NAME):
             logger.info("Collection already exists, loading it...")
-            collection = Collection(name='movie_collection')
+            collection = Collection(name=config.TEXT_COLLECTION_NAME)
             collection.load()
             return collection
         fields = [
             FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=False),
             FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=dimension),
-            FieldSchema(name="title", dtype=DataType.VARCHAR, max_length=1000),
-            FieldSchema(name="overview", dtype=DataType.VARCHAR, max_length=20000),
-            FieldSchema(name="release_date", dtype=DataType.VARCHAR, max_length=50),
-            FieldSchema(name="genre", dtype=DataType.VARCHAR, max_length=200),
+            FieldSchema(name="title", dtype=DataType.VARCHAR, max_length=config.TEXT_TITLE_MAX_LENGTH),
+            FieldSchema(name="overview", dtype=DataType.VARCHAR, max_length=config.TEXT_OVERVIEW_MAX_LENGTH),
+            FieldSchema(name="release_date", dtype=DataType.VARCHAR, max_length=config.TEXT_RELEASE_DATE_MAX_LENGTH),
+            FieldSchema(name="genre", dtype=DataType.VARCHAR, max_length=config.TEXT_GENRE_MAX_LENGTH),
             FieldSchema(name="popularity", dtype=DataType.DOUBLE),
             FieldSchema(name="vote_average", dtype=DataType.DOUBLE),
             FieldSchema(name="vote_count", dtype=DataType.INT64),
-            FieldSchema(name="original_language", dtype=DataType.VARCHAR, max_length=200),
-            FieldSchema(name="poster_url", dtype=DataType.VARCHAR, max_length=1000),
+            FieldSchema(name="original_language", dtype=DataType.VARCHAR, max_length=config.TEXT_ORIGINAL_LANGUAGE_MAX_LENGTH),
+            FieldSchema(name="poster_url", dtype=DataType.VARCHAR, max_length=config.TEXT_POSTER_URL_MAX_LENGTH),
         ]
         schema = CollectionSchema(fields=fields, description="Movie similarity search collection")
-        collection = Collection(name='movie_collection', schema=schema)
+        collection = Collection(name=config.TEXT_COLLECTION_NAME, schema=schema)
         index_params = {
-            "metric_type": "IP",
-            "index_type": "IVF_FLAT",
-            "params": {"nlist": 128}
+            "metric_type": config.INDEX_METRIC_TYPE,
+            "index_type": config.INDEX_TYPE,
+            "params": {"nlist": config.INDEX_NLIST}
         }
         collection.create_index(field_name="embedding", index_params=index_params)
         collection.load()
@@ -68,7 +75,9 @@ def create_text_collection(dimension=384):
         return None
 
 
-def delete_text_collection(collection_name='movie_collection'):
+def delete_text_collection(collection_name=None):
+    if collection_name is None:
+        collection_name = config.TEXT_COLLECTION_NAME
     try:
         if utility.has_collection(collection_name):
             utility.drop_collection(collection_name)
@@ -78,7 +87,11 @@ def delete_text_collection(collection_name='movie_collection'):
     except Exception as e:
         logger.error(f"Failed to delete collection: {e}")
 
-def create_image_collection(collection_name='movie_posters', dimension=512):
+def create_image_collection(collection_name=None, dimension=None):
+    if collection_name is None:
+        collection_name = config.IMAGE_COLLECTION_NAME
+    if dimension is None:
+        dimension = config.IMAGE_EMBEDDING_DIMENSION
     try:
         if utility.has_collection(collection_name):
             logger.info(f"Collection '{collection_name}' already exists, loading it...")
@@ -88,16 +101,16 @@ def create_image_collection(collection_name='movie_posters', dimension=512):
         fields = [
             FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=False),
             FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=dimension),
-            FieldSchema(name="title", dtype=DataType.VARCHAR, max_length=500),
-            FieldSchema(name="filename", dtype=DataType.VARCHAR, max_length=500),
-            FieldSchema(name="image_path", dtype=DataType.VARCHAR, max_length=1000),
+            FieldSchema(name="title", dtype=DataType.VARCHAR, max_length=config.IMAGE_TITLE_MAX_LENGTH),
+            FieldSchema(name="filename", dtype=DataType.VARCHAR, max_length=config.IMAGE_FILENAME_MAX_LENGTH),
+            FieldSchema(name="image_path", dtype=DataType.VARCHAR, max_length=config.IMAGE_PATH_MAX_LENGTH),
         ]
         schema = CollectionSchema(fields=fields, description="Movie poster image similarity search")
         collection = Collection(name=collection_name, schema=schema)
         index_params = {
-            "metric_type": "IP",
-            "index_type": "IVF_FLAT",
-            "params": {"nlist": 128}
+            "metric_type": config.INDEX_METRIC_TYPE,
+            "index_type": config.INDEX_TYPE,
+            "params": {"nlist": config.INDEX_NLIST}
         }
         collection.create_index(field_name="embedding", index_params=index_params)
         collection.load()
@@ -108,7 +121,9 @@ def create_image_collection(collection_name='movie_posters', dimension=512):
         return None
 
 
-def delete_image_collection(collection_name='movie_posters'):
+def delete_image_collection(collection_name=None):
+    if collection_name is None:
+        collection_name = config.IMAGE_COLLECTION_NAME
     try:
         if utility.has_collection(collection_name):
             utility.drop_collection(collection_name)
@@ -131,11 +146,11 @@ def save_image_embeddings(collection, embeddings, metadata):
             logger.error(f"Embeddings ({len(embeddings)}) and metadata ({len(metadata)}) length mismatch")
             return False
         ids = list(range(len(metadata)))
-        titles = [m['title'][:500] for m in metadata]
-        filenames = [m['filename'][:500] for m in metadata]
-        image_paths = [m['image_path'][:1000] for m in metadata]
+        titles = [m['title'][:config.IMAGE_TITLE_MAX_LENGTH] for m in metadata]
+        filenames = [m['filename'][:config.IMAGE_FILENAME_MAX_LENGTH] for m in metadata]
+        image_paths = [m['image_path'][:config.IMAGE_PATH_MAX_LENGTH] for m in metadata]
         embedding_list = [embedding.astype("float32").flatten().tolist() for embedding in embeddings]
-        BATCH_SIZE = 100
+        BATCH_SIZE = config.INSERT_BATCH_SIZE
         total = len(ids)
         logger.info(f"Inserting {total} embeddings in batches of {BATCH_SIZE}...")
         for start in range(0, total, BATCH_SIZE):
@@ -193,11 +208,13 @@ def save_csv_embeddings(collection, embeddings, metadata):
 def _is_valid_date_format(date_str):
     if not date_str:
         return False
-    pattern = r'^\d{4}-\d{2}-\d{2}$'
+    pattern = config.DATE_FORMAT_PATTERN
     return bool(re.match(pattern, date_str))
 
 
-def format_genre(genre, max_len=30):
+def format_genre(genre, max_len=None):
+    if max_len is None:
+        max_len = config.GENRE_DISPLAY_MAX_LENGTH
     if not genre:
         return "N/A"
     return genre if len(genre) <= max_len else genre[:max_len] + "..."
@@ -206,10 +223,10 @@ def format_genre(genre, max_len=30):
 def _validate_year(year_value, param_name):
     try:
         year_int = int(year_value)
-        if 1800 <= year_int <= 2100:
+        if config.MIN_YEAR <= year_int <= config.MAX_YEAR:
             return year_int
         else:
-            logger.warning(f"{param_name} must be between 1800 and 2100, got {year_int}, ignoring")
+            logger.warning(f"{param_name} must be between {config.MIN_YEAR} and {config.MAX_YEAR}, got {year_int}, ignoring")
             return None
     except (ValueError, TypeError):
         logger.warning(f"Invalid {param_name} value: {year_value!r}, ignoring")
@@ -219,19 +236,21 @@ def _validate_year(year_value, param_name):
 def _validate_rating(rating_value, param_name):
     try:
         rating_float = float(rating_value)
-        if 0 <= rating_float <= 10:
+        if config.MIN_RATING <= rating_float <= config.MAX_RATING:
             return rating_float
         else:
-            logger.warning(f"{param_name} must be between 0 and 10, got {rating_float}, ignoring")
+            logger.warning(f"{param_name} must be between {config.MIN_RATING} and {config.MAX_RATING}, got {rating_float}, ignoring")
             return None
     except (ValueError, TypeError):
         logger.warning(f"Invalid {param_name} value: {rating_value!r}, ignoring")
         return None
 
 
-def search_similar_movies(collection, model, query_text: str, top_k: int = 10,
+def search_similar_movies(collection, model, query_text: str, top_k: int = None,
                          genre_filter=None, min_rating=None, max_rating=None,
                          year_filter=None, min_year=None, max_year=None, min_popularity=None):
+    if top_k is None:
+        top_k = config.DEFAULT_TOP_K
     try:
         if collection is None:
             logger.error("Collection is not loaded")
@@ -265,8 +284,8 @@ def search_similar_movies(collection, model, query_text: str, top_k: int = 10,
         if min_popularity is not None:
             try:
                 pop_float = float(min_popularity)
-                if pop_float < 0:
-                    logger.warning(f"min_popularity must be >= 0, got {pop_float}, ignoring")
+                if pop_float < config.MIN_POPULARITY:
+                    logger.warning(f"min_popularity must be >= {config.MIN_POPULARITY}, got {pop_float}, ignoring")
                 else:
                     filter_parts.append(f"popularity >= {pop_float}")
             except (ValueError, TypeError):
@@ -299,8 +318,8 @@ def search_similar_movies(collection, model, query_text: str, top_k: int = 10,
             logger.info(f"Applying database filter: {filter_expr}")
         if genre_filter:
             logger.info(f"Will apply genre post-filter: '{genre_filter}'")
-        fetch_limit = top_k * 3 if genre_filter else top_k
-        search_params = {"metric_type": "IP", "params": {"nprobe": 10}}
+        fetch_limit = top_k * config.SEARCH_MULTIPLIER if genre_filter else top_k
+        search_params = {"metric_type": config.SEARCH_METRIC_TYPE, "params": {"nprobe": config.SEARCH_NPROBE}}
         results = collection.search(
             data=query_embedding.tolist(),
             anns_field="embedding",
@@ -347,7 +366,9 @@ def search_similar_movies(collection, model, query_text: str, top_k: int = 10,
         logger.error(f"Search failed: {e}")
         return []
 
-def search_similar_images(collection, model, processor, device, query_image_path: str, top_k: int = 10):
+def search_similar_images(collection, model, processor, device, query_image_path: str, top_k: int = None):
+    if top_k is None:
+        top_k = config.DEFAULT_TOP_K
     try:
         if collection is None:
             logger.error("Collection is not loaded")
@@ -362,7 +383,7 @@ def search_similar_images(collection, model, processor, device, query_image_path
             logger.error("Failed to get query embedding")
             return []
         query_list = query_embedding.astype("float32").flatten().tolist()
-        search_params = {"metric_type": "IP", "params": {"nprobe": 10}}
+        search_params = {"metric_type": config.SEARCH_METRIC_TYPE, "params": {"nprobe": config.SEARCH_NPROBE}}
         results = collection.search(
             data=[query_list],
             anns_field="embedding",
@@ -396,7 +417,7 @@ def get_all_images(collection):
         results = collection.query(
             expr="id >= 0",
             output_fields=["id", "title", "filename", "image_path"],
-            limit=16384
+            limit=config.MAX_QUERY_LIMIT
         )
         images = [
             {

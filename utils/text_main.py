@@ -2,8 +2,9 @@ import sys
 import logging
 from text_embedder import load_model
 from milvus_vectordb import milvus_connect, milvus_disconnect, create_text_collection, search_similar_movies, format_genre
+import config
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=config.LOG_LEVEL, format=config.LOG_FORMAT)
 logger = logging.getLogger(__name__)
 
 

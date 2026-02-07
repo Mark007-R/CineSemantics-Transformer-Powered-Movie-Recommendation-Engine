@@ -4,15 +4,18 @@ import numpy as np
 import pandas as pd
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
+import config
 
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    level=config.LOG_LEVEL,
+    format=config.LOG_FORMAT
 )
 logger = logging.getLogger(__name__)
 
 
-def _safe_float(value, default=0.0):
+def _safe_float(value, default=None):
+    if default is None:
+        default = config.DEFAULT_FLOAT_VALUE
     if pd.isna(value) or value == '':
         return default
     try:
@@ -22,7 +25,9 @@ def _safe_float(value, default=0.0):
         return default
 
 
-def _safe_int(value, default=0):
+def _safe_int(value, default=None):
+    if default is None:
+        default = config.DEFAULT_INT_VALUE
     if pd.isna(value) or value == '':
         return default
     try:
@@ -32,7 +37,9 @@ def _safe_int(value, default=0):
         return default
 
 
-def load_model(model_name='sentence-transformers/all-MiniLM-L6-v2'):
+def load_model(model_name=None):
+    if model_name is None:
+        model_name = config.TEXT_MODEL_NAME
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     logger.info(f"Loading model on {device}...")
     try:
@@ -44,7 +51,11 @@ def load_model(model_name='sentence-transformers/all-MiniLM-L6-v2'):
         return None
 
 
-def embed_csv(model, csv_path: str, text_column: str = 'Overview', batch_size: int = 32):
+def embed_csv(model, csv_path: str, text_column: str = None, batch_size: int = None):
+    if text_column is None:
+        text_column = config.DEFAULT_TEXT_COLUMN
+    if batch_size is None:
+        batch_size = config.DEFAULT_BATCH_SIZE
     if model is None:
         logger.error("Model is not loaded")
         return None, None
@@ -82,15 +93,15 @@ def embed_csv(model, csv_path: str, text_column: str = 'Overview', batch_size: i
         texts.append(text)
         metadata.append({
             'index': int(idx),
-            'title': str(row.get('Title', ''))[:1000].strip(),
-            'overview': str(row.get('Overview', ''))[:20000].strip(),
-            'release_date': str(row.get('Release_Date', ''))[:50].strip(),
-            'genre': str(row.get('Genre', ''))[:200].strip(),
-            'popularity': _safe_float(row.get('Popularity', 0)),
-            'vote_average': _safe_float(row.get('Vote_Average', 0)),
-            'vote_count': _safe_int(row.get('Vote_Count', 0)),
-            'original_language': str(row.get('Original_Language', ''))[:200].strip(),
-            'poster_url': str(row.get('Poster_Url', ''))[:1000].strip()
+            'title': str(row.get('Title', ''))[:config.TEXT_TITLE_MAX_LENGTH].strip(),
+            'overview': str(row.get('Overview', ''))[:config.TEXT_OVERVIEW_MAX_LENGTH].strip(),
+            'release_date': str(row.get('Release_Date', ''))[:config.TEXT_RELEASE_DATE_MAX_LENGTH].strip(),
+            'genre': str(row.get('Genre', ''))[:config.TEXT_GENRE_MAX_LENGTH].strip(),
+            'popularity': _safe_float(row.get('Popularity', config.DEFAULT_FLOAT_VALUE)),
+            'vote_average': _safe_float(row.get('Vote_Average', config.DEFAULT_FLOAT_VALUE)),
+            'vote_count': _safe_int(row.get('Vote_Count', config.DEFAULT_INT_VALUE)),
+            'original_language': str(row.get('Original_Language', ''))[:config.TEXT_ORIGINAL_LANGUAGE_MAX_LENGTH].strip(),
+            'poster_url': str(row.get('Poster_Url', ''))[:config.TEXT_POSTER_URL_MAX_LENGTH].strip()
         })
     logger.info(f"Found {len(texts)} rows, extracting embeddings...")
     try:
