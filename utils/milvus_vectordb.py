@@ -135,7 +135,7 @@ def save_image_embeddings(collection, embeddings, metadata):
         filenames = [m['filename'][:500] for m in metadata]
         image_paths = [m['image_path'][:1000] for m in metadata]
         embedding_list = [embedding.astype("float32").flatten().tolist() for embedding in embeddings]
-        BATCH_SIZE = 500
+        BATCH_SIZE = 200
         total = len(ids)
         logger.info(f"Inserting {total} embeddings in batches of {BATCH_SIZE}...")
         for start in range(0, total, BATCH_SIZE):
