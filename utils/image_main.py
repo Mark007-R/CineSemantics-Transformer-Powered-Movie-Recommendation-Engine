@@ -12,6 +12,19 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 
+def check_docker_milvus():
+    """Check if Docker Milvus is running"""
+    import socket
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(2)
+        result = sock.connect_ex(('localhost', 19530))
+        sock.close()
+        return result == 0
+    except Exception:
+        return False
+
+
 def build_database(images_folder: str, collection_name: str = 'movie_posters', batch_size: int = 32):
     try:
         logger.info("=" * 80)
@@ -96,6 +109,11 @@ def search_similar_movies(query_image: str, collection_name: str = 'movie_poster
         stats = get_collection_stats(collection_name)
         if stats:
             logger.info(f"✓ Collection loaded with {stats['num_entities']} images")
+            if stats['num_entities'] == 0:
+                logger.warning("Collection is empty! Please build the database first.")
+                logger.info("Run: rebuild_database() to populate the collection")
+                milvus_disconnect()
+                return []
         
         logger.info(f"[4/4] Searching for similar images...")
         results = search_similar_images(collection, model, processor, device, query_image, top_k)
@@ -152,15 +170,23 @@ def main():
         logger.info("Image-Based Movie Recommendation System (Milvus)")
         logger.info("=" * 80)
         
+        if not check_docker_milvus():
+            logger.warning("⚠ Milvus doesn't appear to be running on localhost:19530")
+            logger.warning("Please start Milvus with: docker-compose up -d")
+            logger.info("Attempting to connect anyway...")
+        
         IMAGES_FOLDER = "../posters"
         COLLECTION_NAME = "movie_posters"
         QUERY_IMAGE = "../posters/#Alive.jpg"
         TOP_K = 5
         BATCH_SIZE = 32
         
-        milvus_connect()
-        collection_exists = get_collection_stats(COLLECTION_NAME) is not None
-        milvus_disconnect()
+        if milvus_connect():
+            collection_exists = get_collection_stats(COLLECTION_NAME) is not None
+            milvus_disconnect()
+        else:
+            logger.error("Cannot connect to Milvus. Exiting.")
+            sys.exit(1)
         
         if not collection_exists:
             logger.info("Collection not found. Building new database...")
