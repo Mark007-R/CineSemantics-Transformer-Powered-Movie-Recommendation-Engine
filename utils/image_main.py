@@ -159,11 +159,15 @@ def main():
         BATCH_SIZE = 32
         
         milvus_connect()
-        collection_exists = get_collection_stats(COLLECTION_NAME) is not None
+        stats = get_collection_stats(COLLECTION_NAME)
+        collection_ready = stats is not None and stats['num_entities'] > 0
+        if stats is not None and stats['num_entities'] == 0:
+            logger.info("Collection exists but is empty, deleting it for rebuild...")
+            delete_image_collection(COLLECTION_NAME)
         milvus_disconnect()
         
-        if not collection_exists:
-            logger.info("Collection not found. Building new database...")
+        if not collection_ready:
+            logger.info("Collection not found or empty. Building new database...")
             
             if not Path(IMAGES_FOLDER).exists():
                 logger.error(f"Images folder not found: {IMAGES_FOLDER}")

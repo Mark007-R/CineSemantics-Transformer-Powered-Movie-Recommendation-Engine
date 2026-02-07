@@ -102,11 +102,8 @@ def embed_folder(model, processor, device, folder_path: str, batch_size: int = 3
                 continue
             try:
                 inputs = processor(images=images, return_tensors="pt", padding=True).to(device)
-                output = model.get_image_features(**inputs)
-                if isinstance(output, torch.Tensor):
-                    features = output
-                else:
-                    features = output[0] if hasattr(output, '__getitem__') else output.pooler_output
+                vision_out = model.vision_model(pixel_values=inputs['pixel_values'])
+                features = model.visual_projection(vision_out.pooler_output)
                 features = F.normalize(features, p=2, dim=-1)
                 all_embeddings.append(features.cpu().numpy())
                 successful_metadata.extend(batch_meta)
@@ -144,11 +141,8 @@ def embed_image(model, processor, device, image_path: str) -> np.ndarray:
     try:
         with torch.no_grad():
             inputs = processor(images=image, return_tensors="pt").to(device)
-            output = model.get_image_features(**inputs)
-            if isinstance(output, torch.Tensor):
-                features = output
-            else:
-                features = output[0] if hasattr(output, '__getitem__') else output.pooler_output
+            vision_out = model.vision_model(pixel_values=inputs['pixel_values'])
+            features = model.visual_projection(vision_out.pooler_output)
             features = F.normalize(features, p=2, dim=-1)
         return features.cpu().numpy()
     except Exception as e:
