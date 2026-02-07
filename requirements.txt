@@ -16,3 +16,4 @@ faiss-cpu
 pymilvus
 milvus
 sentence-transformers
+streamlit
