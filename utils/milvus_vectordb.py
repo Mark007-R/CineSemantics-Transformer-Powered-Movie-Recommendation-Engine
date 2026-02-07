@@ -12,13 +12,14 @@ logger = logging.getLogger(__name__)
 
 def milvus_connect(host='localhost', port='19530'):
     try:
-        logger.info(f"Connecting to Milvus standalone at {host}:{port}...")
-        connections.connect(alias="default", host=host, port=port)
-        logger.info(f"Connected to Milvus standalone successfully")
+        logger.info(f"Using Milvus Lite (embedded mode)...")
+        from milvus import default_server
+        default_server.start()
+        connections.connect(alias="default", host="127.0.0.1", port=default_server.listen_port)
+        logger.info("Connected to Milvus Lite successfully")
         return True
     except Exception as e:
-        logger.error(f"Failed to connect to Milvus: {e}")
-        logger.error(f"Make sure Milvus is running with: docker-compose up -d")
+        logger.error(f"Failed to start Milvus Lite: {e}")
         return False
 
 
