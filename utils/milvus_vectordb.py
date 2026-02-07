@@ -190,6 +190,12 @@ def _is_valid_date_format(date_str):
     return bool(re.match(pattern, date_str))
 
 
+def format_genre(genre, max_len=30):
+    if not genre:
+        return "N/A"
+    return genre if len(genre) <= max_len else genre[:max_len] + "..."
+
+
 def _validate_year(year_value, param_name):
     try:
         year_int = int(year_value)
