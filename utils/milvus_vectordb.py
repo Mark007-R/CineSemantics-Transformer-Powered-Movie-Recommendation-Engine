@@ -135,16 +135,23 @@ def save_image_embeddings(collection, embeddings, metadata):
         filenames = [m['filename'][:500] for m in metadata]
         image_paths = [m['image_path'][:1000] for m in metadata]
         embedding_list = [embedding.astype("float32").flatten().tolist() for embedding in embeddings]
-        entities = [
-            ids,
-            embedding_list,
-            titles,
-            filenames,
-            image_paths
-        ]
-        collection.insert(entities)
+        BATCH_SIZE = 500
+        total = len(ids)
+        logger.info(f"Inserting {total} embeddings in batches of {BATCH_SIZE}...")
+        for start in range(0, total, BATCH_SIZE):
+            end = min(start + BATCH_SIZE, total)
+            batch_entities = [
+                ids[start:end],
+                embedding_list[start:end],
+                titles[start:end],
+                filenames[start:end],
+                image_paths[start:end]
+            ]
+            collection.insert(batch_entities)
+            logger.info(f"Inserted batch {start} → {end}")
         collection.flush()
-        logger.info(f"Saved {len(ids)} image embeddings to collection")
+        collection.load()
+        logger.info(f"Successfully saved {total} image embeddings to collection")
         return True
     except Exception as e:
         logger.error(f"Failed to save image embeddings: {e}")
