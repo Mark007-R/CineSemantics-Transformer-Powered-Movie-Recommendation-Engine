@@ -222,7 +222,7 @@ def _validate_rating(rating_value, param_name):
         return None
 
 
-def search_similar_movies(collection, query_text: str, top_k: int = 10,
+def search_similar_movies(collection, model, query_text: str, top_k: int = 10,
                          genre_filter=None, min_rating=None, max_rating=None,
                          year_filter=None, min_year=None, max_year=None, min_popularity=None):
     try:
@@ -233,7 +233,7 @@ def search_similar_movies(collection, query_text: str, top_k: int = 10,
             logger.warning(f"Invalid top_k {top_k}, using 1")
             top_k = 1
         logger.info(f"Generating embedding for query: '{query_text}'")
-        query_embedding = embed_text(query_text)
+        query_embedding = embed_text(model, query_text)
         if query_embedding is None:
             logger.error("Failed to get query embedding")
             return []
