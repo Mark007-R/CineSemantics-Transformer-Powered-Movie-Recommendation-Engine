@@ -1,3 +1,4 @@
+
 import streamlit as st
 from PIL import Image
 import tempfile
@@ -8,7 +9,6 @@ from pathlib import Path
 import logging
 from datetime import datetime
 
-# Setup paths
 utils_dir = Path(__file__).resolve().parent.parent / 'utils'
 if str(utils_dir) not in sys.path:
     sys.path.insert(0, str(utils_dir))
@@ -18,7 +18,7 @@ try:
     from text_embedder import load_model
     from image_embedder import load_clip_model
     from milvus_vectordb import (
-        milvus_connect, milvus_disconnect, 
+        milvus_connect, milvus_disconnect,
         create_text_collection, create_image_collection,
         search_similar_movies, search_similar_images,
         get_collection_stats
@@ -30,23 +30,20 @@ except ImportError as e:
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Page configuration
+
 st.set_page_config(
     page_title="MovieFlix - Discover Movies",
-    page_icon="🎬",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# Modern CSS with Netflix/Disney+ inspired design
+
 st.markdown("""
     <style>
-    /* Hide Streamlit branding */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
-    
-    /* Main container */
     .main {
         background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
         padding: 0;
@@ -362,7 +359,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Initialize session state
+
 if 'text_model' not in st.session_state:
     st.session_state.text_model = None
 if 'image_model' not in st.session_state:
@@ -388,6 +385,7 @@ if 'show_filters' not in st.session_state:
 if 'current_view' not in st.session_state:
     st.session_state.current_view = 'home'
 
+
 @st.cache_resource
 def initialize_milvus():
     try:
@@ -399,6 +397,7 @@ def initialize_milvus():
         logger.error(f"Milvus connection error: {e}")
         return False
 
+
 @st.cache_resource
 def initialize_text_model():
     try:
@@ -408,6 +407,7 @@ def initialize_text_model():
     except Exception as e:
         logger.error(f"Text model loading error: {e}")
         return None
+
 
 @st.cache_resource
 def initialize_image_model():
@@ -419,6 +419,7 @@ def initialize_image_model():
         logger.error(f"Image model loading error: {e}")
         return None, None, None
 
+
 def add_to_watchlist(movie):
     movie_id = f"{movie['title']}_{movie.get('release_date', '')}"
     existing_ids = [f"{m['title']}_{m.get('release_date', '')}" for m in st.session_state.watchlist]
@@ -426,6 +427,7 @@ def add_to_watchlist(movie):
         st.session_state.watchlist.append(movie.copy())
         return True
     return False
+
 
 def add_to_favorites(movie):
     movie_id = f"{movie['title']}_{movie.get('release_date', '')}"
@@ -435,55 +437,50 @@ def add_to_favorites(movie):
         return True
     return False
 
+
 def remove_from_watchlist(index):
     if 0 <= index < len(st.session_state.watchlist):
         st.session_state.watchlist.pop(index)
+
 
 def remove_from_favorites(index):
     if 0 <= index < len(st.session_state.favorites):
         st.session_state.favorites.pop(index)
 
+
 def display_movie_card(movie, card_key=""):
-    """Display movie in modern card format"""
     with st.container():
         st.markdown("<div class='movie-card'>", unsafe_allow_html=True)
-        
         col1, col2 = st.columns([1, 3])
-        
         with col1:
             st.markdown("<div class='movie-poster'>", unsafe_allow_html=True)
             if movie.get('poster_url'):
                 try:
                     st.image(movie['poster_url'], use_container_width=True)
                 except:
-                    st.markdown("<div style='font-size: 100px; text-align: center; padding: 40px;'>🎬</div>", unsafe_allow_html=True)
+                    st.markdown("<div style='font-size: 100px; text-align: center; padding: 40px;'></div>", unsafe_allow_html=True)
             elif movie.get('image_path') and os.path.exists(movie['image_path']):
                 try:
                     st.image(movie['image_path'], use_container_width=True)
                 except:
-                    st.markdown("<div style='font-size: 100px; text-align: center; padding: 40px;'>🎬</div>", unsafe_allow_html=True)
+                    st.markdown("<div style='font-size: 100px; text-align: center; padding: 40px;'></div>", unsafe_allow_html=True)
             else:
-                st.markdown("<div style='font-size: 100px; text-align: center; padding: 40px;'>🎬</div>", unsafe_allow_html=True)
+                st.markdown("<div style='font-size: 100px; text-align: center; padding: 40px;'></div>", unsafe_allow_html=True)
             st.markdown("</div>", unsafe_allow_html=True)
-        
         with col2:
             st.markdown(f"<div class='movie-title'>{movie.get('title', 'Unknown')}</div>", unsafe_allow_html=True)
-            
-            # Badges
             badges_html = "<div class='movie-meta'>"
             if movie.get('release_date'):
                 year = movie['release_date'][:4] if len(movie['release_date']) >= 4 else movie['release_date']
-                badges_html += f"<span class='badge badge-year'>📅 {year}</span>"
+                badges_html += f"<span class='badge badge-year'>{year}</span>"
             if movie.get('vote_average'):
-                badges_html += f"<span class='badge badge-rating'>⭐ {movie['vote_average']}/10</span>"
+                badges_html += f"<span class='badge badge-rating'>{movie['vote_average']}/10</span>"
             if movie.get('similarity_percent'):
-                badges_html += f"<span class='badge badge-similarity'>🎯 {movie['similarity_percent']}</span>"
+                badges_html += f"<span class='badge badge-similarity'>{movie['similarity_percent']}</span>"
             if movie.get('popularity'):
-                badges_html += f"<span class='badge badge-popularity'>🔥 {movie['popularity']:.0f}</span>"
+                badges_html += f"<span class='badge badge-popularity'>{movie['popularity']:.0f}</span>"
             badges_html += "</div>"
             st.markdown(badges_html, unsafe_allow_html=True)
-            
-            # Genres
             if movie.get('genre'):
                 genres = movie['genre'].split(',') if ',' in movie['genre'] else [movie['genre']]
                 genre_html = "<div style='margin: 15px 0;'>"
@@ -491,69 +488,54 @@ def display_movie_card(movie, card_key=""):
                     genre_html += f"<span class='genre-tag'>{g.strip()}</span>"
                 genre_html += "</div>"
                 st.markdown(genre_html, unsafe_allow_html=True)
-            
-            # Overview
             if movie.get('overview'):
-                with st.expander("📖 Read Synopsis"):
+                with st.expander("Read Synopsis"):
                     st.markdown(f"<div class='overview-text'>{movie['overview']}</div>", unsafe_allow_html=True)
-            
-            # Action buttons
             col_a, col_b, col_c = st.columns([1, 1, 3])
             with col_a:
                 btn_key = f"watchlist_{card_key}_{hash(str(movie.get('title', '')))}"
-                if st.button("➕ Watchlist", key=btn_key, use_container_width=True):
+                if st.button("Watchlist", key=btn_key, use_container_width=True):
                     if add_to_watchlist(movie):
-                        st.toast("✅ Added to watchlist!", icon="✅")
+                        st.toast("Added to watchlist!", icon="")
                     else:
-                        st.toast("Already in watchlist", icon="ℹ️")
+                        st.toast("Already in watchlist", icon="")
                     st.rerun()
-            
             with col_b:
                 fav_key = f"favorite_{card_key}_{hash(str(movie.get('title', '')))}"
-                if st.button("❤️ Favorite", key=fav_key, use_container_width=True):
+                if st.button("Favorite", key=fav_key, use_container_width=True):
                     if add_to_favorites(movie):
-                        st.toast("❤️ Added to favorites!", icon="❤️")
+                        st.toast("Added to favorites!", icon="")
                     else:
-                        st.toast("Already in favorites", icon="ℹ️")
+                        st.toast("Already in favorites", icon="")
                     st.rerun()
-        
         st.markdown("</div>", unsafe_allow_html=True)
 
+
 def main():
-    # Initialize connection
     if not st.session_state.milvus_connected:
         with st.spinner("Connecting to database..."):
             st.session_state.milvus_connected = initialize_milvus()
             if not st.session_state.milvus_connected:
-                st.error("❌ Failed to connect to database")
+                st.error("Failed to connect to database")
                 st.stop()
-    
-    # Header
     st.markdown("""
         <div class='main-header'>
-            <h1 class='logo-text'>🎬 MovieFlix</h1>
+            <h1 class='logo-text'>MovieFlix</h1>
             <p class='tagline'>Discover Your Next Favorite Movie</p>
         </div>
     """, unsafe_allow_html=True)
-    
-    # Navigation tabs
     tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "🏠 Discover",
-        "🔍 Search", 
-        "🖼️ Visual Search", 
-        "📋 My Watchlist", 
-        "❤️ Favorites"
+        "Discover",
+        "Search",
+        "Visual Search",
+        "My Watchlist",
+        "Favorites"
     ])
-    
-    # Tab 1: Discover (Browse by categories)
     with tab1:
-        # Stats row
         col1, col2, col3, col4 = st.columns(4)
-        
         try:
             text_stats = get_collection_stats(config.TEXT_COLLECTION_NAME)
             image_stats = get_collection_stats(config.IMAGE_COLLECTION_NAME)
-            
             with col1:
                 st.markdown(f"""
                     <div class='stat-card'>
@@ -561,7 +543,6 @@ def main():
                         <div class='stat-label'>Movies Available</div>
                     </div>
                 """, unsafe_allow_html=True)
-            
             with col2:
                 st.markdown(f"""
                     <div class='stat-card'>
@@ -569,7 +550,6 @@ def main():
                         <div class='stat-label'>In Watchlist</div>
                     </div>
                 """, unsafe_allow_html=True)
-            
             with col3:
                 st.markdown(f"""
                     <div class='stat-card'>
@@ -577,7 +557,6 @@ def main():
                         <div class='stat-label'>Favorites</div>
                     </div>
                 """, unsafe_allow_html=True)
-            
             with col4:
                 st.markdown(f"""
                     <div class='stat-card'>
@@ -587,41 +566,32 @@ def main():
                 """, unsafe_allow_html=True)
         except:
             pass
-        
         st.markdown("<br>", unsafe_allow_html=True)
-        
-        # Browse categories
-        st.markdown("### 🎯 Browse by Category")
-        
+        st.markdown("### Browse by Category")
         col1, col2 = st.columns([3, 1])
         with col1:
             category = st.selectbox(
                 "Choose a category",
-                ["🏆 Top Rated Movies", "🔥 Most Popular", "🆕 Recent Releases", 
-                 "🎞️ Classic Films", "🎭 By Genre"],
+                ["Top Rated Movies", "Most Popular", "Recent Releases",
+                 "Classic Films", "By Genre"],
                 label_visibility="collapsed"
             )
-        
         with col2:
             limit = st.slider("Movies", 5, 20, 10, key="discover_limit")
-        
-        if category == "🎭 By Genre":
+        if category == "By Genre":
             genre = st.selectbox(
                 "Select Genre",
-                ["Action", "Adventure", "Animation", "Comedy", "Drama", 
+                ["Action", "Adventure", "Animation", "Comedy", "Drama",
                  "Horror", "Romance", "Science Fiction", "Thriller"]
             )
-        
-        if st.button("🎬 Load Movies", type="primary", use_container_width=True):
+        if st.button("Load Movies", type="primary", use_container_width=True):
             if st.session_state.text_model is None:
                 with st.spinner("Loading AI model..."):
                     st.session_state.text_model = initialize_text_model()
-            
             if st.session_state.text_collection is None:
                 st.session_state.text_collection = create_text_collection()
-            
             if st.session_state.text_model and st.session_state.text_collection:
-                with st.spinner("🎬 Loading amazing movies..."):
+                with st.spinner("Loading movies..."):
                     try:
                         if "Top Rated" in category:
                             results = search_similar_movies(
@@ -658,9 +628,8 @@ def main():
                                 f"best {genre} movies",
                                 top_k=limit, genre_filter=genre
                             )
-                        
                         if results:
-                            st.success(f"🎉 Found {len(results)} amazing movies!")
+                            st.success(f"Found {len(results)} movies!")
                             for idx, movie in enumerate(results):
                                 display_movie_card(movie, card_key=f"discover_{idx}")
                         else:
@@ -668,31 +637,25 @@ def main():
                     except Exception as e:
                         st.error(f"Error: {e}")
     
-    # Tab 2: Search
+
     with tab2:
         st.markdown("<div class='search-box'>", unsafe_allow_html=True)
-        st.markdown("### 🔍 Smart Movie Search")
+        st.markdown("### Smart Movie Search")
         st.markdown("<p style='color: rgba(255,255,255,0.6);'>Describe what you're looking for and let AI find the perfect match</p>", unsafe_allow_html=True)
-        
         query = st.text_area(
             "Search",
             placeholder="e.g., 'mind-bending sci-fi thriller', 'heartwarming family drama', 'epic adventure'",
             height=100,
             label_visibility="collapsed"
         )
-        
         col1, col2 = st.columns([3, 1])
         with col1:
-            if st.button("🎯 Show Advanced Filters", use_container_width=True):
+            if st.button("Show Advanced Filters", use_container_width=True):
                 st.session_state.show_filters = not st.session_state.show_filters
-        
         st.markdown("</div>", unsafe_allow_html=True)
-        
-        # Filters
         if st.session_state.show_filters:
             st.markdown("<div class='filter-section'>", unsafe_allow_html=True)
-            st.markdown("#### 🎛️ Advanced Filters")
-            
+            st.markdown("#### Advanced Filters")
             col1, col2, col3, col4 = st.columns(4)
             with col1:
                 min_year = st.number_input("From Year", 1900, 2030, 1990, 1)
@@ -704,28 +667,24 @@ def main():
                 min_pop = st.number_input("Min Popularity", 0.0, 1000.0, 0.0, 10.0)
             with col4:
                 genre_filter = st.selectbox("Genre", ["All", "Action", "Adventure", "Animation", "Comedy", "Drama", "Horror", "Romance", "Science Fiction", "Thriller"])
-            
             st.markdown("</div>", unsafe_allow_html=True)
         else:
             min_year, max_year = 1990, 2024
             min_rating, max_rating = 0.0, 10.0
             min_pop = 0.0
             genre_filter = "All"
-        
         col1, col2 = st.columns([1, 3])
         with col1:
             top_k = st.slider("Results", 1, 20, 5)
         with col2:
-            search_btn = st.button("🔍 Search Movies", type="primary", use_container_width=True)
-        
+            search_btn = st.button("Search Movies", type="primary", use_container_width=True)
         if search_btn and query:
             if st.session_state.text_model is None:
                 st.session_state.text_model = initialize_text_model()
             if st.session_state.text_collection is None:
                 st.session_state.text_collection = create_text_collection()
-            
             if st.session_state.text_model and st.session_state.text_collection:
-                with st.spinner("🔍 Searching..."):
+                with st.spinner("Searching..."):
                     try:
                         kwargs = {'top_k': top_k}
                         if st.session_state.show_filters:
@@ -737,16 +696,14 @@ def main():
                                 kwargs['min_popularity'] = min_pop
                             if genre_filter != "All":
                                 kwargs['genre_filter'] = genre_filter
-                        
                         results = search_similar_movies(
                             st.session_state.text_collection,
                             st.session_state.text_model,
                             query,
                             **kwargs
                         )
-                        
                         if results:
-                            st.success(f"🎉 Found {len(results)} matches!")
+                            st.success(f"Found {len(results)} matches!")
                             for idx, movie in enumerate(results):
                                 display_movie_card(movie, card_key=f"search_{idx}")
                         else:
@@ -754,36 +711,30 @@ def main():
                     except Exception as e:
                         st.error(f"Error: {e}")
     
-    # Tab 3: Image Search
+
     with tab3:
-        st.markdown("### 🖼️ Visual Movie Discovery")
+        st.markdown("### Visual Movie Discovery")
         st.markdown("<p style='color: rgba(255,255,255,0.6);'>Upload a movie poster to find visually similar films</p>", unsafe_allow_html=True)
-        
         uploaded = st.file_uploader("Drop poster here", type=["jpg", "jpeg", "png", "webp"], label_visibility="collapsed")
-        
         if uploaded:
             col1, col2 = st.columns([1, 2])
             with col1:
                 img = Image.open(uploaded)
                 st.image(img, use_container_width=True)
                 img_k = st.slider("Results", 1, 20, 5, key="img_k")
-                
-                if st.button("🔍 Find Similar", type="primary", use_container_width=True):
+                if st.button("Find Similar", type="primary", use_container_width=True):
                     if st.session_state.image_model is None:
                         model, proc, dev = initialize_image_model()
                         st.session_state.image_model = model
                         st.session_state.image_processor = proc
                         st.session_state.image_device = dev
-                    
                     if st.session_state.image_collection is None:
                         st.session_state.image_collection = create_image_collection()
-                    
                     if st.session_state.image_model and st.session_state.image_collection:
                         with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
                             img.save(tmp.name)
                             path = tmp.name
-                        
-                        with st.spinner("🎨 Analyzing..."):
+                        with st.spinner("Analyzing..."):
                             try:
                                 results = search_similar_images(
                                     st.session_state.image_collection,
@@ -792,10 +743,9 @@ def main():
                                     st.session_state.image_device,
                                     path, top_k=img_k
                                 )
-                                
                                 if results:
                                     with col2:
-                                        st.success(f"🎨 {len(results)} similar movies")
+                                        st.success(f"{len(results)} similar movies")
                                         for idx, m in enumerate(results):
                                             display_movie_card(m, card_key=f"img_{idx}")
                                 else:
@@ -806,69 +756,62 @@ def main():
                                 if os.path.exists(path):
                                     os.remove(path)
     
-    # Tab 4: Watchlist
+
     with tab4:
-        st.markdown("### 📋 My Watchlist")
-        
+        st.markdown("### My Watchlist")
         if st.session_state.watchlist:
             st.markdown(f"<p style='color: rgba(255,255,255,0.7);'>{len(st.session_state.watchlist)} movies to watch</p>", unsafe_allow_html=True)
-            
             for idx, movie in enumerate(st.session_state.watchlist):
                 col1, col2 = st.columns([6, 1])
                 with col1:
                     st.markdown(f"""
                         <div class='list-item'>
-                            <h4>🎬 {movie.get('title', 'Unknown')}</h4>
-                            <p>📅 {movie.get('release_date', 'N/A')[:4]} • ⭐ {movie.get('vote_average', 'N/A')}/10 • 🎭 {movie.get('genre', 'N/A')}</p>
+                            <h4>{movie.get('title', 'Unknown')}</h4>
+                            <p>{movie.get('release_date', 'N/A')[:4]} • {movie.get('vote_average', 'N/A')}/10 • {movie.get('genre', 'N/A')}</p>
                         </div>
                     """, unsafe_allow_html=True)
                 with col2:
-                    if st.button("❌", key=f"rm_w_{idx}", use_container_width=True):
+                    if st.button("Remove", key=f"rm_w_{idx}", use_container_width=True):
                         remove_from_watchlist(idx)
                         st.rerun()
-            
-            if st.button("🗑️ Clear All", type="secondary"):
+            if st.button("Clear All", type="secondary"):
                 st.session_state.watchlist = []
                 st.rerun()
         else:
-            st.info("📋 Your watchlist is empty")
+            st.info("Your watchlist is empty")
     
-    # Tab 5: Favorites
+
     with tab5:
-        st.markdown("### ❤️ My Favorite Movies")
-        
+        st.markdown("### My Favorite Movies")
         if st.session_state.favorites:
             st.markdown(f"<p style='color: rgba(255,255,255,0.7);'>{len(st.session_state.favorites)} favorite movies</p>", unsafe_allow_html=True)
-            
             for idx, movie in enumerate(st.session_state.favorites):
                 col1, col2 = st.columns([6, 1])
                 with col1:
                     st.markdown(f"""
                         <div class='list-item'>
-                            <h4>❤️ {movie.get('title', 'Unknown')}</h4>
-                            <p>📅 {movie.get('release_date', 'N/A')[:4]} • ⭐ {movie.get('vote_average', 'N/A')}/10 • 🎭 {movie.get('genre', 'N/A')}</p>
+                            <h4>{movie.get('title', 'Unknown')}</h4>
+                            <p>{movie.get('release_date', 'N/A')[:4]} • {movie.get('vote_average', 'N/A')}/10 • {movie.get('genre', 'N/A')}</p>
                         </div>
                     """, unsafe_allow_html=True)
                 with col2:
-                    if st.button("❌", key=f"rm_f_{idx}", use_container_width=True):
+                    if st.button("Remove", key=f"rm_f_{idx}", use_container_width=True):
                         remove_from_favorites(idx)
                         st.rerun()
-            
-            if st.button("🗑️ Clear All", type="secondary"):
+            if st.button("Clear All", type="secondary"):
                 st.session_state.favorites = []
                 st.rerun()
         else:
-            st.info("❤️ No favorites yet")
-    
-    # Footer
+            st.info("No favorites yet")
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("""
         <div style='text-align: center; color: rgba(255,255,255,0.4); padding: 40px 20px; font-size: 0.9rem;'>
-            <p style='font-size: 1.2rem; font-weight: 600; margin-bottom: 10px;'>🎬 MovieFlix</p>
-            <p>Powered by AI Vector Search • Built with ❤️ using Streamlit</p>
+            <p style='font-size: 1.2rem; font-weight: 600; margin-bottom: 10px;'>MovieFlix</p>
+            <p>Powered by AI Vector Search • Built with Streamlit</p>
             <p style='font-size: 0.8rem; margin-top: 10px;'>Discover, explore, and enjoy movies like never before</p>
         </div>
     """, unsafe_allow_html=True)
+
 
 if __name__ == "__main__":
     main()
