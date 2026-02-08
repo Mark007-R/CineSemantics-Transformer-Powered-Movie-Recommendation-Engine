@@ -1,4 +1,3 @@
-
 import streamlit as st
 from PIL import Image
 import tempfile
@@ -30,14 +29,12 @@ except ImportError as e:
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 st.set_page_config(
     page_title="MovieFlix - Discover Movies",
     page_icon="",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
-
 
 st.markdown("""
     <style>
@@ -359,7 +356,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
 if 'text_model' not in st.session_state:
     st.session_state.text_model = None
 if 'image_model' not in st.session_state:
@@ -385,7 +381,6 @@ if 'show_filters' not in st.session_state:
 if 'current_view' not in st.session_state:
     st.session_state.current_view = 'home'
 
-
 @st.cache_resource
 def initialize_milvus():
     try:
@@ -397,7 +392,6 @@ def initialize_milvus():
         logger.error(f"Milvus connection error: {e}")
         return False
 
-
 @st.cache_resource
 def initialize_text_model():
     try:
@@ -407,7 +401,6 @@ def initialize_text_model():
     except Exception as e:
         logger.error(f"Text model loading error: {e}")
         return None
-
 
 @st.cache_resource
 def initialize_image_model():
@@ -419,7 +412,6 @@ def initialize_image_model():
         logger.error(f"Image model loading error: {e}")
         return None, None, None
 
-
 def add_to_watchlist(movie):
     movie_id = f"{movie['title']}_{movie.get('release_date', '')}"
     existing_ids = [f"{m['title']}_{m.get('release_date', '')}" for m in st.session_state.watchlist]
@@ -427,7 +419,6 @@ def add_to_watchlist(movie):
         st.session_state.watchlist.append(movie.copy())
         return True
     return False
-
 
 def add_to_favorites(movie):
     movie_id = f"{movie['title']}_{movie.get('release_date', '')}"
@@ -437,16 +428,13 @@ def add_to_favorites(movie):
         return True
     return False
 
-
 def remove_from_watchlist(index):
     if 0 <= index < len(st.session_state.watchlist):
         st.session_state.watchlist.pop(index)
 
-
 def remove_from_favorites(index):
     if 0 <= index < len(st.session_state.favorites):
         st.session_state.favorites.pop(index)
-
 
 def display_movie_card(movie, card_key=""):
     with st.container():
@@ -509,7 +497,6 @@ def display_movie_card(movie, card_key=""):
                         st.toast("Already in favorites", icon="")
                     st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
-
 
 def main():
     if not st.session_state.milvus_connected:
@@ -636,7 +623,6 @@ def main():
                             st.warning("No movies found in this category")
                     except Exception as e:
                         st.error(f"Error: {e}")
-    
 
     with tab2:
         st.markdown("<div class='search-box'>", unsafe_allow_html=True)
@@ -710,7 +696,6 @@ def main():
                             st.warning("No matches found")
                     except Exception as e:
                         st.error(f"Error: {e}")
-    
 
     with tab3:
         st.markdown("### Visual Movie Discovery")
@@ -755,7 +740,6 @@ def main():
                             finally:
                                 if os.path.exists(path):
                                     os.remove(path)
-    
 
     with tab4:
         st.markdown("### My Watchlist")
@@ -779,7 +763,6 @@ def main():
                 st.rerun()
         else:
             st.info("Your watchlist is empty")
-    
 
     with tab5:
         st.markdown("### My Favorite Movies")
@@ -811,7 +794,6 @@ def main():
             <p style='font-size: 0.8rem; margin-top: 10px;'>Discover, explore, and enjoy movies like never before</p>
         </div>
     """, unsafe_allow_html=True)
-
 
 if __name__ == "__main__":
     main()
