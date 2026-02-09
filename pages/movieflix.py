@@ -65,7 +65,6 @@ st.markdown("""
         border-bottom: 3px solid #FF4B4B;
     }
     
-    /* Header */
     .main-header {
         background: linear-gradient(135deg, rgba(15, 12, 41, 0.95) 0%, rgba(48, 43, 99, 0.95) 100%);
         padding: 30px;
@@ -92,7 +91,6 @@ st.markdown("""
         margin-top: 10px;
     }
     
-    /* Search container */
     .search-box {
         background: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(10px);
@@ -103,7 +101,6 @@ st.markdown("""
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
     
-    /* Movie card - horizontal card design */
     .movie-card {
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
         backdrop-filter: blur(10px);
@@ -193,7 +190,6 @@ st.markdown("""
         font-size: 0.95rem;
     }
     
-    /* Filter section */
     .filter-section {
         background: linear-gradient(135deg, rgba(255, 75, 75, 0.1) 0%, rgba(255, 107, 107, 0.05) 100%);
         border: 2px solid rgba(255, 75, 75, 0.2);
@@ -203,7 +199,6 @@ st.markdown("""
         backdrop-filter: blur(10px);
     }
     
-    /* Watchlist/Favorites items */
     .list-item {
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
         border-left: 4px solid #FF4B4B;
@@ -230,7 +225,6 @@ st.markdown("""
         margin: 0;
     }
     
-    /* Category buttons */
     .category-btn {
         background: rgba(255, 255, 255, 0.05);
         border: 2px solid rgba(255, 255, 255, 0.1);
@@ -247,7 +241,6 @@ st.markdown("""
         color: #fff;
     }
     
-    /* Stats display */
     .stat-card {
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -271,7 +264,6 @@ st.markdown("""
         margin-top: 5px;
     }
     
-    /* Browse grid */
     .movie-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -279,7 +271,6 @@ st.markdown("""
         margin-top: 20px;
     }
     
-    /* Hero section */
     .hero-section {
         background: linear-gradient(135deg, rgba(255, 75, 75, 0.2) 0%, rgba(48, 43, 99, 0.3) 100%);
         border-radius: 25px;
@@ -289,7 +280,6 @@ st.markdown("""
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
     
-    /* Custom scrollbar */
     ::-webkit-scrollbar {
         width: 10px;
         height: 10px;
@@ -308,7 +298,6 @@ st.markdown("""
         background: linear-gradient(135deg, #FF6B6B 0%, #FF8B8B 100%);
     }
     
-    /* Button styling */
     .stButton > button {
         background: linear-gradient(135deg, #FF4B4B 0%, #FF6B6B 100%);
         color: white;
@@ -326,7 +315,6 @@ st.markdown("""
         box-shadow: 0 6px 20px rgba(255, 75, 75, 0.4);
     }
     
-    /* Input fields */
     .stTextArea textarea, .stTextInput input {
         background: rgba(255, 255, 255, 0.05) !important;
         border: 2px solid rgba(255, 255, 255, 0.1) !important;
@@ -340,7 +328,6 @@ st.markdown("""
         box-shadow: 0 0 0 3px rgba(255, 75, 75, 0.1) !important;
     }
     
-    /* Selectbox */
     .stSelectbox > div > div {
         background: rgba(255, 255, 255, 0.05);
         border: 2px solid rgba(255, 255, 255, 0.1);
@@ -348,7 +335,6 @@ st.markdown("""
         color: white;
     }
     
-    /* Slider */
     .stSlider > div > div > div {
         background: linear-gradient(90deg, #FF4B4B 0%, #FF6B6B 100%);
     }
