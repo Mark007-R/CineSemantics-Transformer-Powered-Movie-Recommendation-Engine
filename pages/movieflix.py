@@ -3,10 +3,8 @@ from PIL import Image
 import tempfile
 import os
 import sys
-import pandas as pd
 from pathlib import Path
 import logging
-from datetime import datetime
 
 utils_dir = Path(__file__).resolve().parent.parent / 'utils'
 if str(utils_dir) not in sys.path:
