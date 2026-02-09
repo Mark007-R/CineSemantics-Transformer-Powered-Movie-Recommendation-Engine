@@ -16,8 +16,7 @@ try:
     import config
     from text_embedder import load_model
     from image_embedder import load_clip_model
-    from milvus_vectordb import (
-        milvus_connect, milvus_disconnect,
+    from milvus_vectordb import (milvus_connect, milvus_disconnect,
         create_text_collection, create_image_collection,
         search_similar_movies, search_similar_images,
         get_collection_stats
