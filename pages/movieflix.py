@@ -339,7 +339,30 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
+if 'text_model' not in st.session_state:
+    st.session_state.text_model = None
+if 'image_model' not in st.session_state:
+    st.session_state.image_model = None
+if 'image_processor' not in st.session_state:
+    st.session_state.image_processor = None
+if 'image_device' not in st.session_state:
+    st.session_state.image_device = None
+if 'milvus_connected' not in st.session_state:
+    st.session_state.milvus_connected = False
+if 'text_collection' not in st.session_state:
+    st.session_state.text_collection = None
+if 'image_collection' not in st.session_state:
+    st.session_state.image_collection = None
+if 'watchlist' not in st.session_state:
+    st.session_state.watchlist = []
+if 'favorites' not in st.session_state:
+    st.session_state.favorites = []
+if 'search_history' not in st.session_state:
+    st.session_state.search_history = []
+if 'show_filters' not in st.session_state:
+    st.session_state.show_filters = False
+if 'current_view' not in st.session_state:
+    st.session_state.current_view = 'home'
 
 @st.cache_resource
 def initialize_milvus():
