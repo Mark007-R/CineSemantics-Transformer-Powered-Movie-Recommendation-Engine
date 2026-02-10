@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 st.set_page_config(
     page_title="MovieFlix - AI Movie Discovery",
-    page_icon="🎬",
+    page_icon="M",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -560,7 +560,6 @@ if 'personal_ratings' not in st.session_state:
 if 'theme' not in st.session_state:
     st.session_state.theme = 'dark'
 
-# Quick search suggestions
 QUICK_SEARCHES = [
     "Mind-bending sci-fi thriller",
     "Heartwarming family adventure",
@@ -572,7 +571,6 @@ QUICK_SEARCHES = [
     "Psychological horror"
 ]
 
-# Random movie prompts for "Surprise Me"
 SURPRISE_PROMPTS = [
     "hidden gem underrated masterpiece",
     "cult classic unique film",
@@ -644,34 +642,29 @@ def remove_from_favorites(index):
         st.session_state.favorites.pop(index)
 
 def add_to_search_history(query):
-    """Add search to history with timestamp"""
     if query and query.strip():
         history_item = {
             'query': query.strip(),
             'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M")
         }
-        # Remove duplicate if exists
         st.session_state.search_history = [
             h for h in st.session_state.search_history 
             if h['query'].lower() != query.lower()
         ]
         st.session_state.search_history.insert(0, history_item)
-        # Keep only last 10 searches
         st.session_state.search_history = st.session_state.search_history[:10]
 
 def get_star_rating(rating):
-    """Convert numeric rating to star display"""
     if not rating:
-        return "☆☆☆☆☆"
+        return ""
     stars = int(float(rating) / 2)
     half_star = (float(rating) / 2) % 1 >= 0.5
-    full_stars = "★" * stars
-    half = "½" if half_star and stars < 5 else ""
-    empty = "☆" * (5 - stars - (1 if half_star else 0))
+    full_stars = "*" * stars
+    half = "+" if half_star and stars < 5 else ""
+    empty = "-" * (5 - stars - (1 if half_star else 0))
     return full_stars + half + empty
 
 def export_list_to_json(list_data, list_name):
-    """Export watchlist or favorites to JSON"""
     export_data = {
         'exported_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'list_name': list_name,
@@ -680,15 +673,12 @@ def export_list_to_json(list_data, list_name):
     return json.dumps(export_data, indent=2)
 
 def get_movie_id(movie):
-    """Generate unique movie ID"""
     return f"{movie.get('title', '')}_{movie.get('release_date', '')}"
 
 def save_movie_note(movie_id, note):
-    """Save a note for a movie"""
     st.session_state.movie_notes[movie_id] = note
 
 def save_personal_rating(movie_id, rating):
-    """Save personal rating for a movie"""
     st.session_state.personal_ratings[movie_id] = rating
 
 def display_movie_card(movie, card_key="", show_actions=True):
@@ -702,19 +692,18 @@ def display_movie_card(movie, card_key="", show_actions=True):
                 try:
                     st.image(movie['poster_url'], use_container_width=True)
                 except:
-                    st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>🎬</div>", unsafe_allow_html=True)
+                    st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>MOVIE</div>", unsafe_allow_html=True)
             elif movie.get('image_path') and os.path.exists(movie['image_path']):
                 try:
                     st.image(movie['image_path'], use_container_width=True)
                 except:
-                    st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>🎬</div>", unsafe_allow_html=True)
+                    st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>MOVIE</div>", unsafe_allow_html=True)
             else:
-                st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>🎬</div>", unsafe_allow_html=True)
+                st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>MOVIE</div>", unsafe_allow_html=True)
             st.markdown("</div>", unsafe_allow_html=True)
         with col2:
             st.markdown(f"<div class='movie-title'>{movie.get('title', 'Unknown')}</div>", unsafe_allow_html=True)
             
-            # Star rating display
             if movie.get('vote_average'):
                 stars = get_star_rating(movie['vote_average'])
                 st.markdown(f"<div class='star-rating'>{stars}</div>", unsafe_allow_html=True)
@@ -722,13 +711,13 @@ def display_movie_card(movie, card_key="", show_actions=True):
             badges_html = "<div class='movie-meta'>"
             if movie.get('release_date'):
                 year = movie['release_date'][:4] if len(movie['release_date']) >= 4 else movie['release_date']
-                badges_html += f"<span class='badge badge-year'>📅 {year}</span>"
+                badges_html += f"<span class='badge badge-year'>{year}</span>"
             if movie.get('vote_average'):
-                badges_html += f"<span class='badge badge-rating'>⭐ {movie['vote_average']}/10</span>"
+                badges_html += f"<span class='badge badge-rating'>{movie['vote_average']}/10</span>"
             if movie.get('similarity_percent'):
-                badges_html += f"<span class='badge badge-similarity'>🎯 {movie['similarity_percent']}</span>"
+                badges_html += f"<span class='badge badge-similarity'>{movie['similarity_percent']}</span>"
             if movie.get('popularity'):
-                badges_html += f"<span class='badge badge-popularity'>🔥 {movie['popularity']:.0f}</span>"
+                badges_html += f"<span class='badge badge-popularity'>{movie['popularity']:.0f}</span>"
             badges_html += "</div>"
             st.markdown(badges_html, unsafe_allow_html=True)
             
@@ -741,66 +730,64 @@ def display_movie_card(movie, card_key="", show_actions=True):
                 st.markdown(genre_html, unsafe_allow_html=True)
             
             if movie.get('overview'):
-                with st.expander("📖 Read Synopsis", expanded=False):
+                with st.expander("Read Synopsis", expanded=False):
                     st.markdown(f"<div class='overview-text'>{movie['overview']}</div>", unsafe_allow_html=True)
             
-            # Personal note preview
             if movie_id in st.session_state.movie_notes and st.session_state.movie_notes[movie_id]:
-                st.markdown(f"<div style='color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 8px;'>📝 {st.session_state.movie_notes[movie_id][:50]}...</div>", unsafe_allow_html=True)
+                st.markdown(f"<div style='color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 8px;'>{st.session_state.movie_notes[movie_id][:50]}...</div>", unsafe_allow_html=True)
             
             if show_actions:
                 col_a, col_b, col_c, col_d = st.columns([1, 1, 1, 2])
                 with col_a:
                     btn_key = f"watchlist_{card_key}_{hash(str(movie.get('title', '')))}"
-                    if st.button("📋 List", key=btn_key, use_container_width=True, help="Add to Watchlist"):
+                    if st.button("+ List", key=btn_key, use_container_width=True, help="Add to Watchlist"):
                         if add_to_watchlist(movie):
-                            st.toast("✅ Added to watchlist!", icon="📋")
+                            st.toast("Added to watchlist!")
                         else:
-                            st.toast("Already in watchlist", icon="ℹ️")
+                            st.toast("Already in watchlist")
                         st.rerun()
                 with col_b:
                     fav_key = f"favorite_{card_key}_{hash(str(movie.get('title', '')))}"
-                    if st.button("❤️ Fave", key=fav_key, use_container_width=True, help="Add to Favorites"):
+                    if st.button("Fave", key=fav_key, use_container_width=True, help="Add to Favorites"):
                         if add_to_favorites(movie):
-                            st.toast("✅ Added to favorites!", icon="❤️")
+                            st.toast("Added to favorites!")
                         else:
-                            st.toast("Already in favorites", icon="ℹ️")
+                            st.toast("Already in favorites")
                         st.rerun()
                 with col_c:
                     note_key = f"note_{card_key}_{hash(str(movie.get('title', '')))}"
-                    with st.popover("📝 Note"):
+                    with st.popover("Note"):
                         current_note = st.session_state.movie_notes.get(movie_id, "")
                         new_note = st.text_area("Your notes:", value=current_note, key=f"note_input_{note_key}", height=100)
                         if st.button("Save", key=f"save_note_{note_key}"):
                             save_movie_note(movie_id, new_note)
-                            st.toast("Note saved!", icon="📝")
+                            st.toast("Note saved!")
         st.markdown("</div>", unsafe_allow_html=True)
 
 def main():
     if not st.session_state.milvus_connected:
-        with st.spinner("🔗 Connecting to database..."):
+        with st.spinner("Connecting to database..."):
             st.session_state.milvus_connected = initialize_milvus()
             if not st.session_state.milvus_connected:
-                st.error("❌ Failed to connect to database")
+                st.error("Failed to connect to database")
                 st.stop()
     
     st.markdown("""
         <div class='main-header'>
-            <h1 class='logo-text'>🎬 MovieFlix</h1>
-            <p class='tagline'>AI-Powered Movie Discovery • Find Your Next Favorite Film</p>
+            <h1 class='logo-text'>MovieFlix</h1>
+            <p class='tagline'>AI-Powered Movie Discovery - Find Your Next Favorite Film</p>
         </div>
     """, unsafe_allow_html=True)
     
     tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "🏠 Discover",
-        "🔍 Smart Search",
-        "🖼️ Visual Search",
-        "📋 Watchlist",
-        "❤️ Favorites"
+        "Discover",
+        "Smart Search",
+        "Visual Search",
+        "Watchlist",
+        "Favorites"
     ])
     
     with tab1:
-        # Stats dashboard
         col1, col2, col3, col4 = st.columns(4)
         try:
             text_stats = get_collection_stats(config.TEXT_COLLECTION_NAME)
@@ -838,11 +825,10 @@ def main():
         
         st.markdown("<br>", unsafe_allow_html=True)
         
-        # Surprise Me Feature
-        st.markdown("<div class='section-title'>🎲 Feeling Lucky?</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-title'>Feeling Lucky?</div>", unsafe_allow_html=True)
         col_surprise, col_info = st.columns([1, 3])
         with col_surprise:
-            if st.button("🎰 Surprise Me!", type="primary", use_container_width=True, help="Get random movie recommendations"):
+            if st.button("Surprise Me!", type="primary", use_container_width=True, help="Get random movie recommendations"):
                 if st.session_state.text_model is None:
                     with st.spinner("Loading AI model..."):
                         st.session_state.text_model = initialize_text_model()
@@ -851,7 +837,7 @@ def main():
                 
                 if st.session_state.text_model and st.session_state.text_collection:
                     random_prompt = random.choice(SURPRISE_PROMPTS)
-                    with st.spinner("🎲 Finding something special..."):
+                    with st.spinner("Finding something special..."):
                         try:
                             results = search_similar_movies(
                                 st.session_state.text_collection,
@@ -869,20 +855,19 @@ def main():
         
         if 'surprise_results' in st.session_state and st.session_state.surprise_results:
             st.markdown("<br>", unsafe_allow_html=True)
-            st.success(f"🎲 Found {len(st.session_state.surprise_results)} surprise picks!")
+            st.success(f"Found {len(st.session_state.surprise_results)} surprise picks!")
             for idx, movie in enumerate(st.session_state.surprise_results):
                 display_movie_card(movie, card_key=f"surprise_{idx}")
         
         st.markdown("<br>", unsafe_allow_html=True)
         
-        # Browse by Category
-        st.markdown("<div class='section-title'>📚 Browse by Category</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-title'>Browse by Category</div>", unsafe_allow_html=True)
         col1, col2 = st.columns([3, 1])
         with col1:
             category = st.selectbox(
                 "Choose a category",
-                ["🏆 Top Rated Movies", "🔥 Most Popular", "🆕 Recent Releases",
-                 "🎞️ Classic Films", "🎭 By Genre"],
+                ["Top Rated Movies", "Most Popular", "Recent Releases",
+                 "Classic Films", "By Genre"],
                 label_visibility="collapsed"
             )
         with col2:
@@ -895,15 +880,15 @@ def main():
                  "Horror", "Romance", "Science Fiction", "Thriller", "Documentary", "Mystery"]
             )
         
-        if st.button("🎬 Load Movies", type="primary", use_container_width=True):
+        if st.button("Load Movies", type="primary", use_container_width=True):
             if st.session_state.text_model is None:
-                with st.spinner("🤖 Loading AI model..."):
+                with st.spinner("Loading AI model..."):
                     st.session_state.text_model = initialize_text_model()
             if st.session_state.text_collection is None:
                 st.session_state.text_collection = create_text_collection()
             
             if st.session_state.text_model and st.session_state.text_collection:
-                with st.spinner("🔍 Loading movies..."):
+                with st.spinner("Loading movies..."):
                     try:
                         if "Top Rated" in category:
                             results = search_similar_movies(
@@ -942,7 +927,7 @@ def main():
                             )
                         
                         if results:
-                            st.success(f"🎉 Found {len(results)} movies!")
+                            st.success(f"Found {len(results)} movies!")
                             for idx, movie in enumerate(results):
                                 display_movie_card(movie, card_key=f"discover_{idx}")
                         else:
@@ -952,8 +937,8 @@ def main():
 
     with tab2:
         st.markdown("<div class='search-box'>", unsafe_allow_html=True)
-        st.markdown("<div class='section-title'>🔍 Smart Movie Search</div>", unsafe_allow_html=True)
-        st.markdown("<p style='color: rgba(255,255,255,0.6);'>Describe what you're looking for — our AI understands natural language!</p>", unsafe_allow_html=True)
+        st.markdown("<div class='section-title'>Smart Movie Search</div>", unsafe_allow_html=True)
+        st.markdown("<p style='color: rgba(255,255,255,0.6);'>Describe what you're looking for - our AI understands natural language!</p>", unsafe_allow_html=True)
         
         query = st.text_area(
             "Search",
@@ -962,8 +947,7 @@ def main():
             label_visibility="collapsed"
         )
         
-        # Quick search suggestions
-        st.markdown("<p style='color: rgba(255,255,255,0.5); font-size: 0.85rem; margin: 15px 0 10px 0;'>💡 Quick searches:</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: rgba(255,255,255,0.5); font-size: 0.85rem; margin: 15px 0 10px 0;'>Quick searches:</p>", unsafe_allow_html=True)
         quick_cols = st.columns(4)
         for idx, suggestion in enumerate(QUICK_SEARCHES):
             with quick_cols[idx % 4]:
@@ -971,20 +955,18 @@ def main():
                     st.session_state['quick_search'] = suggestion
                     st.rerun()
         
-        # Auto-fill from quick search
         if 'quick_search' in st.session_state:
             query = st.session_state.quick_search
             del st.session_state.quick_search
         
         col1, col2 = st.columns([3, 1])
         with col1:
-            if st.button("⚙️ Advanced Filters", use_container_width=True):
+            if st.button("Advanced Filters", use_container_width=True):
                 st.session_state.show_filters = not st.session_state.show_filters
         st.markdown("</div>", unsafe_allow_html=True)
         
-        # Search History
         if st.session_state.search_history:
-            with st.expander("📜 Recent Searches", expanded=False):
+            with st.expander("Recent Searches", expanded=False):
                 for hist_idx, hist_item in enumerate(st.session_state.search_history[:5]):
                     col_hist, col_time, col_btn = st.columns([3, 1, 1])
                     with col_hist:
@@ -998,18 +980,18 @@ def main():
         
         if st.session_state.show_filters:
             st.markdown("<div class='filter-section'>", unsafe_allow_html=True)
-            st.markdown("#### 🎚️ Advanced Filters")
+            st.markdown("#### Advanced Filters")
             col1, col2, col3, col4 = st.columns(4)
             with col1:
-                min_year = st.number_input("📅 From Year", 1900, 2030, 1990, 1)
-                max_year = st.number_input("📅 To Year", 1900, 2030, 2024, 1)
+                min_year = st.number_input("From Year", 1900, 2030, 1990, 1)
+                max_year = st.number_input("To Year", 1900, 2030, 2024, 1)
             with col2:
-                min_rating = st.slider("⭐ Min Rating", 0.0, 10.0, 6.0, 0.1)
-                max_rating = st.slider("⭐ Max Rating", 0.0, 10.0, 10.0, 0.1)
+                min_rating = st.slider("Min Rating", 0.0, 10.0, 6.0, 0.1)
+                max_rating = st.slider("Max Rating", 0.0, 10.0, 10.0, 0.1)
             with col3:
-                min_pop = st.number_input("🔥 Min Popularity", 0.0, 1000.0, 0.0, 10.0)
+                min_pop = st.number_input("Min Popularity", 0.0, 1000.0, 0.0, 10.0)
             with col4:
-                genre_filter = st.selectbox("🎭 Genre", ["All", "Action", "Adventure", "Animation", "Comedy", "Drama", "Horror", "Romance", "Science Fiction", "Thriller", "Documentary", "Mystery"])
+                genre_filter = st.selectbox("Genre", ["All", "Action", "Adventure", "Animation", "Comedy", "Drama", "Horror", "Romance", "Science Fiction", "Thriller", "Documentary", "Mystery"])
             st.markdown("</div>", unsafe_allow_html=True)
         else:
             min_year, max_year = 1990, 2024
@@ -1019,9 +1001,9 @@ def main():
         
         col1, col2 = st.columns([1, 3])
         with col1:
-            top_k = st.slider("📊 Max Results", 1, 20, 8)
+            top_k = st.slider("Max Results", 1, 20, 8)
         with col2:
-            search_btn = st.button("🔍 Search Movies", type="primary", use_container_width=True)
+            search_btn = st.button("Search Movies", type="primary", use_container_width=True)
         
         if search_btn and query:
             add_to_search_history(query)
@@ -1032,7 +1014,7 @@ def main():
                 st.session_state.text_collection = create_text_collection()
             
             if st.session_state.text_model and st.session_state.text_collection:
-                with st.spinner("🔍 Searching with AI..."):
+                with st.spinner("Searching with AI..."):
                     try:
                         kwargs = {'top_k': top_k}
                         if st.session_state.show_filters:
@@ -1053,17 +1035,17 @@ def main():
                         )
                         
                         if results:
-                            st.success(f"🎉 Found {len(results)} matches for \"{query[:30]}{'...' if len(query) > 30 else ''}\"")
+                            st.success(f"Found {len(results)} matches for \"{query[:30]}{'...' if len(query) > 30 else ''}\"")
                             for idx, movie in enumerate(results):
                                 display_movie_card(movie, card_key=f"search_{idx}")
                         else:
-                            st.warning("🔍 No matches found. Try different keywords!")
+                            st.warning("No matches found. Try different keywords!")
                     except Exception as e:
                         st.error(f"Error: {e}")
 
     with tab3:
-        st.markdown("<div class='section-title'>🖼️ Visual Movie Discovery</div>", unsafe_allow_html=True)
-        st.markdown("<p style='color: rgba(255,255,255,0.6);'>Upload a movie poster or any image — our AI will find visually similar films!</p>", unsafe_allow_html=True)
+        st.markdown("<div class='section-title'>Visual Movie Discovery</div>", unsafe_allow_html=True)
+        st.markdown("<p style='color: rgba(255,255,255,0.6);'>Upload a movie poster or any image - our AI will find visually similar films!</p>", unsafe_allow_html=True)
         
         col_upload, col_info = st.columns([2, 1])
         with col_upload:
@@ -1077,10 +1059,10 @@ def main():
             st.markdown("""
                 <div style='background: rgba(255,255,255,0.03); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.1);'>
                     <p style='color: rgba(255,255,255,0.7); font-size: 0.9rem; margin: 0;'>
-                        <strong>💡 Tips:</strong><br>
-                        • Upload movie posters for best results<br>
-                        • Higher quality images = better matches<br>
-                        • Works with screenshots too!
+                        <strong>Tips:</strong><br>
+                        - Upload movie posters for best results<br>
+                        - Higher quality images = better matches<br>
+                        - Works with screenshots too!
                     </p>
                 </div>
             """, unsafe_allow_html=True)
@@ -1092,17 +1074,17 @@ def main():
             with col1:
                 st.markdown("<div style='background: rgba(255,255,255,0.03); border-radius: 20px; padding: 20px;'>", unsafe_allow_html=True)
                 img = Image.open(uploaded)
-                st.image(img, use_container_width=True, caption="📷 Your uploaded image")
+                st.image(img, use_container_width=True, caption="Your uploaded image")
                 
-                img_k = st.slider("🎯 Number of results", 1, 20, 6, key="img_k")
+                img_k = st.slider("Number of results", 1, 20, 6, key="img_k")
                 
-                search_visual = st.button("🔎 Find Similar Movies", type="primary", use_container_width=True)
+                search_visual = st.button("Find Similar Movies", type="primary", use_container_width=True)
                 st.markdown("</div>", unsafe_allow_html=True)
             
             with col2:
                 if search_visual:
                     if st.session_state.image_model is None:
-                        with st.spinner("🤖 Loading visual AI model..."):
+                        with st.spinner("Loading visual AI model..."):
                             model, proc, dev = initialize_image_model()
                             st.session_state.image_model = model
                             st.session_state.image_processor = proc
@@ -1116,7 +1098,7 @@ def main():
                             img.save(tmp.name)
                             path = tmp.name
                         
-                        with st.spinner("🖼️ Analyzing image and finding matches..."):
+                        with st.spinner("Analyzing image and finding matches..."):
                             try:
                                 results = search_similar_images(
                                     st.session_state.image_collection,
@@ -1127,11 +1109,11 @@ def main():
                                 )
                                 
                                 if results:
-                                    st.success(f"🎉 Found {len(results)} visually similar movies!")
+                                    st.success(f"Found {len(results)} visually similar movies!")
                                     for idx, m in enumerate(results):
                                         display_movie_card(m, card_key=f"img_{idx}")
                                 else:
-                                    st.warning("🔍 No visual matches found. Try a different image!")
+                                    st.warning("No visual matches found. Try a different image!")
                             except Exception as e:
                                 st.error(f"Error: {e}")
                             finally:
@@ -1140,35 +1122,34 @@ def main():
                 else:
                     st.markdown("""
                         <div style='text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.4);'>
-                            <p style='font-size: 3rem; margin-bottom: 15px;'>🎬</p>
+                            <p style='font-size: 3rem; margin-bottom: 15px;'>MOVIE</p>
                             <p>Click "Find Similar Movies" to start visual search</p>
                         </div>
                     """, unsafe_allow_html=True)
 
     with tab4:
-        st.markdown("<div class='section-title'>📋 My Watchlist</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-title'>My Watchlist</div>", unsafe_allow_html=True)
         
         if st.session_state.watchlist:
-            # Stats and actions row
             col_stats, col_export, col_clear = st.columns([3, 1, 1])
             with col_stats:
                 st.markdown(f"""
                     <p style='color: rgba(255,255,255,0.7);'>
-                        📊 <strong>{len(st.session_state.watchlist)}</strong> movies to watch 
-                        • Estimated watch time: ~<strong>{len(st.session_state.watchlist) * 2}</strong> hours
+                        <strong>{len(st.session_state.watchlist)}</strong> movies to watch 
+                        - Estimated watch time: ~<strong>{len(st.session_state.watchlist) * 2}</strong> hours
                     </p>
                 """, unsafe_allow_html=True)
             with col_export:
                 export_data = export_list_to_json(st.session_state.watchlist, "Watchlist")
                 st.download_button(
-                    label="📥 Export",
+                    label="Export",
                     data=export_data,
                     file_name="movieflix_watchlist.json",
                     mime="application/json",
                     use_container_width=True
                 )
             with col_clear:
-                if st.button("🗑️ Clear All", type="secondary", use_container_width=True):
+                if st.button("Clear All", type="secondary", use_container_width=True):
                     st.session_state.watchlist = []
                     st.rerun()
             
@@ -1182,15 +1163,15 @@ def main():
                     stars = get_star_rating(movie.get('vote_average'))
                     note_preview = ""
                     if movie_id in st.session_state.movie_notes and st.session_state.movie_notes[movie_id]:
-                        note_preview = f"<br><span style='color: rgba(255,255,255,0.4); font-size: 0.8rem;'>📝 {st.session_state.movie_notes[movie_id][:40]}...</span>"
+                        note_preview = f"<br><span style='color: rgba(255,255,255,0.4); font-size: 0.8rem;'>{st.session_state.movie_notes[movie_id][:40]}...</span>"
                     
                     st.markdown(f"""
                         <div class='list-item'>
                             <h4>{movie.get('title', 'Unknown')} <span style='color: #fcd34d; font-size: 0.9rem;'>{stars}</span></h4>
                             <p>
-                                📅 {movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} • 
-                                ⭐ {movie.get('vote_average', 'N/A')}/10 • 
-                                🎭 {movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}
+                                {movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} | 
+                                {movie.get('vote_average', 'N/A')}/10 | 
+                                {movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}
                                 {note_preview}
                             </p>
                             <p style='font-size: 0.75rem; color: rgba(255,255,255,0.3); margin-top: 8px;'>
@@ -1201,49 +1182,48 @@ def main():
                 
                 with col2:
                     st.markdown("<div style='display: flex; flex-direction: column; gap: 8px; padding-top: 10px;'>", unsafe_allow_html=True)
-                    if st.button("❌", key=f"rm_w_{idx}", use_container_width=True, help="Remove from watchlist"):
+                    if st.button("X", key=f"rm_w_{idx}", use_container_width=True, help="Remove from watchlist"):
                         remove_from_watchlist(idx)
                         st.rerun()
-                    if st.button("❤️", key=f"move_fav_{idx}", use_container_width=True, help="Move to favorites"):
+                    if st.button("Fav", key=f"move_fav_{idx}", use_container_width=True, help="Move to favorites"):
                         if add_to_favorites(movie):
                             remove_from_watchlist(idx)
-                            st.toast("Moved to favorites!", icon="❤️")
+                            st.toast("Moved to favorites!")
                         st.rerun()
                     st.markdown("</div>", unsafe_allow_html=True)
         else:
             st.markdown("""
                 <div style='text-align: center; padding: 80px 20px; color: rgba(255,255,255,0.4);'>
-                    <p style='font-size: 4rem; margin-bottom: 20px;'>📋</p>
+                    <p style='font-size: 4rem; margin-bottom: 20px;'>LIST</p>
                     <p style='font-size: 1.2rem;'>Your watchlist is empty</p>
                     <p style='font-size: 0.9rem; margin-top: 10px;'>Go to Discover or Search to add movies!</p>
                 </div>
             """, unsafe_allow_html=True)
 
     with tab5:
-        st.markdown("<div class='section-title'>❤️ My Favorite Movies</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-title'>My Favorite Movies</div>", unsafe_allow_html=True)
         
         if st.session_state.favorites:
-            # Stats and actions row
             col_stats, col_export, col_clear = st.columns([3, 1, 1])
             with col_stats:
                 avg_rating = sum(float(m.get('vote_average', 0)) for m in st.session_state.favorites) / len(st.session_state.favorites)
                 st.markdown(f"""
                     <p style='color: rgba(255,255,255,0.7);'>
-                        💎 <strong>{len(st.session_state.favorites)}</strong> favorite movies 
-                        • Average rating: <strong>{avg_rating:.1f}</strong>/10
+                        <strong>{len(st.session_state.favorites)}</strong> favorite movies 
+                        - Average rating: <strong>{avg_rating:.1f}</strong>/10
                     </p>
                 """, unsafe_allow_html=True)
             with col_export:
                 export_data = export_list_to_json(st.session_state.favorites, "Favorites")
                 st.download_button(
-                    label="📥 Export",
+                    label="Export",
                     data=export_data,
                     file_name="movieflix_favorites.json",
                     mime="application/json",
                     use_container_width=True
                 )
             with col_clear:
-                if st.button("🗑️ Clear All", type="secondary", key="clear_fav", use_container_width=True):
+                if st.button("Clear All", type="secondary", key="clear_fav", use_container_width=True):
                     st.session_state.favorites = []
                     st.rerun()
             
@@ -1257,15 +1237,15 @@ def main():
                     stars = get_star_rating(movie.get('vote_average'))
                     note_preview = ""
                     if movie_id in st.session_state.movie_notes and st.session_state.movie_notes[movie_id]:
-                        note_preview = f"<br><span style='color: rgba(255,255,255,0.4); font-size: 0.8rem;'>📝 {st.session_state.movie_notes[movie_id][:40]}...</span>"
+                        note_preview = f"<br><span style='color: rgba(255,255,255,0.4); font-size: 0.8rem;'>{st.session_state.movie_notes[movie_id][:40]}...</span>"
                     
                     st.markdown(f"""
                         <div class='list-item' style='border-left-color: #ec4899;'>
-                            <h4>❤️ {movie.get('title', 'Unknown')} <span style='color: #fcd34d; font-size: 0.9rem;'>{stars}</span></h4>
+                            <h4>{movie.get('title', 'Unknown')} <span style='color: #fcd34d; font-size: 0.9rem;'>{stars}</span></h4>
                             <p>
-                                📅 {movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} • 
-                                ⭐ {movie.get('vote_average', 'N/A')}/10 • 
-                                🎭 {movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}
+                                {movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} | 
+                                {movie.get('vote_average', 'N/A')}/10 | 
+                                {movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}
                                 {note_preview}
                             </p>
                             <p style='font-size: 0.75rem; color: rgba(255,255,255,0.3); margin-top: 8px;'>
@@ -1276,20 +1256,20 @@ def main():
                 
                 with col2:
                     st.markdown("<div style='display: flex; flex-direction: column; gap: 8px; padding-top: 10px;'>", unsafe_allow_html=True)
-                    if st.button("❌", key=f"rm_f_{idx}", use_container_width=True, help="Remove from favorites"):
+                    if st.button("X", key=f"rm_f_{idx}", use_container_width=True, help="Remove from favorites"):
                         remove_from_favorites(idx)
                         st.rerun()
-                    with st.popover("📝"):
+                    with st.popover("Note"):
                         current_note = st.session_state.movie_notes.get(movie_id, "")
                         new_note = st.text_area("Your notes:", value=current_note, key=f"fav_note_{idx}", height=80)
                         if st.button("Save", key=f"save_fav_note_{idx}"):
                             save_movie_note(movie_id, new_note)
-                            st.toast("Note saved!", icon="📝")
+                            st.toast("Note saved!")
                     st.markdown("</div>", unsafe_allow_html=True)
         else:
             st.markdown("""
                 <div style='text-align: center; padding: 80px 20px; color: rgba(255,255,255,0.4);'>
-                    <p style='font-size: 4rem; margin-bottom: 20px;'>❤️</p>
+                    <p style='font-size: 4rem; margin-bottom: 20px;'>FAVS</p>
                     <p style='font-size: 1.2rem;'>No favorites yet</p>
                     <p style='font-size: 0.9rem; margin-top: 10px;'>Mark movies as favorites to save them here!</p>
                 </div>
@@ -1305,15 +1285,15 @@ def main():
             border-top: 1px solid rgba(255,255,255,0.05);
             margin-top: 40px;
         '>
-            <p style='font-size: 1.8rem; font-weight: 800; margin-bottom: 15px; background: linear-gradient(135deg, #e50914, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>🎬 MovieFlix</p>
-            <p style='color: rgba(255,255,255,0.5);'>Powered by AI Vector Search • Built with Streamlit & Milvus</p>
+            <p style='font-size: 1.8rem; font-weight: 800; margin-bottom: 15px; background: linear-gradient(135deg, #e50914, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>MovieFlix</p>
+            <p style='color: rgba(255,255,255,0.5);'>Powered by AI Vector Search - Built with Streamlit & Milvus</p>
             <p style='font-size: 0.8rem; margin-top: 15px; color: rgba(255,255,255,0.3);'>
-                Discover • Explore • Enjoy • Your perfect movie is just a search away
+                Discover - Explore - Enjoy - Your perfect movie is just a search away
             </p>
             <div style='margin-top: 20px; display: flex; justify-content: center; gap: 20px;'>
-                <span style='color: rgba(255,255,255,0.4);'>🤖 AI-Powered</span>
-                <span style='color: rgba(255,255,255,0.4);'>🔍 Semantic Search</span>
-                <span style='color: rgba(255,255,255,0.4);'>🖼️ Visual Discovery</span>
+                <span style='color: rgba(255,255,255,0.4);'>AI-Powered</span>
+                <span style='color: rgba(255,255,255,0.4);'>Semantic Search</span>
+                <span style='color: rgba(255,255,255,0.4);'>Visual Discovery</span>
             </div>
         </div>
     """, unsafe_allow_html=True)
