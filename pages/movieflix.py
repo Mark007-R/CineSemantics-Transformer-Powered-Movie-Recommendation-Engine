@@ -6,9 +6,7 @@ import sys
 from pathlib import Path
 import logging
 import random
-import json
 import atexit
-from datetime import datetime
 
 utils_dir = Path(__file__).resolve().parent.parent / 'utils'
 if str(utils_dir) not in sys.path:
@@ -26,6 +24,18 @@ try:
 except ImportError as e:
     st.error(f"Failed to import required modules: {e}")
     st.stop()
+
+from helpers import (
+    QUICK_SEARCHES, SURPRISE_PROMPTS, GENRES, CATEGORIES, TAB_NAMES,
+    SUPPORTED_IMAGE_TYPES, DEFAULT_TOP_K, DEFAULT_DISCOVER_LIMIT,
+    DEFAULT_IMAGE_RESULTS, DEFAULT_MIN_YEAR, DEFAULT_MAX_YEAR,
+    DEFAULT_MIN_RATING, DEFAULT_MAX_RATING, DEFAULT_MIN_POPULARITY,
+    init_session_state, get_movie_id, get_star_rating, export_list_to_json,
+    add_to_watchlist, add_to_favorites, remove_from_watchlist, remove_from_favorites,
+    add_to_search_history, save_movie_note, save_personal_rating, get_note_preview,
+    calculate_watch_time, calculate_average_rating, get_category_search_params,
+    build_search_kwargs
+)
 
 atexit.register(milvus_disconnect)
 
@@ -47,58 +57,7 @@ def load_css():
 
 load_css()
 
-if 'text_model' not in st.session_state:
-    st.session_state.text_model = None
-if 'image_model' not in st.session_state:
-    st.session_state.image_model = None
-if 'image_processor' not in st.session_state:
-    st.session_state.image_processor = None
-if 'image_device' not in st.session_state:
-    st.session_state.image_device = None
-if 'milvus_connected' not in st.session_state:
-    st.session_state.milvus_connected = False
-if 'text_collection' not in st.session_state:
-    st.session_state.text_collection = None
-if 'image_collection' not in st.session_state:
-    st.session_state.image_collection = None
-if 'watchlist' not in st.session_state:
-    st.session_state.watchlist = []
-if 'favorites' not in st.session_state:
-    st.session_state.favorites = []
-if 'search_history' not in st.session_state:
-    st.session_state.search_history = []
-if 'show_filters' not in st.session_state:
-    st.session_state.show_filters = False
-if 'current_view' not in st.session_state:
-    st.session_state.current_view = 'home'
-if 'movie_notes' not in st.session_state:
-    st.session_state.movie_notes = {}
-if 'personal_ratings' not in st.session_state:
-    st.session_state.personal_ratings = {}
-if 'theme' not in st.session_state:
-    st.session_state.theme = 'dark'
-
-QUICK_SEARCHES = [
-    "Mind-bending sci-fi thriller",
-    "Heartwarming family adventure",
-    "Epic fantasy journey",
-    "Romantic comedy",
-    "Gripping crime drama",
-    "Animated masterpiece",
-    "Intense action movie",
-    "Psychological horror"
-]
-
-SURPRISE_PROMPTS = [
-    "hidden gem underrated masterpiece",
-    "cult classic unique film",
-    "critically acclaimed drama",
-    "visually stunning cinematography",
-    "award winning performance",
-    "thought provoking deep meaning",
-    "exciting adventure exploration",
-    "emotional touching story"
-]
+init_session_state(st.session_state)
 
 @st.cache_resource
 def initialize_milvus():
@@ -130,74 +89,6 @@ def initialize_image_model():
     except Exception as e:
         logger.error(f"Image model loading error: {e}")
         return None, None, None
-
-def add_to_watchlist(movie):
-    movie_id = f"{movie['title']}_{movie.get('release_date', '')}"
-    existing_ids = [f"{m['title']}_{m.get('release_date', '')}" for m in st.session_state.watchlist]
-    if movie_id not in existing_ids:
-        movie_copy = movie.copy()
-        movie_copy['added_date'] = datetime.now().strftime("%Y-%m-%d %H:%M")
-        st.session_state.watchlist.append(movie_copy)
-        return True
-    return False
-
-def add_to_favorites(movie):
-    movie_id = f"{movie['title']}_{movie.get('release_date', '')}"
-    existing_ids = [f"{m['title']}_{m.get('release_date', '')}" for m in st.session_state.favorites]
-    if movie_id not in existing_ids:
-        movie_copy = movie.copy()
-        movie_copy['added_date'] = datetime.now().strftime("%Y-%m-%d %H:%M")
-        st.session_state.favorites.append(movie_copy)
-        return True
-    return False
-
-def remove_from_watchlist(index):
-    if 0 <= index < len(st.session_state.watchlist):
-        st.session_state.watchlist.pop(index)
-
-def remove_from_favorites(index):
-    if 0 <= index < len(st.session_state.favorites):
-        st.session_state.favorites.pop(index)
-
-def add_to_search_history(query):
-    if query and query.strip():
-        history_item = {
-            'query': query.strip(),
-            'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M")
-        }
-        st.session_state.search_history = [
-            h for h in st.session_state.search_history 
-            if h['query'].lower() != query.lower()
-        ]
-        st.session_state.search_history.insert(0, history_item)
-        st.session_state.search_history = st.session_state.search_history[:10]
-
-def get_star_rating(rating):
-    if not rating:
-        return ""
-    stars = int(float(rating) / 2)
-    half_star = (float(rating) / 2) % 1 >= 0.5
-    full_stars = "*" * stars
-    half = "+" if half_star and stars < 5 else ""
-    empty = "-" * (5 - stars - (1 if half_star else 0))
-    return full_stars + half + empty
-
-def export_list_to_json(list_data, list_name):
-    export_data = {
-        'exported_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        'list_name': list_name,
-        'movies': list_data
-    }
-    return json.dumps(export_data, indent=2)
-
-def get_movie_id(movie):
-    return f"{movie.get('title', '')}_{movie.get('release_date', '')}"
-
-def save_movie_note(movie_id, note):
-    st.session_state.movie_notes[movie_id] = note
-
-def save_personal_rating(movie_id, rating):
-    st.session_state.personal_ratings[movie_id] = rating
 
 def display_movie_card(movie, card_key="", show_actions=True):
     movie_id = get_movie_id(movie)
@@ -259,7 +150,7 @@ def display_movie_card(movie, card_key="", show_actions=True):
                 with col_a:
                     btn_key = f"watchlist_{card_key}_{hash(str(movie.get('title', '')))}"
                     if st.button("+ List", key=btn_key, use_container_width=True, help="Add to Watchlist"):
-                        if add_to_watchlist(movie):
+                        if add_to_watchlist(st.session_state, movie):
                             st.toast("Added to watchlist!")
                         else:
                             st.toast("Already in watchlist")
@@ -267,7 +158,7 @@ def display_movie_card(movie, card_key="", show_actions=True):
                 with col_b:
                     fav_key = f"favorite_{card_key}_{hash(str(movie.get('title', '')))}"
                     if st.button("Fave", key=fav_key, use_container_width=True, help="Add to Favorites"):
-                        if add_to_favorites(movie):
+                        if add_to_favorites(st.session_state, movie):
                             st.toast("Added to favorites!")
                         else:
                             st.toast("Already in favorites")
@@ -278,7 +169,7 @@ def display_movie_card(movie, card_key="", show_actions=True):
                         current_note = st.session_state.movie_notes.get(movie_id, "")
                         new_note = st.text_area("Your notes:", value=current_note, key=f"note_input_{note_key}", height=100)
                         if st.button("Save", key=f"save_note_{note_key}"):
-                            save_movie_note(movie_id, new_note)
+                            save_movie_note(st.session_state, movie_id, new_note)
                             st.toast("Note saved!")
         st.markdown("</div>", unsafe_allow_html=True)
 
@@ -297,13 +188,7 @@ def main():
         </div>
     """, unsafe_allow_html=True)
     
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "Discover",
-        "Smart Search",
-        "Visual Search",
-        "Watchlist",
-        "Favorites"
-    ])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(TAB_NAMES)
     
     with tab1:
         col1, col2, col3, col4 = st.columns(4)
@@ -384,18 +269,16 @@ def main():
         with col1:
             category = st.selectbox(
                 "Choose a category",
-                ["Top Rated Movies", "Most Popular", "Recent Releases",
-                 "Classic Films", "By Genre"],
+                CATEGORIES,
                 label_visibility="collapsed"
             )
         with col2:
-            limit = st.slider("Results", 5, 20, 10, key="discover_limit")
+            limit = st.slider("Results", 5, 20, DEFAULT_DISCOVER_LIMIT, key="discover_limit")
         
         if "By Genre" in category:
             genre = st.selectbox(
                 "Select Genre",
-                ["Action", "Adventure", "Animation", "Comedy", "Drama",
-                 "Horror", "Romance", "Science Fiction", "Thriller", "Documentary", "Mystery"]
+                GENRES
             )
         
         if st.button("Load Movies", type="primary", use_container_width=True):
@@ -509,22 +392,22 @@ def main():
             with col3:
                 min_pop = st.number_input("Min Popularity", 0.0, 1000.0, 0.0, 10.0)
             with col4:
-                genre_filter = st.selectbox("Genre", ["All", "Action", "Adventure", "Animation", "Comedy", "Drama", "Horror", "Romance", "Science Fiction", "Thriller", "Documentary", "Mystery"])
+                genre_filter = st.selectbox("Genre", ["All"] + GENRES)
             st.markdown("</div>", unsafe_allow_html=True)
         else:
-            min_year, max_year = 1990, 2024
-            min_rating, max_rating = 0.0, 10.0
-            min_pop = 0.0
+            min_year, max_year = DEFAULT_MIN_YEAR, DEFAULT_MAX_YEAR
+            min_rating, max_rating = DEFAULT_MIN_RATING, DEFAULT_MAX_RATING
+            min_pop = DEFAULT_MIN_POPULARITY
             genre_filter = "All"
         
         col1, col2 = st.columns([1, 3])
         with col1:
-            top_k = st.slider("Max Results", 1, 20, 8)
+            top_k = st.slider("Max Results", 1, 20, DEFAULT_TOP_K)
         with col2:
             search_btn = st.button("Search Movies", type="primary", use_container_width=True)
         
         if search_btn and query:
-            add_to_search_history(query)
+            add_to_search_history(st.session_state, query)
             
             if st.session_state.text_model is None:
                 st.session_state.text_model = initialize_text_model()
@@ -594,7 +477,7 @@ def main():
                 img = Image.open(uploaded)
                 st.image(img, use_container_width=True, caption="Your uploaded image")
                 
-                img_k = st.slider("Number of results", 1, 20, 6, key="img_k")
+                img_k = st.slider("Number of results", 1, 20, DEFAULT_IMAGE_RESULTS, key="img_k")
                 
                 search_visual = st.button("Find Similar Movies", type="primary", use_container_width=True)
                 st.markdown("</div>", unsafe_allow_html=True)
@@ -654,7 +537,7 @@ def main():
                 st.markdown(f"""
                     <p style='color: rgba(255,255,255,0.7);'>
                         <strong>{len(st.session_state.watchlist)}</strong> movies to watch 
-                        - Estimated watch time: ~<strong>{len(st.session_state.watchlist) * 2}</strong> hours
+                        - Estimated watch time: ~<strong>{calculate_watch_time(st.session_state.watchlist)}</strong> hours
                     </p>
                 """, unsafe_allow_html=True)
             with col_export:
@@ -701,11 +584,11 @@ def main():
                 with col2:
                     st.markdown("<div style='display: flex; flex-direction: column; gap: 8px; padding-top: 10px;'>", unsafe_allow_html=True)
                     if st.button("X", key=f"rm_w_{idx}", use_container_width=True, help="Remove from watchlist"):
-                        remove_from_watchlist(idx)
+                        remove_from_watchlist(st.session_state, idx)
                         st.rerun()
                     if st.button("Fav", key=f"move_fav_{idx}", use_container_width=True, help="Move to favorites"):
-                        if add_to_favorites(movie):
-                            remove_from_watchlist(idx)
+                        if add_to_favorites(st.session_state, movie):
+                            remove_from_watchlist(st.session_state, idx)
                             st.toast("Moved to favorites!")
                         st.rerun()
                     st.markdown("</div>", unsafe_allow_html=True)
@@ -724,7 +607,7 @@ def main():
         if st.session_state.favorites:
             col_stats, col_export, col_clear = st.columns([3, 1, 1])
             with col_stats:
-                avg_rating = sum(float(m.get('vote_average', 0)) for m in st.session_state.favorites) / len(st.session_state.favorites)
+                avg_rating = calculate_average_rating(st.session_state.favorites)
                 st.markdown(f"""
                     <p style='color: rgba(255,255,255,0.7);'>
                         <strong>{len(st.session_state.favorites)}</strong> favorite movies 
@@ -775,13 +658,13 @@ def main():
                 with col2:
                     st.markdown("<div style='display: flex; flex-direction: column; gap: 8px; padding-top: 10px;'>", unsafe_allow_html=True)
                     if st.button("X", key=f"rm_f_{idx}", use_container_width=True, help="Remove from favorites"):
-                        remove_from_favorites(idx)
+                        remove_from_favorites(st.session_state, idx)
                         st.rerun()
                     with st.popover("Note"):
                         current_note = st.session_state.movie_notes.get(movie_id, "")
                         new_note = st.text_area("Your notes:", value=current_note, key=f"fav_note_{idx}", height=80)
                         if st.button("Save", key=f"save_fav_note_{idx}"):
-                            save_movie_note(movie_id, new_note)
+                            save_movie_note(st.session_state, movie_id, new_note)
                             st.toast("Note saved!")
                     st.markdown("</div>", unsafe_allow_html=True)
         else:
