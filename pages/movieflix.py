@@ -27,9 +27,8 @@ except ImportError as e:
 
 from helpers import (
     QUICK_SEARCHES, SURPRISE_PROMPTS, GENRES, CATEGORIES, TAB_NAMES,
-    SUPPORTED_IMAGE_TYPES, DEFAULT_TOP_K, DEFAULT_DISCOVER_LIMIT,
+    SUPPORTED_IMAGE_TYPES, DEFAULT_DISCOVER_LIMIT,
     DEFAULT_IMAGE_RESULTS, DEFAULT_MIN_YEAR, DEFAULT_MAX_YEAR,
-    DEFAULT_MIN_RATING, DEFAULT_MAX_RATING, DEFAULT_MIN_POPULARITY,
     init_session_state, get_movie_id, get_star_rating, export_list_to_json,
     add_to_watchlist, add_to_favorites, remove_from_watchlist, remove_from_favorites,
     add_to_search_history, save_movie_note, save_personal_rating, get_note_preview,
@@ -396,13 +395,13 @@ def main():
             st.markdown("</div>", unsafe_allow_html=True)
         else:
             min_year, max_year = DEFAULT_MIN_YEAR, DEFAULT_MAX_YEAR
-            min_rating, max_rating = DEFAULT_MIN_RATING, DEFAULT_MAX_RATING
-            min_pop = DEFAULT_MIN_POPULARITY
+            min_rating, max_rating = config.MIN_RATING, config.MAX_RATING
+            min_pop = config.MIN_POPULARITY
             genre_filter = "All"
         
         col1, col2 = st.columns([1, 3])
         with col1:
-            top_k = st.slider("Max Results", 1, 20, DEFAULT_TOP_K)
+            top_k = st.slider("Max Results", 1, 20, config.DEFAULT_TOP_K)
         with col2:
             search_btn = st.button("Search Movies", type="primary", use_container_width=True)
         
