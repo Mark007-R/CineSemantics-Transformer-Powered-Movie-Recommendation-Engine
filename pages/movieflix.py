@@ -7,6 +7,7 @@ from pathlib import Path
 import logging
 import random
 import json
+import atexit
 from datetime import datetime
 
 utils_dir = Path(__file__).resolve().parent.parent / 'utils'
@@ -25,6 +26,8 @@ try:
 except ImportError as e:
     st.error(f"Failed to import required modules: {e}")
     st.stop()
+
+atexit.register(milvus_disconnect)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
