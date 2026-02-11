@@ -470,19 +470,3 @@ header {visibility: hidden;}
     box-shadow: 0 4px 20px rgba(5, 150, 105, 0.3) !important;
 }
 
-.section-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(229, 9, 20, 0.5), transparent);
-}
