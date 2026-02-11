@@ -115,11 +115,51 @@ header {visibility: hidden;}
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
     padding: 24px;
-    margin: 24px 0;
+    margin: 20px 0;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     position: relative;
     overflow: hidden;
+}
+
+div[data-testid="stVerticalBlock"] > div:empty {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+div[data-testid="column"] > div:empty {
+    display: none !important;
+    height: 0 !important;
+}
+
+div[data-testid="stNotification"]:empty,
+div[data-testid="stAlert"]:empty,
+.stAlert:empty {
+    display: none !important;
+}
+
+.element-container:has(> .stMarkdown:only-child) {
+    margin-bottom: 0 !important;
+}
+
+.movie-card + div[data-testid="stVerticalBlock"]:empty {
+    display: none !important;
+}
+
+.element-container > div[data-testid="stVerticalBlock"] {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+section[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlock"] {
+    background: transparent !important;
+}
+
+div[data-testid="stVerticalBlock"] {
+    background-color: transparent !important;
 }
 
 .movie-card::before {
