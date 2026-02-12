@@ -319,6 +319,38 @@ header {visibility: hidden;}
     font-size: 0.9rem;
 }
 
+.list-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    color: #ffffff;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+}
+
+.list-name {
+    color: #ffffff;
+}
+
+.list-meta {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.9rem;
+}
+
+.note-preview {
+    margin-top: 6px;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.8rem;
+}
+
+.list-added {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 8px;
+}
+
 .stat-card {
     background: linear-gradient(145deg, rgba(30, 30, 60, 0.6) 0%, rgba(20, 20, 40, 0.8) 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);

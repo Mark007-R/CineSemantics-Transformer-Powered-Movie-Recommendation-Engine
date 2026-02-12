@@ -3,9 +3,11 @@ from PIL import Image
 import tempfile
 import os
 import sys
+import hashlib
 from pathlib import Path
 import logging
 import random
+import textwrap
 import atexit
 
 utils_dir = Path(__file__).resolve().parent.parent / 'utils'
@@ -91,6 +93,7 @@ def initialize_image_model():
 
 def display_movie_card(movie, card_key="", show_actions=True):
     movie_id = get_movie_id(movie)
+    stable_id = hashlib.md5(movie_id.encode("utf-8")).hexdigest()
     card_container = st.container()
     with card_container:
         col1, col2 = st.columns([1, 3])
@@ -145,25 +148,41 @@ def display_movie_card(movie, card_key="", show_actions=True):
                 st.markdown(f"<div style='color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 8px;'>{st.session_state.movie_notes[movie_id][:50]}...</div>", unsafe_allow_html=True)
             
             if show_actions:
+                watchlist_ids = {get_movie_id(m) for m in st.session_state.watchlist}
+                favorites_ids = {get_movie_id(m) for m in st.session_state.favorites}
+                in_watchlist = movie_id in watchlist_ids
+                in_favorites = movie_id in favorites_ids
                 col_a, col_b, col_c, col_d = st.columns([1, 1, 1, 2])
                 with col_a:
-                    btn_key = f"watchlist_{card_key}_{hash(str(movie.get('title', '')))}"
-                    if st.button("+ List", key=btn_key, use_container_width=True, help="Add to Watchlist"):
+                    btn_key = f"watchlist_{card_key}_{stable_id}"
+                    if st.button(
+                        "In List" if in_watchlist else "+ List",
+                        key=btn_key,
+                        use_container_width=True,
+                        help="Add to Watchlist",
+                        disabled=in_watchlist
+                    ):
                         if add_to_watchlist(st.session_state, movie):
                             st.toast("Added to watchlist!")
                         else:
                             st.toast("Already in watchlist")
                         st.rerun()
                 with col_b:
-                    fav_key = f"favorite_{card_key}_{hash(str(movie.get('title', '')))}"
-                    if st.button("Fave", key=fav_key, use_container_width=True, help="Add to Favorites"):
+                    fav_key = f"favorite_{card_key}_{stable_id}"
+                    if st.button(
+                        "Faved" if in_favorites else "Fave",
+                        key=fav_key,
+                        use_container_width=True,
+                        help="Add to Favorites",
+                        disabled=in_favorites
+                    ):
                         if add_to_favorites(st.session_state, movie):
                             st.toast("Added to favorites!")
                         else:
                             st.toast("Already in favorites")
                         st.rerun()
                 with col_c:
-                    note_key = f"note_{card_key}_{hash(str(movie.get('title', '')))}"
+                    note_key = f"note_{card_key}_{stable_id}"
                     with st.popover("Note"):
                         current_note = st.session_state.movie_notes.get(movie_id, "")
                         new_note = st.text_area("Your notes:", value=current_note, key=f"note_input_{note_key}", height=100)
@@ -430,15 +449,24 @@ def main():
                             query,
                             **kwargs
                         )
-                        
-                        if results:
-                            st.success(f"Found {len(results)} matches for \"{query[:30]}{'...' if len(query) > 30 else ''}\"")
-                            for idx, movie in enumerate(results):
-                                display_movie_card(movie, card_key=f"search_{idx}")
-                        else:
-                            st.warning("No matches found. Try different keywords!")
+                        st.session_state.search_results = results or []
+                        st.session_state.search_query_executed = query
                     except Exception as e:
+                        st.session_state.search_results = []
+                        st.session_state.search_query_executed = query
                         st.error(f"Error: {e}")
+
+        if st.session_state.search_query_executed:
+            display_query = st.session_state.search_query_executed
+            results = st.session_state.search_results
+            if results:
+                st.success(
+                    f"Found {len(results)} matches for \"{display_query[:30]}{'...' if len(display_query) > 30 else ''}\""
+                )
+                for idx, movie in enumerate(results):
+                    display_movie_card(movie, card_key=f"search_{idx}")
+            else:
+                st.warning("No matches found. Try different keywords!")
 
     with tab3:
         st.markdown("<div class='section-title'>Visual Movie Discovery</div>", unsafe_allow_html=True)
@@ -560,22 +588,26 @@ def main():
                     stars = get_star_rating(movie.get('vote_average'))
                     note_preview = ""
                     if movie_id in st.session_state.movie_notes and st.session_state.movie_notes[movie_id]:
-                        note_preview = f"<br><span style='color: rgba(255,255,255,0.4); font-size: 0.8rem;'>{st.session_state.movie_notes[movie_id][:40]}...</span>"
+                        note_preview = f"<div class='note-preview'>{st.session_state.movie_notes[movie_id][:40]}...</div>"
                     
-                    st.markdown(f"""
-                        <div class='list-item'>
-                            <h4>{movie.get('title', 'Unknown')} <span style='color: #fcd34d; font-size: 0.9rem;'>{stars}</span></h4>
-                            <p>
-                                {movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} | 
-                                {movie.get('vote_average', 'N/A')}/10 | 
-                                {movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}
+                    st.markdown(
+                        textwrap.dedent(f"""
+                            <div class='list-item'>
+                                <div class='list-title'>
+                                    <span class='list-name'>{movie.get('title', 'Unknown')}</span>
+                                    <span class='star-rating'>{stars}</span>
+                                </div>
+                                <div class='list-meta'>
+                                    {movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} | 
+                                    {movie.get('vote_average', 'N/A')}/10 | 
+                                    {movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}
+                                </div>
                                 {note_preview}
-                            </p>
-                            <p style='font-size: 0.75rem; color: rgba(255,255,255,0.3); margin-top: 8px;'>
-                                Added: {movie.get('added_date', 'Unknown')}
-                            </p>
-                        </div>
-                    """, unsafe_allow_html=True)
+                                <div class='list-added'>Added: {movie.get('added_date', 'Unknown')}</div>
+                            </div>
+                        """).strip(),
+                        unsafe_allow_html=True
+                    )
                 
                 with col2:
                     st.markdown("<div style='display: flex; flex-direction: column; gap: 8px; padding-top: 10px;'>", unsafe_allow_html=True)
@@ -634,22 +666,26 @@ def main():
                     stars = get_star_rating(movie.get('vote_average'))
                     note_preview = ""
                     if movie_id in st.session_state.movie_notes and st.session_state.movie_notes[movie_id]:
-                        note_preview = f"<br><span style='color: rgba(255,255,255,0.4); font-size: 0.8rem;'>{st.session_state.movie_notes[movie_id][:40]}...</span>"
+                        note_preview = f"<div class='note-preview'>{st.session_state.movie_notes[movie_id][:40]}...</div>"
                     
-                    st.markdown(f"""
-                        <div class='list-item' style='border-left-color: #ec4899;'>
-                            <h4>{movie.get('title', 'Unknown')} <span style='color: #fcd34d; font-size: 0.9rem;'>{stars}</span></h4>
-                            <p>
-                                {movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} | 
-                                {movie.get('vote_average', 'N/A')}/10 | 
-                                {movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}
+                    st.markdown(
+                        textwrap.dedent(f"""
+                            <div class='list-item' style='border-left-color: #ec4899;'>
+                                <div class='list-title'>
+                                    <span class='list-name'>{movie.get('title', 'Unknown')}</span>
+                                    <span class='star-rating'>{stars}</span>
+                                </div>
+                                <div class='list-meta'>
+                                    {movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} | 
+                                    {movie.get('vote_average', 'N/A')}/10 | 
+                                    {movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}
+                                </div>
                                 {note_preview}
-                            </p>
-                            <p style='font-size: 0.75rem; color: rgba(255,255,255,0.3); margin-top: 8px;'>
-                                Added: {movie.get('added_date', 'Unknown')}
-                            </p>
-                        </div>
-                    """, unsafe_allow_html=True)
+                                <div class='list-added'>Added: {movie.get('added_date', 'Unknown')}</div>
+                            </div>
+                        """).strip(),
+                        unsafe_allow_html=True
+                    )
                 
                 with col2:
                     st.markdown("<div style='display: flex; flex-direction: column; gap: 8px; padding-top: 10px;'>", unsafe_allow_html=True)

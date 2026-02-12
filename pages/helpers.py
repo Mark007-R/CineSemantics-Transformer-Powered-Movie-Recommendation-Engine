@@ -82,6 +82,8 @@ SESSION_STATE_DEFAULTS = {
     'image_collection': None,
     'watchlist': [],
     'favorites': [],
+    'search_results': [],
+    'search_query_executed': "",
     'search_history': [],
     'show_filters': False,
     'current_view': 'home',
