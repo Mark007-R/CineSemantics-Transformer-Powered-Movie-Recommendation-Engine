@@ -44,11 +44,13 @@ CineSemantics is a movie recommendation engine that leverages transformer-based 
 1. **Install Python dependencies:**
    - Run `pip install -r requirements.txt` to install all required packages.
 
-2. **Start Milvus:**
-   - Ensure you have Docker and Docker Compose installed.
-   - From the project root, start Milvus using the provided compose file:
-     - `docker-compose -f utils/docker-compose.yml up -d`
-   - By default, Milvus will be available on `localhost:19530`. Make sure the Milvus host and port in `utils/config.py` match these values.
+2. **Milvus vector database (embedded vs. Docker):**
+   - **Default (recommended for quick start):** The app uses Milvus Lite in embedded mode and will start it automatically. No Docker setup is required for this mode.
+   - **Optional: Run Milvus as a separate service via Docker Compose:**
+     - Ensure you have Docker and Docker Compose installed.
+     - From the project root, start Milvus using the provided compose file:
+       - `docker-compose -f utils/docker-compose.yml up -d`
+     - By default, Milvus will be available on `localhost:19530`. Make sure the Milvus host and port in `utils/config.py` match these values if you choose this option.
 
 3. **Prepare your data:**
    - Place your movie CSV file in the `data/` directory.
