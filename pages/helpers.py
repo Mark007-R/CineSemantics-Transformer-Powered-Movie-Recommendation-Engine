@@ -102,7 +102,7 @@ def get_movie_id(movie):
     return f"{movie.get('title', '')}_{movie.get('release_date', '')}"
 
 def get_star_rating(rating):
-    if not rating:
+    if rating is None or rating == "":
         return ""
     value = float(rating) / 2
     full = int(value)

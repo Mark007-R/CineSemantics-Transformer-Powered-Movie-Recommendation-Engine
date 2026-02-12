@@ -241,8 +241,9 @@ def main():
                         <div class='stat-label'>Movie Posters</div>
                     </div>
                 """, unsafe_allow_html=True)
-        except:
-            pass
+        except Exception as e:
+            logging.exception("Failed to load collection stats for homepage: %s", e)
+            st.warning("Unable to load collection statistics at the moment. Other features remain available.")
         
         st.markdown("<br>", unsafe_allow_html=True)
         
