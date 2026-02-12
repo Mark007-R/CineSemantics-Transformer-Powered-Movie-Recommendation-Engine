@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import tempfile
+import html
 import os
 import sys
 import hashlib
@@ -92,6 +93,7 @@ def initialize_image_model():
 def display_movie_card(movie, card_key="", show_actions=True):
     movie_id = get_movie_id(movie)
     stable_id = hashlib.md5(movie_id.encode("utf-8")).hexdigest()
+    safe_title = html.escape(str(movie.get("title", "Unknown")))
     card_container = st.container()
     with card_container:
         col1, col2 = st.columns([1, 3])
@@ -115,7 +117,7 @@ def display_movie_card(movie, card_key="", show_actions=True):
             st.markdown("</div>", unsafe_allow_html=True)
         
         with col2:
-            st.markdown(f"<div class='movie-title'>{movie.get('title', 'Unknown')}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='movie-title'>{safe_title}</div>", unsafe_allow_html=True)
             
             if movie.get('vote_average'):
                 stars = get_star_rating(movie['vote_average'])
@@ -124,9 +126,9 @@ def display_movie_card(movie, card_key="", show_actions=True):
             badges_html = "<div class='movie-meta'>"
             if movie.get('release_date'):
                 year = movie['release_date'][:4] if len(movie['release_date']) >= 4 else movie['release_date']
-                badges_html += f"<span class='badge badge-year'>{year}</span>"
+                badges_html += f"<span class='badge badge-year'>{html.escape(str(year))}</span>"
             if movie.get('vote_average'):
-                badges_html += f"<span class='badge badge-rating'>{movie['vote_average']}/10</span>"
+                badges_html += f"<span class='badge badge-rating'>{html.escape(str(movie['vote_average']))}/10</span>"
             badges_html += "</div>"
             st.markdown(badges_html, unsafe_allow_html=True)
             
@@ -134,18 +136,20 @@ def display_movie_card(movie, card_key="", show_actions=True):
                 genres = movie['genre'].split(',') if ',' in movie['genre'] else [movie['genre']]
                 genre_html = "<div style='margin: 15px 0;'>"
                 for g in genres[:4]:
-                    genre_html += f"<span class='genre-tag'>{g.strip()}</span>"
+                    genre_html += f"<span class='genre-tag'>{html.escape(g.strip())}</span>"
                 genre_html += "</div>"
                 st.markdown(genre_html, unsafe_allow_html=True)
             
             if movie.get('overview'):
+                safe_overview = html.escape(str(movie['overview']))
                 st.markdown(
-                    f"<div class='synopsis-box'><div class='synopsis-title'>Synopsis</div><div class='overview-text'>{movie['overview']}</div></div>",
+                    f"<div class='synopsis-box'><div class='synopsis-title'>Synopsis</div><div class='overview-text'>{safe_overview}</div></div>",
                     unsafe_allow_html=True
                 )
             
             if movie_id in st.session_state.movie_notes and st.session_state.movie_notes[movie_id]:
-                st.markdown(f"<div style='color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 8px;'>{st.session_state.movie_notes[movie_id][:50]}...</div>", unsafe_allow_html=True)
+                note_preview = html.escape(str(st.session_state.movie_notes[movie_id][:50]))
+                st.markdown(f"<div style='color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 8px;'>{note_preview}...</div>", unsafe_allow_html=True)
             
             if show_actions:
                 watchlist_ids = get_watchlist_ids(st.session_state)
@@ -391,9 +395,18 @@ def main():
                 for hist_idx, hist_item in enumerate(st.session_state.search_history[:5]):
                     col_hist, col_time, col_btn = st.columns([3, 1, 1])
                     with col_hist:
-                        st.markdown(f"<div style='color: rgba(255,255,255,0.7);'>{hist_item['query'][:50]}...</div>" if len(hist_item['query']) > 50 else f"<div style='color: rgba(255,255,255,0.7);'>{hist_item['query']}</div>", unsafe_allow_html=True)
+                        raw_query = hist_item['query']
+                        short_query = raw_query[:50]
+                        safe_query = html.escape(short_query)
+                        st.markdown(
+                            f"<div style='color: rgba(255,255,255,0.7);'>{safe_query}...</div>"
+                            if len(raw_query) > 50
+                            else f"<div style='color: rgba(255,255,255,0.7);'>{safe_query}</div>",
+                            unsafe_allow_html=True
+                        )
                     with col_time:
-                        st.markdown(f"<div style='color: rgba(255,255,255,0.4); font-size: 0.8rem;'>{hist_item['timestamp']}</div>", unsafe_allow_html=True)
+                        safe_timestamp = html.escape(str(hist_item['timestamp']))
+                        st.markdown(f"<div style='color: rgba(255,255,255,0.4); font-size: 0.8rem;'>{safe_timestamp}</div>", unsafe_allow_html=True)
                     with col_btn:
                         if st.button("Re-search", key=f"hist_{hist_idx}", use_container_width=True):
                             st.session_state['quick_search'] = hist_item['query']
@@ -523,7 +536,10 @@ def main():
                     
                     if st.session_state.image_model and st.session_state.image_collection:
                         with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
-                            img.save(tmp.name)
+                            image_to_save = img
+                            if img.mode in ("RGBA", "LA") or (img.mode == "P" and "transparency" in img.info):
+                                image_to_save = img.convert("RGB")
+                            image_to_save.save(tmp.name, format="JPEG")
                             path = tmp.name
                         
                         with st.spinner("Analyzing image and finding matches..."):
@@ -591,23 +607,29 @@ def main():
                     stars = get_star_rating(movie.get('vote_average'))
                     note_preview = ""
                     if movie_id in st.session_state.movie_notes and st.session_state.movie_notes[movie_id]:
-                        note_preview = f"<div class='note-preview'>{st.session_state.movie_notes[movie_id][:40]}...</div>"
+                        safe_note = html.escape(str(st.session_state.movie_notes[movie_id][:40]))
+                        note_preview = f"<div class='note-preview'>{safe_note}...</div>"
+                    safe_title = html.escape(str(movie.get('title', 'Unknown')))
+                    safe_year = html.escape(str(movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'))
+                    safe_rating = html.escape(str(movie.get('vote_average', 'N/A')))
+                    safe_genre = html.escape(str(movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'))
+                    safe_added = html.escape(str(movie.get('added_date', 'Unknown')))
                     
                     list_html = "\n".join([
                         "<div class='list-item'>",
                         "<div class='list-title'>",
-                        f"<span class='list-name'>{movie.get('title', 'Unknown')}</span>",
+                        f"<span class='list-name'>{safe_title}</span>",
                         f"<span class='star-rating'>{stars}</span>",
                         "</div>",
                         "<div class='list-meta'>",
                         (
-                            f"{movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} | "
-                            f"{movie.get('vote_average', 'N/A')}/10 | "
-                            f"{movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}"
+                            f"{safe_year} | "
+                            f"{safe_rating}/10 | "
+                            f"{safe_genre}"
                         ),
                         "</div>",
                         note_preview,
-                        f"<div class='list-added'>Added: {movie.get('added_date', 'Unknown')}</div>",
+                        f"<div class='list-added'>Added: {safe_added}</div>",
                         "</div>",
                     ])
                     st.markdown(list_html, unsafe_allow_html=True)
@@ -669,23 +691,29 @@ def main():
                     stars = get_star_rating(movie.get('vote_average'))
                     note_preview = ""
                     if movie_id in st.session_state.movie_notes and st.session_state.movie_notes[movie_id]:
-                        note_preview = f"<div class='note-preview'>{st.session_state.movie_notes[movie_id][:40]}...</div>"
+                        safe_note = html.escape(str(st.session_state.movie_notes[movie_id][:40]))
+                        note_preview = f"<div class='note-preview'>{safe_note}...</div>"
+                    safe_title = html.escape(str(movie.get('title', 'Unknown')))
+                    safe_year = html.escape(str(movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'))
+                    safe_rating = html.escape(str(movie.get('vote_average', 'N/A')))
+                    safe_genre = html.escape(str(movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'))
+                    safe_added = html.escape(str(movie.get('added_date', 'Unknown')))
                     
                     list_html = "\n".join([
                         "<div class='list-item' style='border-left-color: #ec4899;'>",
                         "<div class='list-title'>",
-                        f"<span class='list-name'>{movie.get('title', 'Unknown')}</span>",
+                        f"<span class='list-name'>{safe_title}</span>",
                         f"<span class='star-rating'>{stars}</span>",
                         "</div>",
                         "<div class='list-meta'>",
                         (
-                            f"{movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} | "
-                            f"{movie.get('vote_average', 'N/A')}/10 | "
-                            f"{movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}"
+                            f"{safe_year} | "
+                            f"{safe_rating}/10 | "
+                            f"{safe_genre}"
                         ),
                         "</div>",
                         note_preview,
-                        f"<div class='list-added'>Added: {movie.get('added_date', 'Unknown')}</div>",
+                        f"<div class='list-added'>Added: {safe_added}</div>",
                         "</div>",
                     ])
                     st.markdown(list_html, unsafe_allow_html=True)
