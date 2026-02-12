@@ -7,7 +7,6 @@ import hashlib
 from pathlib import Path
 import logging
 import random
-import textwrap
 import atexit
 
 utils_dir = Path(__file__).resolve().parent.parent / 'utils'
@@ -590,24 +589,24 @@ def main():
                     if movie_id in st.session_state.movie_notes and st.session_state.movie_notes[movie_id]:
                         note_preview = f"<div class='note-preview'>{st.session_state.movie_notes[movie_id][:40]}...</div>"
                     
-                    st.markdown(
-                        textwrap.dedent(f"""
-                            <div class='list-item'>
-                                <div class='list-title'>
-                                    <span class='list-name'>{movie.get('title', 'Unknown')}</span>
-                                    <span class='star-rating'>{stars}</span>
-                                </div>
-                                <div class='list-meta'>
-                                    {movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} | 
-                                    {movie.get('vote_average', 'N/A')}/10 | 
-                                    {movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}
-                                </div>
-                                {note_preview}
-                                <div class='list-added'>Added: {movie.get('added_date', 'Unknown')}</div>
-                            </div>
-                        """).strip(),
-                        unsafe_allow_html=True
-                    )
+                    list_html = "\n".join([
+                        "<div class='list-item'>",
+                        "<div class='list-title'>",
+                        f"<span class='list-name'>{movie.get('title', 'Unknown')}</span>",
+                        f"<span class='star-rating'>{stars}</span>",
+                        "</div>",
+                        "<div class='list-meta'>",
+                        (
+                            f"{movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} | "
+                            f"{movie.get('vote_average', 'N/A')}/10 | "
+                            f"{movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}"
+                        ),
+                        "</div>",
+                        note_preview,
+                        f"<div class='list-added'>Added: {movie.get('added_date', 'Unknown')}</div>",
+                        "</div>",
+                    ])
+                    st.markdown(list_html, unsafe_allow_html=True)
                 
                 with col2:
                     st.markdown("<div style='display: flex; flex-direction: column; gap: 8px; padding-top: 10px;'>", unsafe_allow_html=True)
@@ -668,24 +667,24 @@ def main():
                     if movie_id in st.session_state.movie_notes and st.session_state.movie_notes[movie_id]:
                         note_preview = f"<div class='note-preview'>{st.session_state.movie_notes[movie_id][:40]}...</div>"
                     
-                    st.markdown(
-                        textwrap.dedent(f"""
-                            <div class='list-item' style='border-left-color: #ec4899;'>
-                                <div class='list-title'>
-                                    <span class='list-name'>{movie.get('title', 'Unknown')}</span>
-                                    <span class='star-rating'>{stars}</span>
-                                </div>
-                                <div class='list-meta'>
-                                    {movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} | 
-                                    {movie.get('vote_average', 'N/A')}/10 | 
-                                    {movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}
-                                </div>
-                                {note_preview}
-                                <div class='list-added'>Added: {movie.get('added_date', 'Unknown')}</div>
-                            </div>
-                        """).strip(),
-                        unsafe_allow_html=True
-                    )
+                    list_html = "\n".join([
+                        "<div class='list-item' style='border-left-color: #ec4899;'>",
+                        "<div class='list-title'>",
+                        f"<span class='list-name'>{movie.get('title', 'Unknown')}</span>",
+                        f"<span class='star-rating'>{stars}</span>",
+                        "</div>",
+                        "<div class='list-meta'>",
+                        (
+                            f"{movie.get('release_date', 'N/A')[:4] if movie.get('release_date') else 'N/A'} | "
+                            f"{movie.get('vote_average', 'N/A')}/10 | "
+                            f"{movie.get('genre', 'N/A')[:30] if movie.get('genre') else 'N/A'}"
+                        ),
+                        "</div>",
+                        note_preview,
+                        f"<div class='list-added'>Added: {movie.get('added_date', 'Unknown')}</div>",
+                        "</div>",
+                    ])
+                    st.markdown(list_html, unsafe_allow_html=True)
                 
                 with col2:
                     st.markdown("<div style='display: flex; flex-direction: column; gap: 8px; padding-top: 10px;'>", unsafe_allow_html=True)
