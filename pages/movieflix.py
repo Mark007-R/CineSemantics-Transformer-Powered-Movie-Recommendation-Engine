@@ -336,7 +336,6 @@ def main():
                         st.error(f"Error: {e}")
 
     with tab2:
-        st.markdown("<div class='search-box'>", unsafe_allow_html=True)
         st.markdown("<div class='section-title'>Smart Movie Search</div>", unsafe_allow_html=True)
         st.markdown("<p style='color: rgba(255,255,255,0.6);'>Describe what you're looking for - our AI understands natural language!</p>", unsafe_allow_html=True)
         
@@ -363,7 +362,6 @@ def main():
         with col1:
             if st.button("Advanced Filters", use_container_width=True):
                 st.session_state.show_filters = not st.session_state.show_filters
-        st.markdown("</div>", unsafe_allow_html=True)
         
         if st.session_state.search_history:
             with st.expander("Recent Searches", expanded=False):
