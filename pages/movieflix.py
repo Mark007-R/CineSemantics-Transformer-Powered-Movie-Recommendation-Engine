@@ -91,85 +91,88 @@ def initialize_image_model():
 
 def display_movie_card(movie, card_key="", show_actions=True):
     movie_id = get_movie_id(movie)
-    st.markdown("<div class='movie-card'>", unsafe_allow_html=True)
-    col1, col2 = st.columns([1, 3])
-    with col1:
-        st.markdown("<div class='movie-poster'>", unsafe_allow_html=True)
-        if movie.get('poster_url'):
-            try:
-                st.image(movie['poster_url'], use_container_width=True)
-            except:
-                st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>MOVIE</div>", unsafe_allow_html=True)
-        elif movie.get('image_path') and os.path.exists(movie['image_path']):
-            try:
-                st.image(movie['image_path'], use_container_width=True)
-            except:
-                st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>MOVIE</div>", unsafe_allow_html=True)
-        else:
-            st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>MOVIE</div>", unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
-    with col2:
-        st.markdown(f"<div class='movie-title'>{movie.get('title', 'Unknown')}</div>", unsafe_allow_html=True)
+    card_container = st.container()
+    with card_container:
+        col1, col2 = st.columns([1, 3])
         
-        if movie.get('vote_average'):
-            stars = get_star_rating(movie['vote_average'])
-            st.markdown(f"<div class='star-rating'>{stars}</div>", unsafe_allow_html=True)
+        with col1:
+            st.markdown("<div class='movie-poster'>", unsafe_allow_html=True)
+            if movie.get('poster_url'):
+                try:
+                    st.image(movie['poster_url'], use_container_width=True)
+                except:
+                    st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>🎬</div>", unsafe_allow_html=True)
+            elif movie.get('image_path') and os.path.exists(movie['image_path']):
+                try:
+                    st.image(movie['image_path'], use_container_width=True)
+                except:
+                    st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>🎬</div>", unsafe_allow_html=True)
+            else:
+                st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>🎬</div>", unsafe_allow_html=True)
+            st.markdown("</div>", unsafe_allow_html=True)
         
-        badges_html = "<div class='movie-meta'>"
-        if movie.get('release_date'):
-            year = movie['release_date'][:4] if len(movie['release_date']) >= 4 else movie['release_date']
-            badges_html += f"<span class='badge badge-year'>{year}</span>"
-        if movie.get('vote_average'):
-            badges_html += f"<span class='badge badge-rating'>{movie['vote_average']}/10</span>"
-        if movie.get('similarity_percent'):
-            badges_html += f"<span class='badge badge-similarity'>{movie['similarity_percent']}</span>"
-        if movie.get('popularity'):
-            badges_html += f"<span class='badge badge-popularity'>{movie['popularity']:.0f}</span>"
-        badges_html += "</div>"
-        st.markdown(badges_html, unsafe_allow_html=True)
+        with col2:
+            st.markdown(f"<div class='movie-title'>{movie.get('title', 'Unknown')}</div>", unsafe_allow_html=True)
+            
+            if movie.get('vote_average'):
+                stars = get_star_rating(movie['vote_average'])
+                st.markdown(f"<div class='star-rating'>{stars}</div>", unsafe_allow_html=True)
+            
+            badges_html = "<div class='movie-meta'>"
+            if movie.get('release_date'):
+                year = movie['release_date'][:4] if len(movie['release_date']) >= 4 else movie['release_date']
+                badges_html += f"<span class='badge badge-year'>{year}</span>"
+            if movie.get('vote_average'):
+                badges_html += f"<span class='badge badge-rating'>{movie['vote_average']}/10</span>"
+            if movie.get('similarity_percent'):
+                badges_html += f"<span class='badge badge-similarity'>{movie['similarity_percent']}</span>"
+            if movie.get('popularity'):
+                badges_html += f"<span class='badge badge-popularity'>{movie['popularity']:.0f}</span>"
+            badges_html += "</div>"
+            st.markdown(badges_html, unsafe_allow_html=True)
+            
+            if movie.get('genre'):
+                genres = movie['genre'].split(',') if ',' in movie['genre'] else [movie['genre']]
+                genre_html = "<div style='margin: 15px 0;'>"
+                for g in genres[:4]:
+                    genre_html += f"<span class='genre-tag'>{g.strip()}</span>"
+                genre_html += "</div>"
+                st.markdown(genre_html, unsafe_allow_html=True)
+            
+            if movie.get('overview'):
+                with st.expander("Read Synopsis", expanded=False):
+                    st.markdown(f"<div class='overview-text'>{movie['overview']}</div>", unsafe_allow_html=True)
+            
+            if movie_id in st.session_state.movie_notes and st.session_state.movie_notes[movie_id]:
+                st.markdown(f"<div style='color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 8px;'>{st.session_state.movie_notes[movie_id][:50]}...</div>", unsafe_allow_html=True)
+            
+            if show_actions:
+                col_a, col_b, col_c, col_d = st.columns([1, 1, 1, 2])
+                with col_a:
+                    btn_key = f"watchlist_{card_key}_{hash(str(movie.get('title', '')))}"
+                    if st.button("+ List", key=btn_key, use_container_width=True, help="Add to Watchlist"):
+                        if add_to_watchlist(st.session_state, movie):
+                            st.toast("Added to watchlist!")
+                        else:
+                            st.toast("Already in watchlist")
+                        st.rerun()
+                with col_b:
+                    fav_key = f"favorite_{card_key}_{hash(str(movie.get('title', '')))}"
+                    if st.button("Fave", key=fav_key, use_container_width=True, help="Add to Favorites"):
+                        if add_to_favorites(st.session_state, movie):
+                            st.toast("Added to favorites!")
+                        else:
+                            st.toast("Already in favorites")
+                        st.rerun()
+                with col_c:
+                    note_key = f"note_{card_key}_{hash(str(movie.get('title', '')))}"
+                    with st.popover("Note"):
+                        current_note = st.session_state.movie_notes.get(movie_id, "")
+                        new_note = st.text_area("Your notes:", value=current_note, key=f"note_input_{note_key}", height=100)
+                        if st.button("Save", key=f"save_note_{note_key}"):
+                            save_movie_note(st.session_state, movie_id, new_note)
+                            st.toast("Note saved!")
         
-        if movie.get('genre'):
-            genres = movie['genre'].split(',') if ',' in movie['genre'] else [movie['genre']]
-            genre_html = "<div style='margin: 15px 0;'>"
-            for g in genres[:4]:
-                genre_html += f"<span class='genre-tag'>{g.strip()}</span>"
-            genre_html += "</div>"
-            st.markdown(genre_html, unsafe_allow_html=True)
-        
-        if movie.get('overview'):
-            with st.expander("Read Synopsis", expanded=False):
-                st.markdown(f"<div class='overview-text'>{movie['overview']}</div>", unsafe_allow_html=True)
-        
-        if movie_id in st.session_state.movie_notes and st.session_state.movie_notes[movie_id]:
-            st.markdown(f"<div style='color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 8px;'>{st.session_state.movie_notes[movie_id][:50]}...</div>", unsafe_allow_html=True)
-        
-        if show_actions:
-            col_a, col_b, col_c, col_d = st.columns([1, 1, 1, 2])
-            with col_a:
-                btn_key = f"watchlist_{card_key}_{hash(str(movie.get('title', '')))}"
-                if st.button("+ List", key=btn_key, use_container_width=True, help="Add to Watchlist"):
-                    if add_to_watchlist(st.session_state, movie):
-                        st.toast("Added to watchlist!")
-                    else:
-                        st.toast("Already in watchlist")
-                    st.rerun()
-            with col_b:
-                fav_key = f"favorite_{card_key}_{hash(str(movie.get('title', '')))}"
-                if st.button("Fave", key=fav_key, use_container_width=True, help="Add to Favorites"):
-                    if add_to_favorites(st.session_state, movie):
-                        st.toast("Added to favorites!")
-                    else:
-                        st.toast("Already in favorites")
-                    st.rerun()
-            with col_c:
-                note_key = f"note_{card_key}_{hash(str(movie.get('title', '')))}"
-                with st.popover("Note"):
-                    current_note = st.session_state.movie_notes.get(movie_id, "")
-                    new_note = st.text_area("Your notes:", value=current_note, key=f"note_input_{note_key}", height=100)
-                    if st.button("Save", key=f"save_note_{note_key}"):
-                        save_movie_note(st.session_state, movie_id, new_note)
-                        st.toast("Note saved!")
-    st.markdown("</div>", unsafe_allow_html=True)
 
 def main():
     if not st.session_state.milvus_connected:
@@ -256,7 +259,7 @@ def main():
         
         if 'surprise_results' in st.session_state and st.session_state.surprise_results:
             st.markdown("<br>", unsafe_allow_html=True)
-            st.success(f"Found {len(st.session_state.surprise_results)} surprise picks!")
+            st.success(f"✨ Found {len(st.session_state.surprise_results)} surprise picks!")
             for idx, movie in enumerate(st.session_state.surprise_results):
                 display_movie_card(movie, card_key=f"surprise_{idx}")
         
