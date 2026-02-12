@@ -496,14 +496,15 @@ header {visibility: hidden;}
     border-color: rgba(45, 212, 191, 0.2);
 }
 
-.surprise-wrap .stButton > button {
-    background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%) !important;
-    color: #1f1402 !important;
-    box-shadow: 0 6px 22px rgba(245, 158, 11, 0.35) !important;
+.surprise-wrap .stButton > button[kind="primary"] {
+    background: linear-gradient(135deg, #2dd4bf 0%, #0ea5a4 100%) !important;
+    color: #04111d !important;
+    border: none !important;
+    box-shadow: 0 6px 22px rgba(45, 212, 191, 0.35) !important;
 }
 
-.surprise-wrap .stButton > button:hover {
-    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.5) !important;
+.surprise-wrap .stButton > button[kind="primary"]:hover {
+    box-shadow: 0 10px 30px rgba(45, 212, 191, 0.5) !important;
     transform: translateY(-2px);
 }
 
@@ -547,6 +548,7 @@ header {visibility: hidden;}
 
 .stButton > button[kind="primary"]:active {
     transform: translateY(-1px);
+    box-shadow: 0 12px 35px rgba(45, 212, 191, 0.5);
 }
 
 .stButton > button[kind="secondary"] {
