@@ -42,8 +42,6 @@ TAB_NAMES = [
     "Favorites"
 ]
 
-SUPPORTED_IMAGE_TYPES = ["jpg", "jpeg", "png", "webp"]
-
 MAX_SEARCH_HISTORY = 10
 MAX_GENRES_DISPLAY = 4
 DEFAULT_DISCOVER_LIMIT = 10
@@ -172,17 +170,6 @@ def add_to_search_history(session_state, query):
 def save_movie_note(session_state, movie_id, note):
     session_state.movie_notes[movie_id] = note
 
-def save_personal_rating(session_state, movie_id, rating):
-    session_state.personal_ratings[movie_id] = rating
-
-def get_note_preview(session_state, movie_id, max_length=40):
-    if movie_id in session_state.movie_notes and session_state.movie_notes[movie_id]:
-        note = session_state.movie_notes[movie_id]
-        if len(note) > max_length:
-            return f"{note[:max_length]}..."
-        return note
-    return ""
-
 def calculate_watch_time(watchlist, avg_movie_hours=2):
     return len(watchlist) * avg_movie_hours
 
@@ -192,30 +179,3 @@ def calculate_average_rating(movies):
     total = sum(float(m.get('vote_average', 0)) for m in movies)
     return total / len(movies)
 
-def get_category_search_params(category, genre=None, limit=DEFAULT_DISCOVER_LIMIT):
-    for key, params in CATEGORY_SEARCH_PARAMS.items():
-        if key in category:
-            result = {'top_k': limit}
-            result.update(params)
-            return result['query'], {k: v for k, v in result.items() if k != 'query'}
-    
-    if genre:
-        return f"best {genre} movies", {'top_k': limit, 'genre_filter': genre}
-    
-    return "popular movies", {'top_k': limit}
-
-def build_search_kwargs(top_k, show_filters, min_year, max_year, 
-                        min_rating, max_rating, min_pop, genre_filter):
-    kwargs = {'top_k': top_k}
-    if show_filters:
-        kwargs.update({
-            'min_year': min_year,
-            'max_year': max_year,
-            'min_rating': min_rating,
-            'max_rating': max_rating
-        })
-        if min_pop > 0:
-            kwargs['min_popularity'] = min_pop
-        if genre_filter != "All":
-            kwargs['genre_filter'] = genre_filter
-    return kwargs

@@ -28,13 +28,11 @@ except ImportError as e:
 
 from helpers import (
     QUICK_SEARCHES, SURPRISE_PROMPTS, GENRES, CATEGORIES, TAB_NAMES,
-    SUPPORTED_IMAGE_TYPES, DEFAULT_DISCOVER_LIMIT,
-    DEFAULT_IMAGE_RESULTS, DEFAULT_MIN_YEAR, DEFAULT_MAX_YEAR,
-    init_session_state, get_movie_id, get_star_rating, export_list_to_json,
-    add_to_watchlist, add_to_favorites, remove_from_watchlist, remove_from_favorites,
-    add_to_search_history, save_movie_note, save_personal_rating, get_note_preview,
-    calculate_watch_time, calculate_average_rating, get_category_search_params,
-    build_search_kwargs
+    DEFAULT_DISCOVER_LIMIT, DEFAULT_IMAGE_RESULTS, DEFAULT_MIN_YEAR,
+    DEFAULT_MAX_YEAR, init_session_state, get_movie_id, get_star_rating,
+    export_list_to_json, add_to_watchlist, add_to_favorites,
+    remove_from_watchlist, remove_from_favorites, add_to_search_history,
+    save_movie_note, calculate_watch_time, calculate_average_rating
 )
 
 atexit.register(milvus_disconnect)
@@ -43,8 +41,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 st.set_page_config(
-    page_title="MovieFlix - AI Movie Discovery",
-    page_icon="M",
+    page_title="CineSemantics - AI Movie Discovery",
+    page_icon="C",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -200,7 +198,7 @@ def main():
     
     st.markdown("""
         <div class='main-header'>
-            <h1 class='logo-text'>MovieFlix</h1>
+            <h1 class='logo-text'>CineSemantics</h1>
             <p class='tagline'>AI-Powered Movie Discovery - Find Your Next Favorite Film</p>
         </div>
     """, unsafe_allow_html=True)
@@ -717,7 +715,7 @@ def main():
             border-top: 1px solid rgba(255,255,255,0.05);
             margin-top: 40px;
         '>
-            <p style='font-size: 1.8rem; font-weight: 800; margin-bottom: 15px; background: linear-gradient(135deg, #e50914, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>MovieFlix</p>
+            <p style='font-size: 1.8rem; font-weight: 800; margin-bottom: 15px; background: linear-gradient(135deg, #2dd4bf, #5eead4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>CineSemantics</p>
             <p style='color: rgba(255,255,255,0.5);'>Powered by AI Vector Search - Built with Streamlit & Milvus</p>
             <p style='font-size: 0.8rem; margin-top: 15px; color: rgba(255,255,255,0.3);'>
                 Discover - Explore - Enjoy - Your perfect movie is just a search away
