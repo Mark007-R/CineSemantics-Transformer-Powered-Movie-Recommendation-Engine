@@ -100,12 +100,14 @@ def display_movie_card(movie, card_key="", show_actions=True):
             if movie.get('poster_url'):
                 try:
                     st.image(movie['poster_url'], use_container_width=True)
-                except:
+                except Exception as e:
+                    logger.warning("Failed to render poster_url image: %s", e)
                     st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>🎬</div>", unsafe_allow_html=True)
             elif movie.get('image_path') and os.path.exists(movie['image_path']):
                 try:
                     st.image(movie['image_path'], use_container_width=True)
-                except:
+                except Exception as e:
+                    logger.warning("Failed to render image_path image: %s", e)
                     st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>🎬</div>", unsafe_allow_html=True)
             else:
                 st.markdown("<div style='font-size: 80px; text-align: center; padding: 40px; background: linear-gradient(135deg, #1a1a3e, #0a0a1a); border-radius: 12px;'>🎬</div>", unsafe_allow_html=True)
