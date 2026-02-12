@@ -246,6 +246,7 @@ def main():
         st.markdown("<div class='section-title'>Feeling Lucky?</div>", unsafe_allow_html=True)
         col_surprise, col_info = st.columns([1, 3])
         with col_surprise:
+            st.markdown("<div class='surprise-wrap'>", unsafe_allow_html=True)
             if st.button("Surprise Me!", type="primary", use_container_width=True, help="Get random movie recommendations"):
                 if st.session_state.text_model is None:
                     with st.spinner("Loading AI model..."):
@@ -267,6 +268,7 @@ def main():
                                 st.session_state['surprise_results'] = results
                         except Exception as e:
                             st.error(f"Error: {e}")
+            st.markdown("</div>", unsafe_allow_html=True)
         
         with col_info:
             st.markdown("<p style='color: rgba(255,255,255,0.5); margin-top: 10px;'>Let AI pick random movies based on quality, uniqueness, and hidden gems!</p>", unsafe_allow_html=True)
