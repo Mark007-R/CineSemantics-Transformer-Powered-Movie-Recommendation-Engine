@@ -152,7 +152,7 @@ def display_movie_card(movie, card_key="", show_actions=True):
                 favorites_ids = get_favorites_ids(st.session_state)
                 in_watchlist = movie_id in watchlist_ids
                 in_favorites = movie_id in favorites_ids
-                col_a, col_b, col_c, col_d = st.columns([1, 1, 1, 2])
+                col_a, col_b, col_c = st.columns([1, 1, 1])
                 with col_a:
                     btn_key = f"watchlist_{card_key}_{stable_id}"
                     if st.button(
