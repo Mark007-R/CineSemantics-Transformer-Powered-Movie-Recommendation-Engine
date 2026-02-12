@@ -482,7 +482,7 @@ header {visibility: hidden;}
     background: linear-gradient(135deg, #ff3b3b 0%, #e50914 100%);
 }
 
-.stButton > button {
+.stButton > button[kind="primary"] {
     background: linear-gradient(135deg, #e50914 0%, #b20710 100%);
     color: white;
     border: none;
@@ -496,13 +496,33 @@ header {visibility: hidden;}
     letter-spacing: 0.5px;
 }
 
-.stButton > button:hover {
+.stButton > button[kind="primary"]:hover {
     transform: translateY(-3px);
     box-shadow: 0 12px 35px rgba(229, 9, 20, 0.5);
 }
 
-.stButton > button:active {
+.stButton > button[kind="primary"]:active {
     transform: translateY(-1px);
+}
+
+.stButton > button[kind="secondary"] {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(229, 9, 20, 0.35);
+    border-radius: 14px;
+    padding: 12px 28px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.stButton > button[kind="secondary"]:hover {
+    border-color: rgba(229, 9, 20, 0.6);
+    box-shadow: 0 8px 24px rgba(229, 9, 20, 0.2);
+    transform: translateY(-2px);
 }
 
 .stTextArea textarea, .stTextInput input {

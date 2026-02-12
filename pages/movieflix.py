@@ -350,7 +350,7 @@ def main():
         quick_cols = st.columns(4)
         for idx, suggestion in enumerate(QUICK_SEARCHES):
             with quick_cols[idx % 4]:
-                if st.button(suggestion, key=f"quick_{idx}", use_container_width=True):
+                if st.button(suggestion, key=f"quick_{idx}", use_container_width=True, type="secondary"):
                     st.session_state['quick_search'] = suggestion
                     st.rerun()
         
@@ -360,7 +360,7 @@ def main():
         
         col1, col2 = st.columns([3, 1])
         with col1:
-            if st.button("Advanced Filters", use_container_width=True):
+            if st.button("Advanced Filters", use_container_width=True, type="primary"):
                 st.session_state.show_filters = not st.session_state.show_filters
         
         if st.session_state.search_history:
