@@ -338,12 +338,17 @@ def main():
     with tab2:
         st.markdown("<div class='section-title'>Smart Movie Search</div>", unsafe_allow_html=True)
         st.markdown("<p style='color: rgba(255,255,255,0.6);'>Describe what you're looking for - our AI understands natural language!</p>", unsafe_allow_html=True)
+
+        if 'quick_search' in st.session_state:
+            st.session_state.search_query = st.session_state.quick_search
+            del st.session_state.quick_search
         
         query = st.text_area(
             "Search",
             placeholder="e.g., 'a gripping thriller with unexpected twists', 'feel-good comedy for family night', 'visually stunning sci-fi adventure'...",
             height=100,
-            label_visibility="collapsed"
+            label_visibility="collapsed",
+            key="search_query"
         )
         
         st.markdown("<p style='color: rgba(255,255,255,0.5); font-size: 0.85rem; margin: 15px 0 10px 0;'>Quick searches:</p>", unsafe_allow_html=True)
@@ -353,10 +358,6 @@ def main():
                 if st.button(suggestion, key=f"quick_{idx}", use_container_width=True, type="secondary"):
                     st.session_state['quick_search'] = suggestion
                     st.rerun()
-        
-        if 'quick_search' in st.session_state:
-            query = st.session_state.quick_search
-            del st.session_state.quick_search
         
         col1, col2 = st.columns([3, 1])
         with col1:
