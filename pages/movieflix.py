@@ -32,7 +32,8 @@ from helpers import (
     DEFAULT_MAX_YEAR, init_session_state, get_movie_id, get_star_rating,
     export_list_to_json, add_to_watchlist, add_to_favorites,
     remove_from_watchlist, remove_from_favorites, add_to_search_history,
-    save_movie_note, calculate_watch_time, calculate_average_rating
+    save_movie_note, calculate_watch_time, calculate_average_rating,
+    get_watchlist_ids, get_favorites_ids
 )
 
 atexit.register(milvus_disconnect)
@@ -147,8 +148,8 @@ def display_movie_card(movie, card_key="", show_actions=True):
                 st.markdown(f"<div style='color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 8px;'>{st.session_state.movie_notes[movie_id][:50]}...</div>", unsafe_allow_html=True)
             
             if show_actions:
-                watchlist_ids = {get_movie_id(m) for m in st.session_state.watchlist}
-                favorites_ids = {get_movie_id(m) for m in st.session_state.favorites}
+                watchlist_ids = get_watchlist_ids(st.session_state)
+                favorites_ids = get_favorites_ids(st.session_state)
                 in_watchlist = movie_id in watchlist_ids
                 in_favorites = movie_id in favorites_ids
                 col_a, col_b, col_c, col_d = st.columns([1, 1, 1, 2])

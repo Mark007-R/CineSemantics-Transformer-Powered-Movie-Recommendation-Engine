@@ -179,3 +179,31 @@ def calculate_average_rating(movies):
     total = sum(float(m.get('vote_average', 0)) for m in movies)
     return total / len(movies)
 
+
+def get_watchlist_ids(session_state):
+    watchlist = session_state.get("watchlist", [])
+    cache_key_ids = "_watchlist_ids_cache"
+    cache_key_sig = "_watchlist_ids_signature"
+    signature = tuple(get_movie_id(m) for m in watchlist)
+    cached_ids = session_state.get(cache_key_ids)
+    cached_sig = session_state.get(cache_key_sig)
+    if cached_ids is None or cached_sig != signature:
+        cached_ids = set(signature)
+        session_state[cache_key_ids] = cached_ids
+        session_state[cache_key_sig] = signature
+    return cached_ids
+
+
+def get_favorites_ids(session_state):
+    favorites = session_state.get("favorites", [])
+    cache_key_ids = "_favorites_ids_cache"
+    cache_key_sig = "_favorites_ids_signature"
+    signature = tuple(get_movie_id(m) for m in favorites)
+    cached_ids = session_state.get(cache_key_ids)
+    cached_sig = session_state.get(cache_key_sig)
+    if cached_ids is None or cached_sig != signature:
+        cached_ids = set(signature)
+        session_state[cache_key_ids] = cached_ids
+        session_state[cache_key_sig] = signature
+    return cached_ids
+
