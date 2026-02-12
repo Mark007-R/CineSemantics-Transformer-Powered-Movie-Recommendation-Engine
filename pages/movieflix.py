@@ -124,10 +124,6 @@ def display_movie_card(movie, card_key="", show_actions=True):
                 badges_html += f"<span class='badge badge-year'>{year}</span>"
             if movie.get('vote_average'):
                 badges_html += f"<span class='badge badge-rating'>{movie['vote_average']}/10</span>"
-            if movie.get('similarity_percent'):
-                badges_html += f"<span class='badge badge-similarity'>{movie['similarity_percent']}</span>"
-            if movie.get('popularity'):
-                badges_html += f"<span class='badge badge-popularity'>{movie['popularity']:.0f}</span>"
             badges_html += "</div>"
             st.markdown(badges_html, unsafe_allow_html=True)
             
@@ -140,8 +136,10 @@ def display_movie_card(movie, card_key="", show_actions=True):
                 st.markdown(genre_html, unsafe_allow_html=True)
             
             if movie.get('overview'):
-                with st.expander("Read Synopsis", expanded=False):
-                    st.markdown(f"<div class='overview-text'>{movie['overview']}</div>", unsafe_allow_html=True)
+                st.markdown(
+                    f"<div class='synopsis-box'><div class='synopsis-title'>Synopsis</div><div class='overview-text'>{movie['overview']}</div></div>",
+                    unsafe_allow_html=True
+                )
             
             if movie_id in st.session_state.movie_notes and st.session_state.movie_notes[movie_id]:
                 st.markdown(f"<div style='color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 8px;'>{st.session_state.movie_notes[movie_id][:50]}...</div>", unsafe_allow_html=True)

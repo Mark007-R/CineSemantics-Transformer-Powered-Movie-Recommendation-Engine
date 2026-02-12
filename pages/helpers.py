@@ -104,12 +104,15 @@ def get_movie_id(movie):
 def get_star_rating(rating):
     if not rating:
         return ""
-    stars = int(float(rating) / 2)
-    half_star = (float(rating) / 2) % 1 >= 0.5
-    full_stars = "*" * stars
-    half = "+" if half_star and stars < 5 else ""
-    empty = "-" * (5 - stars - (1 if half_star else 0))
-    return full_stars + half + empty
+    value = float(rating) / 2
+    full = int(value)
+    half = 1 if (value - full) >= 0.5 else 0
+    empty = 5 - full - half
+    return (
+        "<span class='star full'>★</span>" * full
+        + "<span class='star half'>★</span>" * half
+        + "<span class='star empty'>★</span>" * empty
+    )
 
 def export_list_to_json(list_data, list_name):
     export_data = {
