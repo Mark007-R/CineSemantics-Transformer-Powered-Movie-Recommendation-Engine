@@ -38,8 +38,8 @@ from helpers import (
 
 atexit.register(milvus_disconnect)
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+logger.setLevel(getattr(config, "LOG_LEVEL", logging.INFO))
 
 st.set_page_config(
     page_title="CineSemantics - AI Movie Discovery",
