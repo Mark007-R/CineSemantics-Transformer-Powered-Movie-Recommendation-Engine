@@ -377,7 +377,6 @@ def main():
                             st.rerun()
         
         if st.session_state.show_filters:
-            st.markdown("<div class='filter-section'>", unsafe_allow_html=True)
             st.markdown("#### Advanced Filters")
             col1, col2, col3, col4 = st.columns(4)
             with col1:
@@ -390,7 +389,6 @@ def main():
                 min_pop = st.number_input("Min Popularity", 0.0, 1000.0, 0.0, 10.0)
             with col4:
                 genre_filter = st.selectbox("Genre", ["All"] + GENRES)
-            st.markdown("</div>", unsafe_allow_html=True)
         else:
             min_year, max_year = DEFAULT_MIN_YEAR, DEFAULT_MAX_YEAR
             min_rating, max_rating = config.MIN_RATING, config.MAX_RATING
