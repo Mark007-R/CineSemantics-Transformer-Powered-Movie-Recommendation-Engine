@@ -24,8 +24,9 @@ CineSemantics is a movie recommendation engine that leverages transformer-based 
 ├── data_cleaning/       # Data cleaning scripts and notebooks
 ├── posters/             # Movie poster images
 ├── pages/               # Streamlit app scripts
-│   ├── movie_app.py     # (optional)
+│   ├── helpers.py       # UI helpers and shared utilities
 │   ├── movieflix.py     # Main Streamlit app
+│   └── style.css        # Custom styles
 ├── utils/               # Core scripts and configuration
 │   ├── config.py        # Central configuration file
 │   ├── text_embedder.py # Text embedding utilities
@@ -34,6 +35,8 @@ CineSemantics is a movie recommendation engine that leverages transformer-based 
 │   ├── text_main.py     # Main script for text-based search
 │   ├── image_main.py    # Main script for image-based search
 │   └── ...
+├── data_cleaning/       # Data cleaning notebook
+│   └── data_cleaning.ipynb
 ├── vector_db/           # Vector database files
 ├── requirements.txt     # Python dependencies
 └── README.md            # Project documentation
@@ -122,7 +125,7 @@ All configurable parameters are located in `utils/config.py`, including:
 See `requirements.txt` for the full list.
 
 ## License
-This project is for educational and research purposes. Please check individual package licenses for commercial use.
+MIT License. See [LICENSE](LICENSE).
 
 ## Contact
 For questions or contributions, please open an issue or contact the project maintainer.
