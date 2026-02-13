@@ -300,6 +300,7 @@ def main():
         with col2:
             limit = st.slider("Results", 5, 20, DEFAULT_DISCOVER_LIMIT, key="discover_limit")
         
+        genre = None
         if "By Genre" in category:
             genre = st.selectbox(
                 "Select Genre",
@@ -351,15 +352,24 @@ def main():
                                 f"best {genre} movies",
                                 top_k=limit, genre_filter=genre
                             )
-                        
-                        if results:
-                            st.success(f"Found {len(results)} movies!")
-                            for idx, movie in enumerate(results):
-                                display_movie_card(movie, card_key=f"discover_{idx}")
-                        else:
-                            st.warning("No movies found in this category")
+                        st.session_state.discover_results = results or []
+                        st.session_state.discover_category = category
+                        st.session_state.discover_genre = genre or ""
                     except Exception as e:
+                        st.session_state.discover_results = []
+                        st.session_state.discover_category = category
+                        st.session_state.discover_genre = genre or ""
                         st.error(f"Error: {e}")
+
+        if st.session_state.discover_results:
+            label = st.session_state.discover_category
+            if "By Genre" in label and st.session_state.discover_genre:
+                label = f"{label}: {st.session_state.discover_genre}"
+            st.success(f"Found {len(st.session_state.discover_results)} movies in {label}!")
+            for idx, movie in enumerate(st.session_state.discover_results):
+                display_movie_card(movie, card_key=f"discover_{idx}")
+        elif st.session_state.discover_category:
+            st.warning("No movies found in this category")
 
     with tab2:
         st.markdown("<div class='section-title'>Smart Movie Search</div>", unsafe_allow_html=True)

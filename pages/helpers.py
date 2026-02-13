@@ -87,7 +87,10 @@ SESSION_STATE_DEFAULTS = {
     'current_view': 'home',
     'movie_notes': {},
     'personal_ratings': {},
-    'theme': 'dark'
+    'theme': 'dark',
+    'discover_results': [],
+    'discover_category': '',
+    'discover_genre': ''
 }
 
 def init_session_state(session_state):
