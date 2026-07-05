@@ -9,3 +9,9 @@ venv/
 utils/__pycache__/
 __pycache__/
 *.pyc
+# Day-1 upgrade sprint additions
+mlruns/
+.pytest_cache/
+*.joblib
+models/
+results/**/*.npy
