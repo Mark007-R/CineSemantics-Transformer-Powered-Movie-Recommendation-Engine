@@ -1,0 +1,51 @@
+{
+  "day": 1,
+  "project": "CineSemantics",
+  "phase": "Phase 1 - baseline",
+  "date": "2026-07-05",
+  "eval": {
+    "source": "MovieLens ml-latest-small co-rating 'more like this'",
+    "n_queries": 1072,
+    "catalog_size": 9837,
+    "relevance": "co-liked (rating>=4) movies, aligned to TMDB catalog"
+  },
+  "current_system": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "dim": 384,
+    "metric": "IP==cosine",
+    "note": "genre filter is a substring post-filter (line 354), not semantic"
+  },
+  "systems": {
+    "Random": {
+      "ndcg@10": 0.0034,
+      "recall@20": 0.0023,
+      "map@20": 0.0006,
+      "precision@10": 0.0036,
+      "catalog_coverage": 0.6594,
+      "intra_list_diversity@10": 0.8582
+    },
+    "Popularity": {
+      "ndcg@10": 0.2148,
+      "recall@20": 0.1858,
+      "map@20": 0.1042,
+      "precision@10": 0.236,
+      "catalog_coverage": 0.0011,
+      "intra_list_diversity@10": 0.639
+    },
+    "Semantic": {
+      "ndcg@10": 0.0295,
+      "recall@20": 0.0109,
+      "map@20": 0.0072,
+      "precision@10": 0.0237,
+      "catalog_coverage": 0.5341,
+      "intra_list_diversity@10": 0.6775
+    }
+  },
+  "primary": {
+    "semantic_ndcg@10": 0.0295,
+    "semantic_recall@20": 0.0109,
+    "semantic_map@20": 0.0072,
+    "popularity_ndcg@10": 0.2148,
+    "random_ndcg@10": 0.0034
+  }
+}

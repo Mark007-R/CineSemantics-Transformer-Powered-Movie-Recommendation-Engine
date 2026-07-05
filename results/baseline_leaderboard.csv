@@ -1,0 +1,4 @@
+system,ndcg@10,recall@20,map@20,precision@10,catalog_coverage,intra_list_diversity@10
+Random,0.0034,0.0023,0.0006,0.0036,0.6594,0.8582
+Popularity,0.2148,0.1858,0.1042,0.236,0.0011,0.639
+Semantic,0.0295,0.0109,0.0072,0.0237,0.5341,0.6775
