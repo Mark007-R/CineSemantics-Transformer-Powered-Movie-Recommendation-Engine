@@ -1,0 +1,103 @@
+{
+  "day": 3,
+  "project": "CineSemantics",
+  "phase": "Phase 2b - CF bake-off",
+  "date": "2026-07-07",
+  "eval": {
+    "protocol": "per-user temporal leave-last-20% (no leakage)",
+    "n_users": 547,
+    "candidate_items": 2607,
+    "test_interactions": 7149,
+    "cold_test_ceiling_recall": 0.941
+  },
+  "leaderboard": {
+    "Popularity": {
+      "ndcg@10": 0.0719,
+      "recall@20": 0.0993,
+      "map@20": 0.0343,
+      "precision@10": 0.0492,
+      "catalog_coverage": 0.0053,
+      "candidate_coverage": 0.0199,
+      "intra_list_diversity@10": 0.7782,
+      "novelty@10": 1.797,
+      "fit_seconds": 0.0
+    },
+    "ItemKNN": {
+      "ndcg@10": 0.1059,
+      "recall@20": 0.1675,
+      "map@20": 0.0507,
+      "precision@10": 0.0793,
+      "catalog_coverage": 0.0378,
+      "candidate_coverage": 0.1427,
+      "intra_list_diversity@10": 0.7872,
+      "novelty@10": 2.696,
+      "fit_seconds": 0.04
+    },
+    "ALS": {
+      "ndcg@10": 0.0861,
+      "recall@20": 0.1494,
+      "map@20": 0.0447,
+      "precision@10": 0.0589,
+      "catalog_coverage": 0.0663,
+      "candidate_coverage": 0.2501,
+      "intra_list_diversity@10": 0.7953,
+      "novelty@10": 3.376,
+      "fit_seconds": 0.35
+    },
+    "PureSVD": {
+      "ndcg@10": 0.0979,
+      "recall@20": 0.1608,
+      "map@20": 0.0488,
+      "precision@10": 0.0689,
+      "catalog_coverage": 0.0524,
+      "candidate_coverage": 0.1975,
+      "intra_list_diversity@10": 0.7892,
+      "novelty@10": 3.14,
+      "fit_seconds": 0.29
+    },
+    "Content": {
+      "ndcg@10": 0.0123,
+      "recall@20": 0.0243,
+      "map@20": 0.0046,
+      "precision@10": 0.0099,
+      "catalog_coverage": 0.0392,
+      "candidate_coverage": 0.1481,
+      "intra_list_diversity@10": 0.7141,
+      "novelty@10": 7.066,
+      "fit_seconds": 35.14
+    },
+    "Hybrid": {
+      "ndcg@10": 0.094,
+      "recall@20": 0.1546,
+      "map@20": 0.0483,
+      "precision@10": 0.0627,
+      "catalog_coverage": 0.0653,
+      "candidate_coverage": 0.2463,
+      "intra_list_diversity@10": 0.7486,
+      "novelty@10": 3.73,
+      "fit_seconds": 0.02
+    }
+  },
+  "champion": "ItemKNN",
+  "day1_reference": {
+    "semantic_ndcg@10": 0.0295,
+    "popularity_ndcg@10": 0.2148
+  },
+  "significance": {
+    "ItemKNN": {
+      "vs_popularity_ndcg_wilcoxon_p": 1.1473967155355403e-10
+    },
+    "ALS": {
+      "vs_popularity_ndcg_wilcoxon_p": 0.03188713711778111
+    },
+    "PureSVD": {
+      "vs_popularity_ndcg_wilcoxon_p": 5.747893371376833e-05
+    },
+    "Content": {
+      "vs_popularity_ndcg_wilcoxon_p": 8.015610765440391e-23
+    },
+    "Hybrid": {
+      "vs_popularity_ndcg_wilcoxon_p": 0.0008100584308480122
+    }
+  }
+}
