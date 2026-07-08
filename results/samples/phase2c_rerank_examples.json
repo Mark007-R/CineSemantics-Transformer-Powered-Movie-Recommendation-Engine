@@ -1,0 +1,582 @@
+[
+  {
+    "query_index": 72,
+    "query_title": "Batman",
+    "query_genre": "Fantasy, Action",
+    "semantic_top5": [
+      {
+        "title": "The Dark Knight",
+        "genre": "Drama, Action, Crime, Thriller",
+        "relevant": false
+      },
+      {
+        "title": "Batman Returns",
+        "genre": "Action, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Batman Forever",
+        "genre": "Action, Crime, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Joker",
+        "genre": "Crime, Thriller, Drama",
+        "relevant": false
+      },
+      {
+        "title": "Batman Begins",
+        "genre": "Action, Crime, Drama",
+        "relevant": false
+      }
+    ],
+    "cross_encoder_top5": [
+      {
+        "title": "Batman Returns",
+        "genre": "Action, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Batman Forever",
+        "genre": "Action, Crime, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Batman: Soul of the Dragon",
+        "genre": "Animation, Action, Adventure, Crime, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Batman v Superman: Dawn of Justice",
+        "genre": "Action, Adventure, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "The Batman",
+        "genre": "Crime, Mystery, Thriller",
+        "relevant": false
+      }
+    ]
+  },
+  {
+    "query_index": 90,
+    "query_title": "The Amazing Spider-Man",
+    "query_genre": "Action, Adventure, Fantasy",
+    "semantic_top5": [
+      {
+        "title": "The Amazing Spider-Man 2",
+        "genre": "Action, Adventure, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Spider-Man",
+        "genre": "Fantasy, Action",
+        "relevant": false
+      },
+      {
+        "title": "Spider-Man: Homecoming",
+        "genre": "Action, Adventure, Science Fiction, Drama",
+        "relevant": false
+      },
+      {
+        "title": "Spider-Man: No Way Home",
+        "genre": "Action, Adventure, Science Fiction",
+        "relevant": false
+      },
+      {
+        "title": "Spider-Man 3",
+        "genre": "Fantasy, Action, Adventure",
+        "relevant": false
+      }
+    ],
+    "cross_encoder_top5": [
+      {
+        "title": "The Amazing Spider-Man 2",
+        "genre": "Action, Adventure, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Spider-Man",
+        "genre": "Fantasy, Action",
+        "relevant": false
+      },
+      {
+        "title": "Spider-Man Strikes Back",
+        "genre": "Action, Adventure, Family, Fantasy, TV Movie",
+        "relevant": false
+      },
+      {
+        "title": "Spider-Man 2",
+        "genre": "Action, Adventure, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Spider-Man: Homecoming",
+        "genre": "Action, Adventure, Science Fiction, Drama",
+        "relevant": false
+      }
+    ]
+  },
+  {
+    "query_index": 92,
+    "query_title": "Avatar",
+    "query_genre": "Action, Adventure, Fantasy, Science Fiction",
+    "semantic_top5": [
+      {
+        "title": "The Last Airbender",
+        "genre": "Action, Adventure, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Avatar: Creating the World of Pandora",
+        "genre": "Documentary",
+        "relevant": false
+      },
+      {
+        "title": "Avatar 2",
+        "genre": "Action, Adventure, Science Fiction, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "The Fifth Element",
+        "genre": "Adventure, Fantasy, Action, Thriller, Science Fiction",
+        "relevant": false
+      },
+      {
+        "title": "Pandora",
+        "genre": "Thriller, Drama, Action",
+        "relevant": false
+      }
+    ],
+    "cross_encoder_top5": [
+      {
+        "title": "Avatar 2",
+        "genre": "Action, Adventure, Science Fiction, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "The Last Airbender",
+        "genre": "Action, Adventure, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Inuyashiki",
+        "genre": "Action, Adventure, Science Fiction, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "The Matrix",
+        "genre": "Action, Science Fiction",
+        "relevant": true
+      },
+      {
+        "title": "The Abyss",
+        "genre": "Adventure, Action, Thriller, Science Fiction",
+        "relevant": false
+      }
+    ]
+  },
+  {
+    "query_index": 109,
+    "query_title": "Batman Begins",
+    "query_genre": "Action, Crime, Drama",
+    "semantic_top5": [
+      {
+        "title": "The Dark Knight",
+        "genre": "Drama, Action, Crime, Thriller",
+        "relevant": true
+      },
+      {
+        "title": "Batman",
+        "genre": "Fantasy, Action",
+        "relevant": false
+      },
+      {
+        "title": "The Batman",
+        "genre": "Crime, Mystery, Thriller",
+        "relevant": false
+      },
+      {
+        "title": "Batman: Year One",
+        "genre": "Action, Animation, Crime, Science Fiction",
+        "relevant": false
+      },
+      {
+        "title": "Batman: Gotham Knight",
+        "genre": "Science Fiction, Animation, Action, Adventure",
+        "relevant": false
+      }
+    ],
+    "cross_encoder_top5": [
+      {
+        "title": "The Dark Knight",
+        "genre": "Drama, Action, Crime, Thriller",
+        "relevant": true
+      },
+      {
+        "title": "The Dark Knight Rises",
+        "genre": "Action, Crime, Drama, Thriller",
+        "relevant": false
+      },
+      {
+        "title": "Batman: Gotham by Gaslight",
+        "genre": "Thriller, Action, Animation, Science Fiction",
+        "relevant": false
+      },
+      {
+        "title": "The Batman",
+        "genre": "Crime, Mystery, Thriller",
+        "relevant": false
+      },
+      {
+        "title": "Batman: Year One",
+        "genre": "Action, Animation, Crime, Science Fiction",
+        "relevant": false
+      }
+    ]
+  },
+  {
+    "query_index": 159,
+    "query_title": "Harry Potter and the Chamber of Secrets",
+    "query_genre": "Adventure, Fantasy",
+    "semantic_top5": [
+      {
+        "title": "Harry Potter and the Half-Blood Prince",
+        "genre": "Adventure, Fantasy",
+        "relevant": true
+      },
+      {
+        "title": "Harry Potter and the Deathly Hallows: Part 1",
+        "genre": "Adventure, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Harry Potter and the Deathly Hallows: Part 2",
+        "genre": "Fantasy, Adventure",
+        "relevant": true
+      },
+      {
+        "title": "Harry Potter and the Philosopher's Stone",
+        "genre": "Adventure, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Harry Potter and the Prisoner of Azkaban",
+        "genre": "Adventure, Fantasy",
+        "relevant": true
+      }
+    ],
+    "cross_encoder_top5": [
+      {
+        "title": "Harry Potter and the Philosopher's Stone",
+        "genre": "Adventure, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Harry Potter and the Prisoner of Azkaban",
+        "genre": "Adventure, Fantasy",
+        "relevant": true
+      },
+      {
+        "title": "Harry Potter and the Order of the Phoenix",
+        "genre": "Adventure, Fantasy, Mystery",
+        "relevant": true
+      },
+      {
+        "title": "Harry Potter and the Half-Blood Prince",
+        "genre": "Adventure, Fantasy",
+        "relevant": true
+      },
+      {
+        "title": "Harry Potter and the Deathly Hallows: Part 2",
+        "genre": "Fantasy, Adventure",
+        "relevant": true
+      }
+    ],
+    "poster_fused_top5": [
+      {
+        "title": "Harry Potter and the Philosopher's Stone",
+        "genre": "Adventure, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Harry Potter and the Deathly Hallows: Part 2",
+        "genre": "Fantasy, Adventure",
+        "relevant": true
+      },
+      {
+        "title": "Harry Potter and the Prisoner of Azkaban",
+        "genre": "Adventure, Fantasy",
+        "relevant": true
+      },
+      {
+        "title": "Harry Potter and the Order of the Phoenix",
+        "genre": "Adventure, Fantasy, Mystery",
+        "relevant": true
+      },
+      {
+        "title": "Harry Potter and the Half-Blood Prince",
+        "genre": "Adventure, Fantasy",
+        "relevant": true
+      }
+    ]
+  },
+  {
+    "query_index": 221,
+    "query_title": "The Dark Knight",
+    "query_genre": "Drama, Action, Crime, Thriller",
+    "semantic_top5": [
+      {
+        "title": "The Dark Knight Rises",
+        "genre": "Action, Crime, Drama, Thriller",
+        "relevant": true
+      },
+      {
+        "title": "Batman",
+        "genre": "Fantasy, Action",
+        "relevant": false
+      },
+      {
+        "title": "Batman Begins",
+        "genre": "Action, Crime, Drama",
+        "relevant": true
+      },
+      {
+        "title": "Batman: Gotham Knight",
+        "genre": "Science Fiction, Animation, Action, Adventure",
+        "relevant": false
+      },
+      {
+        "title": "Batman: The Killing Joke",
+        "genre": "Action, Animation, Crime, Drama",
+        "relevant": false
+      }
+    ],
+    "cross_encoder_top5": [
+      {
+        "title": "The Dark Knight Rises",
+        "genre": "Action, Crime, Drama, Thriller",
+        "relevant": true
+      },
+      {
+        "title": "Batman: The Dark Knight Returns, Part 1",
+        "genre": "Science Fiction, Action, Animation, Mystery",
+        "relevant": false
+      },
+      {
+        "title": "Batman Begins",
+        "genre": "Action, Crime, Drama",
+        "relevant": true
+      },
+      {
+        "title": "Batman: Mask of the Phantasm",
+        "genre": "Action, Animation, Crime, Mystery",
+        "relevant": false
+      },
+      {
+        "title": "Batman: The Dark Knight Returns, Part 2",
+        "genre": "Science Fiction, Action, Animation, Mystery",
+        "relevant": false
+      }
+    ],
+    "poster_fused_top5": [
+      {
+        "title": "The Dark Knight Rises",
+        "genre": "Action, Crime, Drama, Thriller",
+        "relevant": true
+      },
+      {
+        "title": "Batman",
+        "genre": "Fantasy, Action",
+        "relevant": false
+      },
+      {
+        "title": "Batman: Gotham Knight",
+        "genre": "Science Fiction, Animation, Action, Adventure",
+        "relevant": false
+      },
+      {
+        "title": "Batman v Superman: Dawn of Justice",
+        "genre": "Action, Adventure, Fantasy",
+        "relevant": false
+      },
+      {
+        "title": "Batman Forever",
+        "genre": "Action, Crime, Fantasy",
+        "relevant": false
+      }
+    ]
+  },
+  {
+    "query_index": 234,
+    "query_title": "Shrek",
+    "query_genre": "Animation, Comedy, Fantasy, Adventure, Family",
+    "semantic_top5": [
+      {
+        "title": "Shrek 2",
+        "genre": "Animation, Family, Comedy, Fantasy, Adventure",
+        "relevant": false
+      },
+      {
+        "title": "Shrek the Halls",
+        "genre": "Adventure, Animation, Comedy, Fantasy, Family",
+        "relevant": false
+      },
+      {
+        "title": "Shrek Forever After",
+        "genre": "Comedy, Adventure, Fantasy, Animation, Family",
+        "relevant": false
+      },
+      {
+        "title": "Shrek the Third",
+        "genre": "Fantasy, Adventure, Animation, Comedy, Family",
+        "relevant": false
+      },
+      {
+        "title": "Scared Shrekless",
+        "genre": "Animation, Comedy",
+        "relevant": false
+      }
+    ],
+    "cross_encoder_top5": [
+      {
+        "title": "Shrek the Halls",
+        "genre": "Adventure, Animation, Comedy, Fantasy, Family",
+        "relevant": false
+      },
+      {
+        "title": "Shrek Forever After",
+        "genre": "Comedy, Adventure, Fantasy, Animation, Family",
+        "relevant": false
+      },
+      {
+        "title": "Shrek 2",
+        "genre": "Animation, Family, Comedy, Fantasy, Adventure",
+        "relevant": false
+      },
+      {
+        "title": "The Ghost of Lord Farquaad",
+        "genre": "Fantasy, Animation, Comedy, Family, Adventure",
+        "relevant": false
+      },
+      {
+        "title": "Shrek the Third",
+        "genre": "Fantasy, Adventure, Animation, Comedy, Family",
+        "relevant": false
+      }
+    ],
+    "poster_fused_top5": [
+      {
+        "title": "Shrek 2",
+        "genre": "Animation, Family, Comedy, Fantasy, Adventure",
+        "relevant": false
+      },
+      {
+        "title": "Shrek the Halls",
+        "genre": "Adventure, Animation, Comedy, Fantasy, Family",
+        "relevant": false
+      },
+      {
+        "title": "Shrek the Third",
+        "genre": "Fantasy, Adventure, Animation, Comedy, Family",
+        "relevant": false
+      },
+      {
+        "title": "Scared Shrekless",
+        "genre": "Animation, Comedy",
+        "relevant": false
+      },
+      {
+        "title": "The Ghost of Lord Farquaad",
+        "genre": "Fantasy, Animation, Comedy, Family, Adventure",
+        "relevant": false
+      }
+    ]
+  },
+  {
+    "query_index": 239,
+    "query_title": "The Hobbit: The Battle of the Five Armies",
+    "query_genre": "Action, Adventure, Fantasy",
+    "semantic_top5": [
+      {
+        "title": "The Hobbit: The Desolation of Smaug",
+        "genre": "Fantasy, Adventure, Action",
+        "relevant": true
+      },
+      {
+        "title": "The Lord of the Rings: The Two Towers",
+        "genre": "Adventure, Fantasy, Action",
+        "relevant": true
+      },
+      {
+        "title": "The Lord of the Rings: The Fellowship of the Ring",
+        "genre": "Adventure, Fantasy, Action",
+        "relevant": true
+      },
+      {
+        "title": "The Hobbit: An Unexpected Journey",
+        "genre": "Adventure, Fantasy, Action",
+        "relevant": true
+      },
+      {
+        "title": "The Lord of the Rings: The Return of the King",
+        "genre": "Adventure, Fantasy, Action",
+        "relevant": true
+      }
+    ],
+    "cross_encoder_top5": [
+      {
+        "title": "The Hobbit: The Desolation of Smaug",
+        "genre": "Fantasy, Adventure, Action",
+        "relevant": true
+      },
+      {
+        "title": "The Hobbit: An Unexpected Journey",
+        "genre": "Adventure, Fantasy, Action",
+        "relevant": true
+      },
+      {
+        "title": "The Lord of the Rings: The Fellowship of the Ring",
+        "genre": "Adventure, Fantasy, Action",
+        "relevant": true
+      },
+      {
+        "title": "The Hobbit",
+        "genre": "Family, Fantasy, Animation, Adventure, TV Movie",
+        "relevant": false
+      },
+      {
+        "title": "The Return of the King",
+        "genre": "Animation, Fantasy, Adventure",
+        "relevant": false
+      }
+    ],
+    "poster_fused_top5": [
+      {
+        "title": "The Hobbit: The Desolation of Smaug",
+        "genre": "Fantasy, Adventure, Action",
+        "relevant": true
+      },
+      {
+        "title": "The Lord of the Rings: The Fellowship of the Ring",
+        "genre": "Adventure, Fantasy, Action",
+        "relevant": true
+      },
+      {
+        "title": "The Lord of the Rings: The Return of the King",
+        "genre": "Adventure, Fantasy, Action",
+        "relevant": true
+      },
+      {
+        "title": "The Hobbit: An Unexpected Journey",
+        "genre": "Adventure, Fantasy, Action",
+        "relevant": true
+      },
+      {
+        "title": "The Lord of the Rings: The Two Towers",
+        "genre": "Adventure, Fantasy, Action",
+        "relevant": true
+      }
+    ]
+  }
+]
