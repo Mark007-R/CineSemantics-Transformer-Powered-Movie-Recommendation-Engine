@@ -106,8 +106,12 @@ def embed_csv(model, csv_path: str, text_column: str = None, batch_size: int = N
     logger.info(f"Found {len(texts)} rows, extracting embeddings...")
     try:
         all_embeddings = []
+        # E5 champion needs an instruction prefix (config.TEXT_MODEL_PREFIX);
+        # applied only at encode time, never stored in metadata. Empty string is
+        # a no-op for models that don't use a prefix (MiniLM/MPNet/BGE-symmetric).
+        prefix = getattr(config, 'TEXT_MODEL_PREFIX', '')
         for i in tqdm(range(0, len(texts), batch_size), desc="Processing batches"):
-            batch_texts = texts[i:i+batch_size]
+            batch_texts = [prefix + t for t in texts[i:i+batch_size]] if prefix else texts[i:i+batch_size]
             embeddings = model.encode(
                 batch_texts,
                 batch_size=batch_size,
@@ -133,8 +137,9 @@ def embed_text(model, text: str):
         return None
     try:
         logger.info(f"Processing query text: {text[:100]}...")
+        prefix = getattr(config, 'TEXT_MODEL_PREFIX', '')
         embedding = model.encode(
-            text,
+            (prefix + text) if prefix else text,
             convert_to_numpy=True,
             normalize_embeddings=True
         )

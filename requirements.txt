@@ -17,3 +17,10 @@ pymilvus
 milvus
 sentence-transformers
 streamlit
+# Day-3/5 upgrade: recsys + production API
+scikit-learn
+scipy
+implicit
+fastapi
+uvicorn
+pydantic
