@@ -1,0 +1,4 @@
+scenario,example,substring_vs_tokenset_disagreements,pct_disagree,verdict,substring_matches,tokenset_all_matches,substring_false_positive_matches,tokenset_matches
+single canonical genre (dropdown),e.g. 'Action',0.0,0.0,agree — substring OK for exact single genre,,,,
+"compound 'G1, G2' (AND intent)","'Action, Adventure'",,,substring misses 1877 true AND-matches (order-sensitive false negatives),1722.0,3599.0,,
+partial/fuzzy input,"'Sci','Rom','a','Anim','Fi'",,,substring returns 13450 garbage matches; token-set correctly returns 0,,,13450.0,0.0

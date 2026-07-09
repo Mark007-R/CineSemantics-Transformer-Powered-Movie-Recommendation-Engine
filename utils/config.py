@@ -4,8 +4,13 @@ Contains all configurable parameters for text and image embeddings,
 database connections, and search functionality.
 """
 # MODEL CONFIGURATIONS
-TEXT_MODEL_NAME = 'sentence-transformers/all-MiniLM-L6-v2'
-TEXT_EMBEDDING_DIMENSION = 384
+# Day-2 bake-off champion: e5-base-v2 (768-dim) beat the shipped MiniLM-L6-v2
+# (384-dim) on content-retrieval NDCG@10 0.0482 vs 0.0295 (+63%). E5 needs an
+# instruction prefix; for symmetric movie<->movie/query similarity we use
+# "query: " on every text (the scheme the Day-2/4 numbers were measured under).
+TEXT_MODEL_NAME = 'intfloat/e5-base-v2'
+TEXT_EMBEDDING_DIMENSION = 768
+TEXT_MODEL_PREFIX = 'query: '
 
 IMAGE_MODEL_NAME = 'openai/clip-vit-base-patch32'
 IMAGE_EMBEDDING_DIMENSION = 512
@@ -18,13 +23,34 @@ MILVUS_DEFAULT_SERVER_HOST = '127.0.0.1'
 TEXT_COLLECTION_NAME = 'movie_collection'
 IMAGE_COLLECTION_NAME = 'movie_posters'
 
+# Day-4 ANN sweep champion: HNSW matched exact NDCG@10 at ~3.9x lower p95 latency
+# than the previously-shipped IVF_FLAT default. IVF params kept for fallback.
 INDEX_METRIC_TYPE = 'IP'
-INDEX_TYPE = 'IVF_FLAT'
-INDEX_NLIST = 128
+INDEX_TYPE = 'HNSW'
+INDEX_NLIST = 128            # IVF_FLAT fallback
+HNSW_M = 32
+HNSW_EF_CONSTRUCTION = 200
 
 SEARCH_METRIC_TYPE = 'IP'
-SEARCH_NPROBE = 10
+SEARCH_NPROBE = 10          # IVF_FLAT fallback
+SEARCH_EF = 64             # HNSW efSearch (Day-4 champion operating point)
 SEARCH_MULTIPLIER = 3
+
+
+def build_index_params():
+    """Index params matching the active INDEX_TYPE (HNSW champion, else IVF_FLAT)."""
+    if INDEX_TYPE == 'HNSW':
+        return {"metric_type": INDEX_METRIC_TYPE, "index_type": "HNSW",
+                "params": {"M": HNSW_M, "efConstruction": HNSW_EF_CONSTRUCTION}}
+    return {"metric_type": INDEX_METRIC_TYPE, "index_type": INDEX_TYPE,
+            "params": {"nlist": INDEX_NLIST}}
+
+
+def build_search_params():
+    """Search params matching the active INDEX_TYPE."""
+    if INDEX_TYPE == 'HNSW':
+        return {"metric_type": SEARCH_METRIC_TYPE, "params": {"ef": SEARCH_EF}}
+    return {"metric_type": SEARCH_METRIC_TYPE, "params": {"nprobe": SEARCH_NPROBE}}
 
 # DATA PROCESSING CONFIGURATIONS
 DEFAULT_BATCH_SIZE = 32

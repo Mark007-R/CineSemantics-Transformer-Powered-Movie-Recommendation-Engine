@@ -11,6 +11,31 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def _genre_tokens(value):
+    """Split a raw genre field into a normalised set of discrete genre tokens."""
+    return {t.strip().lower() for t in re.split(r"[,/|]", str(value)) if t.strip()}
+
+
+def _genre_matches(movie_genre, genre_filter, mode="any"):
+    """Proper token-set genre match, replacing the old substring filter
+    (`genre_filter.lower() in movie_data['genre'].lower()`).
+
+    The substring filter had false positives ("War" hitting "Award"-style text,
+    partial-word collisions) AND false negatives ("Romance" not matching
+    "Romantic"), and could not tokenise a multi-genre field. This tokenises BOTH
+    the movie genres and the requested genre(s) and does exact set matching.
+    A single genre string still works (it becomes a one-element set), so the
+    search_similar_movies signature is unchanged.
+    """
+    have = _genre_tokens(movie_genre)
+    if not have:
+        return False
+    want = _genre_tokens(genre_filter)
+    if not want:
+        return True
+    return want.issubset(have) if mode == "all" else bool(have & want)
+
+
 def milvus_connect(host=None, port=None):
     if host is None:
         host = config.MILVUS_HOST
@@ -61,11 +86,7 @@ def create_text_collection(dimension=None):
         ]
         schema = CollectionSchema(fields=fields, description="Movie similarity search collection")
         collection = Collection(name=config.TEXT_COLLECTION_NAME, schema=schema)
-        index_params = {
-            "metric_type": config.INDEX_METRIC_TYPE,
-            "index_type": config.INDEX_TYPE,
-            "params": {"nlist": config.INDEX_NLIST}
-        }
+        index_params = config.build_index_params()
         collection.create_index(field_name="embedding", index_params=index_params)
         collection.load()
         logger.info("Collection created successfully")
@@ -107,11 +128,7 @@ def create_image_collection(collection_name=None, dimension=None):
         ]
         schema = CollectionSchema(fields=fields, description="Movie poster image similarity search")
         collection = Collection(name=collection_name, schema=schema)
-        index_params = {
-            "metric_type": config.INDEX_METRIC_TYPE,
-            "index_type": config.INDEX_TYPE,
-            "params": {"nlist": config.INDEX_NLIST}
-        }
+        index_params = config.build_index_params()
         collection.create_index(field_name="embedding", index_params=index_params)
         collection.load()
         logger.info(f"Collection '{collection_name}' created successfully")
@@ -319,7 +336,7 @@ def search_similar_movies(collection, model, query_text: str, top_k: int = None,
         if genre_filter:
             logger.info(f"Will apply genre post-filter: '{genre_filter}'")
         fetch_limit = top_k * config.SEARCH_MULTIPLIER if genre_filter else top_k
-        search_params = {"metric_type": config.SEARCH_METRIC_TYPE, "params": {"nprobe": config.SEARCH_NPROBE}}
+        search_params = config.build_search_params()
         results = collection.search(
             data=query_embedding.tolist(),
             anns_field="embedding",
@@ -351,7 +368,7 @@ def search_similar_movies(collection, model, query_text: str, top_k: int = None,
                     'similarity_percent': f"{float(hit.distance) * 100:.2f}%"
                 }
                 if genre_filter:
-                    if genre_filter.lower() in movie_data['genre'].lower():
+                    if _genre_matches(movie_data['genre'], genre_filter):
                         movies.append(movie_data)
                 else:
                     movies.append(movie_data)

@@ -1,0 +1,244 @@
+{
+  "health": {
+    "status": "ok",
+    "catalog_size": 9837,
+    "embedding_model": "intfloat/e5-base-v2",
+    "index": "HNSW",
+    "poster_embeddings": 4083,
+    "recommender_loaded": true
+  },
+  "search_scifi": [
+    {
+      "index": 1454,
+      "title": "The Legend of the Galactic Heroes: Die Neue These Seiran 1",
+      "genre": "Animation, Science Fiction",
+      "release_date": "2019-09-27",
+      "score": 0.8368,
+      "method": "search"
+    },
+    {
+      "index": 7117,
+      "title": "Royal Space Force - The Wings Of Honneamise",
+      "genre": "Animation, Science Fiction",
+      "release_date": "1987-03-14",
+      "score": 0.8194,
+      "method": "search"
+    },
+    {
+      "index": 9820,
+      "title": "Earth vs. the Flying Saucers",
+      "genre": "Action, Science Fiction",
+      "release_date": "1956-07-04",
+      "score": 0.8167,
+      "method": "search"
+    },
+    {
+      "index": 337,
+      "title": "Cosmic Sin",
+      "genre": "Action, Adventure, Science Fiction",
+      "release_date": "2021-03-12",
+      "score": 0.8156,
+      "method": "search"
+    },
+    {
+      "index": 9262,
+      "title": "Godzilla vs. SpaceGodzilla",
+      "genre": "Action, Adventure, Science Fiction",
+      "release_date": "1994-12-10",
+      "score": 0.814,
+      "method": "search"
+    }
+  ],
+  "search_action_comedy_all_rating7": [
+    {
+      "index": 4690,
+      "title": "Beverly Hills Cop",
+      "genre": "Action, Comedy, Crime",
+      "release_date": "1984-11-30",
+      "score": 0.8229,
+      "method": "search"
+    },
+    {
+      "index": 8547,
+      "title": "Extreme Job",
+      "genre": "Action, Comedy, Crime",
+      "release_date": "2019-01-23",
+      "score": 0.8177,
+      "method": "search"
+    },
+    {
+      "index": 8959,
+      "title": "The Guard",
+      "genre": "Action, Comedy, Thriller, Crime",
+      "release_date": "2011-07-07",
+      "score": 0.8123,
+      "method": "search"
+    },
+    {
+      "index": 7178,
+      "title": "Let the Bullets Fly",
+      "genre": "Action, Comedy",
+      "release_date": "2010-12-20",
+      "score": 0.8135,
+      "method": "search"
+    },
+    {
+      "index": 9049,
+      "title": "Midnight Runners",
+      "genre": "Comedy, Action, Mystery",
+      "release_date": "2017-08-09",
+      "score": 0.8169,
+      "method": "search"
+    }
+  ],
+  "similar_text": [
+    {
+      "index": 211,
+      "title": "The Dark Knight Rises",
+      "genre": "Action, Crime, Drama, Thriller",
+      "release_date": "2012-07-16",
+      "score": 0.9324,
+      "method": "text"
+    },
+    {
+      "index": 72,
+      "title": "Batman",
+      "genre": "Fantasy, Action",
+      "release_date": "1989-06-23",
+      "score": 0.9148,
+      "method": "text"
+    },
+    {
+      "index": 109,
+      "title": "Batman Begins",
+      "genre": "Action, Crime, Drama",
+      "release_date": "2005-06-10",
+      "score": 0.9046,
+      "method": "text"
+    },
+    {
+      "index": 3520,
+      "title": "Batman: Gotham Knight",
+      "genre": "Science Fiction, Animation, Action, Adventure",
+      "release_date": "2008-07-08",
+      "score": 0.9038,
+      "method": "text"
+    },
+    {
+      "index": 855,
+      "title": "Batman: The Killing Joke",
+      "genre": "Action, Animation, Crime, Drama",
+      "release_date": "2016-07-24",
+      "score": 0.8988,
+      "method": "text"
+    }
+  ],
+  "similar_poster_fusion": [
+    {
+      "index": 211,
+      "title": "The Dark Knight Rises",
+      "genre": "Action, Crime, Drama, Thriller",
+      "release_date": "2012-07-16",
+      "score": 0.9167,
+      "method": "poster_fusion"
+    },
+    {
+      "index": 72,
+      "title": "Batman",
+      "genre": "Fantasy, Action",
+      "release_date": "1989-06-23",
+      "score": 0.8891,
+      "method": "poster_fusion"
+    },
+    {
+      "index": 3520,
+      "title": "Batman: Gotham Knight",
+      "genre": "Science Fiction, Animation, Action, Adventure",
+      "release_date": "2008-07-08",
+      "score": 0.8866,
+      "method": "poster_fusion"
+    },
+    {
+      "index": 767,
+      "title": "Batman: Hush",
+      "genre": "Science Fiction, Crime, Animation, Mystery, Action",
+      "release_date": "2019-07-19",
+      "score": 0.8727,
+      "method": "poster_fusion"
+    },
+    {
+      "index": 213,
+      "title": "Batman v Superman: Dawn of Justice",
+      "genre": "Action, Adventure, Fantasy",
+      "release_date": "2016-03-23",
+      "score": 0.8726,
+      "method": "poster_fusion"
+    }
+  ],
+  "recommend_cf": [
+    {
+      "index": 211,
+      "title": "The Dark Knight Rises",
+      "genre": "Action, Crime, Drama, Thriller",
+      "release_date": "2012-07-16",
+      "score": 1.3334,
+      "method": "itemknn"
+    },
+    {
+      "index": 1333,
+      "title": "Shutter Island",
+      "genre": "Drama, Thriller, Mystery",
+      "release_date": "2010-02-14",
+      "score": 1.2852,
+      "method": "itemknn"
+    },
+    {
+      "index": 407,
+      "title": "Fight Club",
+      "genre": "Drama",
+      "release_date": "1999-10-15",
+      "score": 1.2713,
+      "method": "itemknn"
+    },
+    {
+      "index": 2342,
+      "title": "The Departed",
+      "genre": "Drama, Thriller, Crime",
+      "release_date": "2006-10-04",
+      "score": 1.1995,
+      "method": "itemknn"
+    },
+    {
+      "index": 109,
+      "title": "Batman Begins",
+      "genre": "Action, Crime, Drama",
+      "release_date": "2005-06-10",
+      "score": 1.1951,
+      "method": "itemknn"
+    },
+    {
+      "index": 419,
+      "title": "The Lord of the Rings: The Return of the King",
+      "genre": "Adventure, Fantasy, Action",
+      "release_date": "2003-12-01",
+      "score": 1.1938,
+      "method": "itemknn"
+    },
+    {
+      "index": 1233,
+      "title": "Guardians of the Galaxy",
+      "genre": "Action, Science Fiction, Adventure",
+      "release_date": "2014-07-30",
+      "score": 1.1806,
+      "method": "itemknn"
+    },
+    {
+      "index": 483,
+      "title": "Up",
+      "genre": "Animation, Comedy, Family, Adventure",
+      "release_date": "2009-05-28",
+      "score": 1.1805,
+      "method": "itemknn"
+    }
+  ]
+}

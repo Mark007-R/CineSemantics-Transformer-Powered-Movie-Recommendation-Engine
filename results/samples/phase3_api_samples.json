@@ -1,0 +1,332 @@
+{
+  "search": [
+    {
+      "query": "space war between galactic empires",
+      "genre_filter": "Science Fiction",
+      "results": [
+        {
+          "title": "The Legend of the Galactic Heroes: Die Neue These Seiran 1",
+          "genre": "Animation, Science Fiction",
+          "score": 0.8368
+        },
+        {
+          "title": "Royal Space Force - The Wings Of Honneamise",
+          "genre": "Animation, Science Fiction",
+          "score": 0.8194
+        },
+        {
+          "title": "Earth vs. the Flying Saucers",
+          "genre": "Action, Science Fiction",
+          "score": 0.8167
+        },
+        {
+          "title": "Cosmic Sin",
+          "genre": "Action, Adventure, Science Fiction",
+          "score": 0.8156
+        },
+        {
+          "title": "Godzilla vs. SpaceGodzilla",
+          "genre": "Action, Adventure, Science Fiction",
+          "score": 0.814
+        }
+      ]
+    },
+    {
+      "query": "romantic comedy in paris",
+      "genre_filter": "Romance",
+      "results": [
+        {
+          "title": "Midnight in Paris",
+          "genre": "Fantasy, Comedy, Romance",
+          "score": 0.8568
+        },
+        {
+          "title": "French Kiss",
+          "genre": "Comedy, Romance",
+          "score": 0.8419
+        },
+        {
+          "title": "Paris Can Wait",
+          "genre": "Romance, Comedy, Drama",
+          "score": 0.837
+        },
+        {
+          "title": "Le Divorce",
+          "genre": "Comedy, Drama, Romance",
+          "score": 0.837
+        },
+        {
+          "title": "Friendzone",
+          "genre": "Romance, Comedy",
+          "score": 0.8254
+        }
+      ]
+    },
+    {
+      "query": "gritty crime thriller",
+      "genre_filter": "Thriller",
+      "results": [
+        {
+          "title": "Den of Thieves",
+          "genre": "Action, Thriller, Crime",
+          "score": 0.8448
+        },
+        {
+          "title": "Ricochet",
+          "genre": "Crime, Thriller, Action",
+          "score": 0.8381
+        },
+        {
+          "title": "Raw Justice",
+          "genre": "Thriller, Action",
+          "score": 0.8375
+        },
+        {
+          "title": "A Hard Day",
+          "genre": "Action, Crime, Thriller",
+          "score": 0.8366
+        },
+        {
+          "title": "I Am Wrath",
+          "genre": "Action, Crime, Drama, Thriller",
+          "score": 0.8338
+        }
+      ]
+    }
+  ],
+  "similar": [
+    {
+      "movie": "The Dark Knight",
+      "text_only": [
+        "The Dark Knight Rises",
+        "Batman",
+        "Batman Begins",
+        "Batman: Gotham Knight",
+        "Batman: The Killing Joke"
+      ],
+      "poster_fused": [
+        "The Dark Knight Rises",
+        "Batman",
+        "Batman: Gotham Knight",
+        "Batman: Hush",
+        "Batman v Superman: Dawn of Justice"
+      ]
+    },
+    {
+      "movie": "Toy Story",
+      "text_only": [
+        "Toy Story 2",
+        "Toy Story 3",
+        "Toy Story 4",
+        "Buzz Lightyear of Star Command: The Adventure Begins",
+        "Toy Story That Time Forgot"
+      ],
+      "poster_fused": [
+        "Toy Story 2",
+        "Toy Story 3",
+        "Toy Story 4",
+        "Small Fry",
+        "Monsters University"
+      ]
+    },
+    {
+      "movie": "Inception",
+      "text_only": [
+        "Tenet",
+        "The Shadow Effect",
+        "Unknown",
+        "In Time",
+        "Interview with a Hitman"
+      ],
+      "poster_fused": [
+        "Tenet",
+        "The Shadow Effect",
+        "Unknown",
+        "In Time",
+        "Interview with a Hitman"
+      ]
+    }
+  ],
+  "recommend": [
+    {
+      "user": 1,
+      "liked_sample": [
+        "The 13th Warrior",
+        "Bambi",
+        "Star Wars: Episode I - The Phantom Menace",
+        "Gladiator",
+        "Road Trip"
+      ],
+      "recommended": [
+        {
+          "title": "Groundhog Day",
+          "genre": "Romance, Fantasy, Drama, Comedy",
+          "hit": true,
+          "method": "itemknn"
+        },
+        {
+          "title": "Ferris Bueller's Day Off",
+          "genre": "Comedy",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "The Terminator",
+          "genre": "Action, Thriller, Science Fiction",
+          "hit": true,
+          "method": "itemknn"
+        },
+        {
+          "title": "Back to the Future",
+          "genre": "Adventure, Comedy, Science Fiction, Family",
+          "hit": true,
+          "method": "itemknn"
+        },
+        {
+          "title": "The Godfather",
+          "genre": "Drama, Crime",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "Die Hard",
+          "genre": "Action, Thriller",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "The Godfather: Part II",
+          "genre": "Drama, Crime",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "The Silence of the Lambs",
+          "genre": "Crime, Drama, Thriller",
+          "hit": true,
+          "method": "itemknn"
+        }
+      ]
+    },
+    {
+      "user": 2,
+      "liked_sample": [
+        "Inception",
+        "Whiplash",
+        "Gladiator",
+        "Shutter Island",
+        "Kill Bill: Vol. 1"
+      ],
+      "recommended": [
+        {
+          "title": "Fight Club",
+          "genre": "Drama",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "Django Unchained",
+          "genre": "Drama, Western",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "The Dark Knight Rises",
+          "genre": "Action, Crime, Drama, Thriller",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "The Lord of the Rings: The Return of the King",
+          "genre": "Adventure, Fantasy, Action",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "Batman Begins",
+          "genre": "Action, Crime, Drama",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "The Hangover",
+          "genre": "Comedy",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "The Lord of the Rings: The Fellowship of the Ring",
+          "genre": "Adventure, Fantasy, Action",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "The Matrix",
+          "genre": "Action, Science Fiction",
+          "hit": false,
+          "method": "itemknn"
+        }
+      ]
+    },
+    {
+      "user": 4,
+      "liked_sample": [
+        "Breakfast at Tiffany's",
+        "Maverick",
+        "High Noon",
+        "High Plains Drifter",
+        "Labyrinth"
+      ],
+      "recommended": [
+        {
+          "title": "The Godfather",
+          "genre": "Drama, Crime",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "Monty Python and the Holy Grail",
+          "genre": "Adventure, Comedy, Fantasy",
+          "hit": true,
+          "method": "itemknn"
+        },
+        {
+          "title": "Reservoir Dogs",
+          "genre": "Crime, Thriller",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "A Fish Called Wanda",
+          "genre": "Comedy, Crime",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "The Godfather: Part II",
+          "genre": "Drama, Crime",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "Ferris Bueller's Day Off",
+          "genre": "Comedy",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "The Graduate",
+          "genre": "Comedy, Drama",
+          "hit": false,
+          "method": "itemknn"
+        },
+        {
+          "title": "L.A. Confidential",
+          "genre": "Crime, Drama, Mystery, Thriller",
+          "hit": false,
+          "method": "itemknn"
+        }
+      ]
+    }
+  ]
+}
