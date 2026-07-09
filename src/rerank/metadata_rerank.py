@@ -52,6 +52,31 @@ class MetadataReranker:
         scored.sort(key=lambda x: x[1], reverse=True)
         return [i for i, _ in scored]
 
+    def rerank_query(self, candidate_idx, cosines, query_genres=None) -> list[int]:
+        """Rerank a candidate pool for a FREE-TEXT query (no query movie index).
+
+        Unlike item-item rerank, a text query has no genres of its own, so the
+        Day-4 genre-Jaccard anchor is undefined. Two principled cases:
+          * caller supplied `query_genres` (e.g. the /search genre filter) -> use
+            those as the Jaccard anchor (honours stated intent);
+          * otherwise -> drop the Jaccard term and rerank by cosine + the
+            popularity prior only (Day-1 showed popularity is the dominant signal;
+            a fabricated anchor genre would just bias toward one arbitrary result).
+        """
+        want: set[str] = set()
+        for g in (query_genres or []):
+            want |= _genre_set(g)
+        scored = []
+        for i, cos in zip(candidate_idx, cosines):
+            jac = 0.0
+            if want:
+                gi = self.genres[i]
+                u = want | gi
+                jac = (len(want & gi) / len(u)) if u else 0.0
+            scored.append((int(i), float(cos) + self.a * jac + self.b * float(self.pop_norm[i])))
+        scored.sort(key=lambda x: x[1], reverse=True)
+        return [i for i, _ in scored]
+
     def rerank_scores(self, query_idx: int, candidate_idx, cosines):
         gq = self.genres[query_idx]
         out = []

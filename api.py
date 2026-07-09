@@ -119,17 +119,13 @@ async def search(req: SearchRequest):
                       min_popularity=req.min_popularity,
                       overfetch=30 if req.rerank else 20)
     if req.rerank and hits:
-        # rerank the returned pool by the query's own genre profile is undefined
-        # for a free-text query, so rerank uses popularity + cosine only via a
-        # pseudo query: reuse cosine order (already ranked) — metadata rerank here
-        # applies the popularity prior over the candidate pool.
+        # Principled text-query rerank: cosine + popularity prior, plus a
+        # genre-Jaccard term against the REQUESTED genres when the caller supplied
+        # them (no fabricated anchor). See MetadataReranker.rerank_query.
         rr: MetadataReranker = STATE["reranker"]
         cand = [h["index"] for h in hits]
         cos = [h["score"] for h in hits]
-        # genre-Jaccard needs a query genre set; for text search we skip Jaccard by
-        # passing the top hit's genre as the anchor (keeps popularity prior active).
-        anchor = cand[0]
-        ordered = rr.rerank(anchor, cand, cos)
+        ordered = rr.rerank_query(cand, cos, query_genres=req.genres)
         by_idx = {h["index"]: h for h in hits}
         hits = [by_idx[i] for i in ordered]
     return [Movie(**{**h, "method": "search"}) for h in hits[:req.top_k]]

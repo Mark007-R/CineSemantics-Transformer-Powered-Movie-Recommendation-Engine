@@ -191,3 +191,19 @@ New: `src/retrieval/{embedder,index,metadata_filter}.py`, `src/recsys/recommende
 `src/rerank/metadata_rerank.py`, `src/integrate_champions.py`, `api.py`, package
 `__init__` exports, `src/__init__.py`. Modified: `utils/config.py`,
 `utils/text_embedder.py`, `utils/milvus_vectordb.py`, `requirements.txt`.
+
+## Day-5 follow-up (same-day hardening PR)
+Two integration-quality gaps found on self-review and fixed in a follow-up PR:
+1. **Principled `/search` rerank.** The first cut faked a genre-Jaccard anchor from
+   the top hit (arbitrary). Replaced with `MetadataReranker.rerank_query`: cosine +
+   popularity prior, plus genre-Jaccard against the **requested** genres when the
+   caller supplies them, else popularity-only. Verified live (genre-filtered query
+   → all-Romance; free-text → popularity-reranked; `rerank:false` honoured).
+2. **Integration regression lock.** `tests/test_day5_integration.py` — 10 fast
+   pytest tests covering the headline genre-filter fix (incl. the substring
+   false-positive/negative it repairs), config champions + param builders,
+   numeric filters, the CF recommender (seen-exclusion, catalog-validity,
+   cold-start fallback, save/load round-trip), the text-query reranker, and the
+   HNSW item-item path on cached embeddings. **10 passed in 3.65s.** This is the
+   integration lock, distinct from Day-10's full per-module suite. Also added
+   `src/eval/__init__.py` (packaging).
