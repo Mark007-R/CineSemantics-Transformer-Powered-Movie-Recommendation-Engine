@@ -13,6 +13,19 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def _query_prefix():
+    """Instruction prefix for the configured encoder.
+
+    The Day-2 champion e5-base-v2 requires an instruction prefix; for the
+    symmetric 'more like this' task both catalog text and queries are prefixed
+    with 'query: '. Returns '' for models that need no prefix (MiniLM/MPNet/BGE),
+    so this stays a no-op if TEXT_MODEL_NAME is reverted.
+    """
+    if 'e5' in config.TEXT_MODEL_NAME.lower():
+        return getattr(config, 'TEXT_QUERY_PREFIX', 'query: ')
+    return ''
+
+
 def _safe_float(value, default=None):
     if default is None:
         default = config.DEFAULT_FLOAT_VALUE
@@ -90,7 +103,7 @@ def embed_csv(model, csv_path: str, text_column: str = None, batch_size: int = N
         if overview:
             text_parts.append(overview)
         text = ". ".join(text_parts).strip()
-        texts.append(text)
+        texts.append(_query_prefix() + text)
         metadata.append({
             'index': int(idx),
             'title': str(row.get('Title', ''))[:config.TEXT_TITLE_MAX_LENGTH].strip(),
@@ -134,7 +147,7 @@ def embed_text(model, text: str):
     try:
         logger.info(f"Processing query text: {text[:100]}...")
         embedding = model.encode(
-            text,
+            _query_prefix() + text,
             convert_to_numpy=True,
             normalize_embeddings=True
         )

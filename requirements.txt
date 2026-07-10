@@ -17,3 +17,12 @@ pymilvus
 milvus
 sentence-transformers
 streamlit
+# --- upgrade-sprint additions ---
+scikit-learn        # Day-3 CF (ItemKNN cosine) + metrics
+scipy               # Day-3 sparse interaction matrix / SVD
+implicit            # Day-3 ALS baseline
+fastapi             # Day-5 production API
+uvicorn             # Day-5 ASGI server
+pydantic>=2         # Day-5 request/response validation
+httpx               # Day-5 API smoke test (TestClient)
+pytest              # Day-5 integration tests

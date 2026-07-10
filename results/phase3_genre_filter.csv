@@ -1,0 +1,9 @@
+query,kind,substring_matches,tokenset_matches,false_positives
+Action,clean vocab,2686,2686,0
+Comedy,clean vocab,3031,3031,0
+Drama,clean vocab,3744,3744,0
+Romance,clean vocab,1476,1476,0
+art,partial input,0,0,0
+rom,partial input,1476,0,1476
+comed,partial input,3031,0,3031
+hist,partial input,427,0,427

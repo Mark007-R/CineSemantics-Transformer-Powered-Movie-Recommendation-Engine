@@ -1,0 +1,35 @@
+{
+  "day": 5,
+  "project": "CineSemantics",
+  "phase": "Phase 3 - integration",
+  "date": "2026-07-10",
+  "reproduction": {
+    "content_exact (MovieIndex flat)": {
+      "ndcg@10": 0.0482,
+      "reference": "Day-2 0.0482"
+    },
+    "content_hnsw ef=64 (MovieIndex hnsw)": {
+      "ndcg@10": 0.0482,
+      "reference": "Day-4 0.0481"
+    },
+    "content_hnsw + metadata_rerank": {
+      "ndcg@10": 0.1847,
+      "reference": "Day-2 0.1755 (test half)"
+    },
+    "personalized_itemknn (Recommender)": {
+      "ndcg@10": 0.1059,
+      "reference": "Day-3 0.1059"
+    },
+    "cold_start_1seed (content fallback)": {
+      "ndcg@10": 0.015,
+      "reference": "honest cold-start gap"
+    }
+  },
+  "genre_filter_fix": {
+    "partial_input_false_positives": 4934,
+    "action_and_comedy_titles": 526,
+    "action_or_horror_titles": 3951,
+    "note": "clean single genres agree; substring fails on partial input and cannot express multi-genre AND/OR"
+  },
+  "catalog_valid_recs": true
+}

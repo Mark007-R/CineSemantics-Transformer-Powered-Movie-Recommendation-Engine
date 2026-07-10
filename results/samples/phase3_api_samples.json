@@ -1,0 +1,249 @@
+{
+  "similar": [
+    {
+      "query_title": "Batman",
+      "results": [
+        {
+          "title": "The Dark Knight",
+          "genre": "Drama, Action, Crime, Thriller",
+          "score": 0.9148
+        },
+        {
+          "title": "Batman Returns",
+          "genre": "Action, Fantasy",
+          "score": 0.9127
+        },
+        {
+          "title": "Batman Forever",
+          "genre": "Action, Crime, Fantasy",
+          "score": 0.9087
+        },
+        {
+          "title": "Joker",
+          "genre": "Crime, Thriller, Drama",
+          "score": 0.9024
+        },
+        {
+          "title": "Batman Begins",
+          "genre": "Action, Crime, Drama",
+          "score": 0.9005
+        }
+      ]
+    },
+    {
+      "query_title": "The Amazing Spider-Man",
+      "results": [
+        {
+          "title": "The Amazing Spider-Man 2",
+          "genre": "Action, Adventure, Fantasy",
+          "score": 0.9093
+        },
+        {
+          "title": "Spider-Man",
+          "genre": "Fantasy, Action",
+          "score": 0.9013
+        },
+        {
+          "title": "Spider-Man: Homecoming",
+          "genre": "Action, Adventure, Science Fiction, Drama",
+          "score": 0.889
+        },
+        {
+          "title": "Spider-Man: No Way Home",
+          "genre": "Action, Adventure, Science Fiction",
+          "score": 0.8889
+        },
+        {
+          "title": "Spider-Man 3",
+          "genre": "Fantasy, Action, Adventure",
+          "score": 0.8874
+        }
+      ]
+    },
+    {
+      "query_title": "Avatar",
+      "results": [
+        {
+          "title": "The Last Airbender",
+          "genre": "Action, Adventure, Fantasy",
+          "score": 0.9077
+        },
+        {
+          "title": "Avatar: Creating the World of Pandora",
+          "genre": "Documentary",
+          "score": 0.8911
+        },
+        {
+          "title": "Avatar 2",
+          "genre": "Action, Adventure, Science Fiction, Fantasy",
+          "score": 0.8888
+        },
+        {
+          "title": "The Fifth Element",
+          "genre": "Adventure, Fantasy, Action, Thriller, Science Fiction",
+          "score": 0.8825
+        },
+        {
+          "title": "Pandora",
+          "genre": "Thriller, Drama, Action",
+          "score": 0.88
+        }
+      ]
+    }
+  ],
+  "recommend": [
+    {
+      "user_id": 1,
+      "liked_sample": [
+        "The 13th Warrior",
+        "Bambi",
+        "Star Wars: Episode I - The Phantom Menace",
+        "Gladiator"
+      ],
+      "recommendations": [
+        {
+          "title": "Groundhog Day",
+          "genre": "Romance, Fantasy, Drama, Comedy",
+          "hit": true
+        },
+        {
+          "title": "Ferris Bueller's Day Off",
+          "genre": "Comedy",
+          "hit": false
+        },
+        {
+          "title": "The Terminator",
+          "genre": "Action, Thriller, Science Fiction",
+          "hit": true
+        },
+        {
+          "title": "Back to the Future",
+          "genre": "Adventure, Comedy, Science Fiction, Family",
+          "hit": true
+        },
+        {
+          "title": "The Godfather",
+          "genre": "Drama, Crime",
+          "hit": false
+        }
+      ],
+      "all_in_catalog": true
+    },
+    {
+      "user_id": 2,
+      "liked_sample": [
+        "Inception",
+        "Whiplash",
+        "Gladiator",
+        "Shutter Island"
+      ],
+      "recommendations": [
+        {
+          "title": "Fight Club",
+          "genre": "Drama",
+          "hit": false
+        },
+        {
+          "title": "Django Unchained",
+          "genre": "Drama, Western",
+          "hit": false
+        },
+        {
+          "title": "The Dark Knight Rises",
+          "genre": "Action, Crime, Drama, Thriller",
+          "hit": false
+        },
+        {
+          "title": "The Lord of the Rings: The Return of the King",
+          "genre": "Adventure, Fantasy, Action",
+          "hit": false
+        },
+        {
+          "title": "Batman Begins",
+          "genre": "Action, Crime, Drama",
+          "hit": false
+        }
+      ],
+      "all_in_catalog": true
+    },
+    {
+      "user_id": 4,
+      "liked_sample": [
+        "Breakfast at Tiffany's",
+        "Maverick",
+        "High Noon",
+        "High Plains Drifter"
+      ],
+      "recommendations": [
+        {
+          "title": "The Godfather",
+          "genre": "Drama, Crime",
+          "hit": false
+        },
+        {
+          "title": "Monty Python and the Holy Grail",
+          "genre": "Adventure, Comedy, Fantasy",
+          "hit": true
+        },
+        {
+          "title": "Reservoir Dogs",
+          "genre": "Crime, Thriller",
+          "hit": false
+        },
+        {
+          "title": "A Fish Called Wanda",
+          "genre": "Comedy, Crime",
+          "hit": false
+        },
+        {
+          "title": "The Godfather: Part II",
+          "genre": "Drama, Crime",
+          "hit": false
+        }
+      ],
+      "all_in_catalog": true
+    }
+  ],
+  "search_genre_and": [
+    {
+      "title": "Free Guy",
+      "genre": "Comedy, Action, Adventure, Science Fiction",
+      "rating": 7.7
+    },
+    {
+      "title": "Jungle Cruise",
+      "genre": "Action, Adventure, Comedy, Fantasy",
+      "rating": 7.6
+    },
+    {
+      "title": "Boruto: Naruto the Movie",
+      "genre": "Animation, Action, Comedy",
+      "rating": 7.7
+    },
+    {
+      "title": "Sonic the Hedgehog",
+      "genre": "Action, Science Fiction, Comedy, Family",
+      "rating": 7.4
+    },
+    {
+      "title": "Matando Cabos 2: La M\u00e1scara del M\u00e1scara",
+      "genre": "Action, Comedy, Adventure",
+      "rating": 7.8
+    },
+    {
+      "title": "Pretty Guardian Sailor Moon Eternal The Movie Part 2",
+      "genre": "Animation, Action, Adventure, Comedy, Drama, Fantasy, Romance",
+      "rating": 8.1
+    },
+    {
+      "title": "Deadpool",
+      "genre": "Action, Adventure, Comedy",
+      "rating": 7.6
+    },
+    {
+      "title": "Jackass Forever",
+      "genre": "Action, Comedy, Documentary",
+      "rating": 7.1
+    }
+  ]
+}

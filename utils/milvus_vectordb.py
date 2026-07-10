@@ -11,6 +11,45 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def _build_index_params():
+    """Index params for the configured index type.
+
+    Day-4 champion is HNSW (M / efConstruction); IVF_FLAT (nlist) is kept as a
+    fallback so the collection still builds if INDEX_TYPE is reverted.
+    """
+    if config.INDEX_TYPE == 'HNSW':
+        params = {"M": config.HNSW_M, "efConstruction": config.HNSW_EF_CONSTRUCTION}
+    else:
+        params = {"nlist": config.INDEX_NLIST}
+    return {"metric_type": config.INDEX_METRIC_TYPE,
+            "index_type": config.INDEX_TYPE, "params": params}
+
+
+def _build_search_params():
+    """Search params matched to the configured index type (HNSW ef / IVF nprobe)."""
+    if config.INDEX_TYPE == 'HNSW':
+        params = {"ef": config.SEARCH_EF}
+    else:
+        params = {"nprobe": config.SEARCH_NPROBE}
+    return {"metric_type": config.SEARCH_METRIC_TYPE, "params": params}
+
+
+def _genre_matches(query_genre, movie_genre):
+    """Token-set genre match replacing the old substring test (line 354).
+
+    The original `query_genre.lower() in movie_genre.lower()` produced false
+    positives on partial input (e.g. "art" matched "Martial Arts") and could not
+    express multi-genre intent. This compares tokenised genre sets: the query
+    string is split on , / | and every requested token must be present.
+    """
+    def toks(g):
+        return {t.strip().lower() for t in re.split(r"[,/|]", str(g)) if t.strip()}
+    want = toks(query_genre)
+    if not want:
+        return True
+    return want.issubset(toks(movie_genre))
+
+
 def milvus_connect(host=None, port=None):
     if host is None:
         host = config.MILVUS_HOST
@@ -61,11 +100,7 @@ def create_text_collection(dimension=None):
         ]
         schema = CollectionSchema(fields=fields, description="Movie similarity search collection")
         collection = Collection(name=config.TEXT_COLLECTION_NAME, schema=schema)
-        index_params = {
-            "metric_type": config.INDEX_METRIC_TYPE,
-            "index_type": config.INDEX_TYPE,
-            "params": {"nlist": config.INDEX_NLIST}
-        }
+        index_params = _build_index_params()
         collection.create_index(field_name="embedding", index_params=index_params)
         collection.load()
         logger.info("Collection created successfully")
@@ -107,11 +142,7 @@ def create_image_collection(collection_name=None, dimension=None):
         ]
         schema = CollectionSchema(fields=fields, description="Movie poster image similarity search")
         collection = Collection(name=collection_name, schema=schema)
-        index_params = {
-            "metric_type": config.INDEX_METRIC_TYPE,
-            "index_type": config.INDEX_TYPE,
-            "params": {"nlist": config.INDEX_NLIST}
-        }
+        index_params = _build_index_params()
         collection.create_index(field_name="embedding", index_params=index_params)
         collection.load()
         logger.info(f"Collection '{collection_name}' created successfully")
@@ -319,7 +350,7 @@ def search_similar_movies(collection, model, query_text: str, top_k: int = None,
         if genre_filter:
             logger.info(f"Will apply genre post-filter: '{genre_filter}'")
         fetch_limit = top_k * config.SEARCH_MULTIPLIER if genre_filter else top_k
-        search_params = {"metric_type": config.SEARCH_METRIC_TYPE, "params": {"nprobe": config.SEARCH_NPROBE}}
+        search_params = _build_search_params()
         results = collection.search(
             data=query_embedding.tolist(),
             anns_field="embedding",
@@ -351,7 +382,7 @@ def search_similar_movies(collection, model, query_text: str, top_k: int = None,
                     'similarity_percent': f"{float(hit.distance) * 100:.2f}%"
                 }
                 if genre_filter:
-                    if genre_filter.lower() in movie_data['genre'].lower():
+                    if _genre_matches(genre_filter, movie_data['genre']):
                         movies.append(movie_data)
                 else:
                     movies.append(movie_data)
@@ -383,7 +414,7 @@ def search_similar_images(collection, model, processor, device, query_image_path
             logger.error("Failed to get query embedding")
             return []
         query_list = query_embedding.astype("float32").flatten().tolist()
-        search_params = {"metric_type": config.SEARCH_METRIC_TYPE, "params": {"nprobe": config.SEARCH_NPROBE}}
+        search_params = _build_search_params()
         results = collection.search(
             data=[query_list],
             anns_field="embedding",

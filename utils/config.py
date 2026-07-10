@@ -4,8 +4,13 @@ Contains all configurable parameters for text and image embeddings,
 database connections, and search functionality.
 """
 # MODEL CONFIGURATIONS
-TEXT_MODEL_NAME = 'sentence-transformers/all-MiniLM-L6-v2'
-TEXT_EMBEDDING_DIMENSION = 384
+# Day-2 embedding bake-off champion: e5-base-v2 (768d) beat the original
+# MiniLM-L6-v2 (384d) on the held-out co-rating eval by +63% NDCG@10.
+# e5 expects an instruction prefix; for the symmetric "more like this" task both
+# sides use "query: " (see utils/text_embedder.py + src/eval/embedding_comparison.py).
+TEXT_MODEL_NAME = 'intfloat/e5-base-v2'
+TEXT_EMBEDDING_DIMENSION = 768
+TEXT_QUERY_PREFIX = 'query: '
 
 IMAGE_MODEL_NAME = 'openai/clip-vit-base-patch32'
 IMAGE_EMBEDDING_DIMENSION = 512
@@ -19,11 +24,16 @@ TEXT_COLLECTION_NAME = 'movie_collection'
 IMAGE_COLLECTION_NAME = 'movie_posters'
 
 INDEX_METRIC_TYPE = 'IP'
-INDEX_TYPE = 'IVF_FLAT'
-INDEX_NLIST = 128
+# Day-4 ANN sweep champion: HNSW Pareto-dominated the original IVF_FLAT — exact
+# NDCG@10 at ~4x lower p95 latency. IVF params kept below as a fallback.
+INDEX_TYPE = 'HNSW'
+HNSW_M = 32
+HNSW_EF_CONSTRUCTION = 200
+INDEX_NLIST = 128          # IVF_FLAT fallback only
 
 SEARCH_METRIC_TYPE = 'IP'
-SEARCH_NPROBE = 10
+SEARCH_EF = 64             # HNSW efSearch (Day-4 champion)
+SEARCH_NPROBE = 10         # IVF_FLAT fallback only
 SEARCH_MULTIPLIER = 3
 
 # DATA PROCESSING CONFIGURATIONS

@@ -1,0 +1,6 @@
+system,ndcg@10,recall@20,reference,p95_ms,map@20
+content_exact (MovieIndex flat),0.0482,0.0205,Day-2 0.0482,,
+content_hnsw ef=64 (MovieIndex hnsw),0.0482,0.0206,Day-4 0.0481,0.851,
+content_hnsw + metadata_rerank,0.1847,0.069,Day-2 0.1755 (test half),,
+personalized_itemknn (Recommender),0.1059,0.1675,Day-3 0.1059,,0.0507
+cold_start_1seed (content fallback),0.015,,honest cold-start gap,,

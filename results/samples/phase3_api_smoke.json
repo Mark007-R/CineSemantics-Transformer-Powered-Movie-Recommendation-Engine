@@ -1,0 +1,288 @@
+{
+  "health": {
+    "status": "ok",
+    "catalog_size": 9837,
+    "embedding": "intfloat/e5-base-v2 (768d)",
+    "index": "faiss HNSW (efSearch=64)",
+    "recommender": "ItemKNN"
+  },
+  "search_basic": {
+    "status": 200,
+    "body": {
+      "query": "space adventure with a robot",
+      "count": 5,
+      "results": [
+        {
+          "index": 3458,
+          "title": "Robot Overlords",
+          "genre": "Science Fiction, Adventure, Action",
+          "release_date": "2015-01-29",
+          "vote_average": 4.8,
+          "score": 0.8247
+        },
+        {
+          "index": 875,
+          "title": "WALL\u00b7E",
+          "genre": "Animation, Family, Science Fiction",
+          "release_date": "2008-06-22",
+          "vote_average": 8.1,
+          "score": 0.8217
+        },
+        {
+          "index": 8328,
+          "title": "Space Chimps",
+          "genre": "Animation, Family, Adventure, Comedy, Science Fiction",
+          "release_date": "2008-06-25",
+          "vote_average": 4.9,
+          "score": 0.819
+        },
+        {
+          "index": 1605,
+          "title": "The Mitchells vs. the Machines",
+          "genre": "Animation, Adventure, Comedy, Family, Science Fiction, Action",
+          "release_date": "2021-04-22",
+          "vote_average": 8.0,
+          "score": 0.8144
+        },
+        {
+          "index": 7749,
+          "title": "Robot",
+          "genre": "Action, Science Fiction, Fantasy",
+          "release_date": "2010-10-01",
+          "vote_average": 6.5,
+          "score": 0.8143
+        }
+      ]
+    }
+  },
+  "search_genre_and_rating": {
+    "status": 200,
+    "body": {
+      "query": "funny heist movie",
+      "count": 2,
+      "results": [
+        {
+          "index": 1275,
+          "title": "Ocean's Eight",
+          "genre": "Crime, Comedy, Action",
+          "release_date": "2018-06-07",
+          "vote_average": 7.0,
+          "score": 0.8179
+        },
+        {
+          "index": 6722,
+          "title": "The Italian Job",
+          "genre": "Action, Crime, Comedy, Thriller",
+          "release_date": "1969-06-02",
+          "vote_average": 7.0,
+          "score": 0.8125
+        }
+      ]
+    }
+  },
+  "similar_by_title": {
+    "status": 200,
+    "body": {
+      "query_title": "The Dark Knight",
+      "reranked": true,
+      "results": [
+        {
+          "index": 211,
+          "title": "The Dark Knight Rises",
+          "genre": "Action, Crime, Drama, Thriller",
+          "release_date": "2012-07-16",
+          "vote_average": 7.8,
+          "score": 0.9324
+        },
+        {
+          "index": 109,
+          "title": "Batman Begins",
+          "genre": "Action, Crime, Drama",
+          "release_date": "2005-06-10",
+          "vote_average": 7.7,
+          "score": 0.9046
+        },
+        {
+          "index": 281,
+          "title": "Joker",
+          "genre": "Crime, Thriller, Drama",
+          "release_date": "2019-10-02",
+          "vote_average": 8.2,
+          "score": 0.8823
+        },
+        {
+          "index": 213,
+          "title": "Batman v Superman: Dawn of Justice",
+          "genre": "Action, Adventure, Fantasy",
+          "release_date": "2016-03-23",
+          "vote_average": 5.9,
+          "score": 0.888
+        },
+        {
+          "index": 72,
+          "title": "Batman",
+          "genre": "Fantasy, Action",
+          "release_date": "1989-06-23",
+          "vote_average": 7.2,
+          "score": 0.9148
+        }
+      ]
+    }
+  },
+  "similar_by_index_norerank": {
+    "status": 200,
+    "body": {
+      "query_title": "Spider-Man: No Way Home",
+      "reranked": false,
+      "results": [
+        {
+          "index": 322,
+          "title": "Doctor Strange in the Multiverse of Madness",
+          "genre": "Fantasy, Action, Adventure",
+          "release_date": "2022-05-04",
+          "vote_average": 0.0,
+          "score": 0.9184
+        },
+        {
+          "index": 144,
+          "title": "Spider-Man: Far From Home",
+          "genre": "Action, Adventure, Science Fiction",
+          "release_date": "2019-06-28",
+          "vote_average": 7.5,
+          "score": 0.9033
+        },
+        {
+          "index": 141,
+          "title": "Doctor Strange",
+          "genre": "Action, Adventure, Fantasy, Science Fiction",
+          "release_date": "2016-10-25",
+          "vote_average": 7.4,
+          "score": 0.9001
+        },
+        {
+          "index": 168,
+          "title": "Spider-Man: Homecoming",
+          "genre": "Action, Adventure, Science Fiction, Drama",
+          "release_date": "2017-07-05",
+          "vote_average": 7.4,
+          "score": 0.8994
+        },
+        {
+          "index": 411,
+          "title": "Morbius",
+          "genre": "Action, Science Fiction, Fantasy",
+          "release_date": "2022-03-30",
+          "vote_average": 0.0,
+          "score": 0.8985
+        }
+      ]
+    }
+  },
+  "recommend_warm": {
+    "status": 200,
+    "body": {
+      "mode": "warm user 1",
+      "catalog_valid": true,
+      "results": [
+        {
+          "index": 2888,
+          "title": "Groundhog Day",
+          "genre": "Romance, Fantasy, Drama, Comedy",
+          "release_date": "1993-02-11",
+          "vote_average": 7.6,
+          "score": 28.4874
+        },
+        {
+          "index": 4315,
+          "title": "Ferris Bueller's Day Off",
+          "genre": "Comedy",
+          "release_date": "1986-06-11",
+          "vote_average": 7.7,
+          "score": 27.3389
+        },
+        {
+          "index": 1433,
+          "title": "The Terminator",
+          "genre": "Action, Thriller, Science Fiction",
+          "release_date": "1984-10-26",
+          "vote_average": 7.6,
+          "score": 27.2583
+        },
+        {
+          "index": 1132,
+          "title": "Back to the Future",
+          "genre": "Adventure, Comedy, Science Fiction, Family",
+          "release_date": "1985-07-03",
+          "vote_average": 8.3,
+          "score": 26.3572
+        },
+        {
+          "index": 609,
+          "title": "The Godfather",
+          "genre": "Drama, Crime",
+          "release_date": "1972-03-14",
+          "vote_average": 8.7,
+          "score": 25.7772
+        }
+      ]
+    }
+  },
+  "recommend_coldstart": {
+    "status": 200,
+    "body": {
+      "mode": "cold-start from 2 liked items",
+      "catalog_valid": true,
+      "results": [
+        {
+          "index": 2342,
+          "title": "The Departed",
+          "genre": "Drama, Thriller, Crime",
+          "release_date": "2006-10-04",
+          "vote_average": 8.2,
+          "score": 1.0083
+        },
+        {
+          "index": 407,
+          "title": "Fight Club",
+          "genre": "Drama",
+          "release_date": "1999-10-15",
+          "vote_average": 8.4,
+          "score": 0.9796
+        },
+        {
+          "index": 211,
+          "title": "The Dark Knight Rises",
+          "genre": "Action, Crime, Drama, Thriller",
+          "release_date": "2012-07-16",
+          "vote_average": 7.8,
+          "score": 0.9645
+        },
+        {
+          "index": 109,
+          "title": "Batman Begins",
+          "genre": "Action, Crime, Drama",
+          "release_date": "2005-06-10",
+          "vote_average": 7.7,
+          "score": 0.9391
+        },
+        {
+          "index": 419,
+          "title": "The Lord of the Rings: The Return of the King",
+          "genre": "Adventure, Fantasy, Action",
+          "release_date": "2003-12-01",
+          "vote_average": 8.5,
+          "score": 0.9202
+        }
+      ]
+    }
+  },
+  "err_similar_404": {
+    "status": 404
+  },
+  "err_search_422": {
+    "status": 422
+  },
+  "err_recommend_404": {
+    "status": 404
+  }
+}
