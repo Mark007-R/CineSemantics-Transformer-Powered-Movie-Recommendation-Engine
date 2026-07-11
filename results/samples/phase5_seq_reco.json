@@ -1,0 +1,438 @@
+{
+  "SASRec": [
+    {
+      "user": 1,
+      "history_tail": [
+        "L.A. Confidential",
+        "A Few Good Men",
+        "RoboCop",
+        "Kiss the Girls",
+        "Wild Things"
+      ],
+      "next_target": "Mr. Smith Goes to Washington",
+      "next_hit@10": false,
+      "top10": [
+        {
+          "title": "The Little Mermaid",
+          "in_full_test": false
+        },
+        {
+          "title": "Snow White and the Seven Dwarfs",
+          "in_full_test": false
+        },
+        {
+          "title": "The Nightmare Before Christmas",
+          "in_full_test": false
+        },
+        {
+          "title": "The Aristocats",
+          "in_full_test": false
+        },
+        {
+          "title": "Matilda",
+          "in_full_test": false
+        },
+        {
+          "title": "Notting Hill",
+          "in_full_test": false
+        },
+        {
+          "title": "Election",
+          "in_full_test": false
+        },
+        {
+          "title": "Old Yeller",
+          "in_full_test": false
+        },
+        {
+          "title": "The Hunchback of Notre Dame",
+          "in_full_test": false
+        },
+        {
+          "title": "Muriel's Wedding",
+          "in_full_test": false
+        }
+      ]
+    },
+    {
+      "user": 2,
+      "history_tail": [
+        "The Departed",
+        "The Dark Knight",
+        "Inglourious Basterds",
+        "Inside Job",
+        "Warrior"
+      ],
+      "next_target": "Good Will Hunting",
+      "next_hit@10": false,
+      "top10": [
+        {
+          "title": "Interstellar",
+          "in_full_test": false
+        },
+        {
+          "title": "Black Swan",
+          "in_full_test": false
+        },
+        {
+          "title": "Her",
+          "in_full_test": false
+        },
+        {
+          "title": "Little Miss Sunshine",
+          "in_full_test": false
+        },
+        {
+          "title": "Into the Wild",
+          "in_full_test": false
+        },
+        {
+          "title": "Lord of War",
+          "in_full_test": false
+        },
+        {
+          "title": "Ex Machina",
+          "in_full_test": false
+        },
+        {
+          "title": "Watchmen",
+          "in_full_test": false
+        },
+        {
+          "title": "The Imitation Game",
+          "in_full_test": false
+        },
+        {
+          "title": "Blood Diamond",
+          "in_full_test": false
+        }
+      ]
+    },
+    {
+      "user": 4,
+      "history_tail": [
+        "Groundhog Day",
+        "The Full Monty",
+        "Grosse Pointe Blank",
+        "A League of Their Own",
+        "Being John Malkovich"
+      ],
+      "next_target": "Blow",
+      "next_hit@10": false,
+      "top10": [
+        {
+          "title": "2001: A Space Odyssey",
+          "in_full_test": false
+        },
+        {
+          "title": "Taxi Driver",
+          "in_full_test": false
+        },
+        {
+          "title": "The Usual Suspects",
+          "in_full_test": false
+        },
+        {
+          "title": "Blade Runner",
+          "in_full_test": false
+        },
+        {
+          "title": "Monty Python and the Holy Grail",
+          "in_full_test": true
+        },
+        {
+          "title": "Chinatown",
+          "in_full_test": false
+        },
+        {
+          "title": "Army of Darkness",
+          "in_full_test": false
+        },
+        {
+          "title": "L.A. Confidential",
+          "in_full_test": false
+        },
+        {
+          "title": "Citizen Kane",
+          "in_full_test": false
+        },
+        {
+          "title": "Apocalypse Now",
+          "in_full_test": false
+        }
+      ]
+    },
+    {
+      "user": 5,
+      "history_tail": [
+        "Snow White and the Seven Dwarfs",
+        "Get Shorty",
+        "Little Women",
+        "The Secret Garden",
+        "Dead Man Walking"
+      ],
+      "next_target": "Pinocchio",
+      "next_hit@10": false,
+      "top10": [
+        {
+          "title": "Rob Roy",
+          "in_full_test": false
+        },
+        {
+          "title": "What's Eating Gilbert Grape",
+          "in_full_test": false
+        },
+        {
+          "title": "The Piano",
+          "in_full_test": false
+        },
+        {
+          "title": "Jumanji",
+          "in_full_test": false
+        },
+        {
+          "title": "Dave",
+          "in_full_test": false
+        },
+        {
+          "title": "Philadelphia",
+          "in_full_test": false
+        },
+        {
+          "title": "Sense and Sensibility",
+          "in_full_test": false
+        },
+        {
+          "title": "Four Weddings and a Funeral",
+          "in_full_test": false
+        },
+        {
+          "title": "French Kiss",
+          "in_full_test": false
+        },
+        {
+          "title": "Sleepless in Seattle",
+          "in_full_test": false
+        }
+      ]
+    }
+  ],
+  "BERT4Rec": [
+    {
+      "user": 1,
+      "history_tail": [
+        "L.A. Confidential",
+        "A Few Good Men",
+        "RoboCop",
+        "Kiss the Girls",
+        "Wild Things"
+      ],
+      "next_target": "Mr. Smith Goes to Washington",
+      "next_hit@10": false,
+      "top10": [
+        {
+          "title": "Aliens",
+          "in_full_test": false
+        },
+        {
+          "title": "The Untouchables",
+          "in_full_test": false
+        },
+        {
+          "title": "Jaws",
+          "in_full_test": false
+        },
+        {
+          "title": "Patton",
+          "in_full_test": false
+        },
+        {
+          "title": "The Bridge on the River Kwai",
+          "in_full_test": false
+        },
+        {
+          "title": "Brazil",
+          "in_full_test": false
+        },
+        {
+          "title": "Ben-Hur",
+          "in_full_test": false
+        },
+        {
+          "title": "The Terminator",
+          "in_full_test": true
+        },
+        {
+          "title": "2001: A Space Odyssey",
+          "in_full_test": false
+        },
+        {
+          "title": "Scream",
+          "in_full_test": false
+        }
+      ]
+    },
+    {
+      "user": 2,
+      "history_tail": [
+        "The Departed",
+        "The Dark Knight",
+        "Inglourious Basterds",
+        "Inside Job",
+        "Warrior"
+      ],
+      "next_target": "Good Will Hunting",
+      "next_hit@10": false,
+      "top10": [
+        {
+          "title": "Interstellar",
+          "in_full_test": false
+        },
+        {
+          "title": "The Prestige",
+          "in_full_test": false
+        },
+        {
+          "title": "Fight Club",
+          "in_full_test": false
+        },
+        {
+          "title": "The Dark Knight Rises",
+          "in_full_test": false
+        },
+        {
+          "title": "In Bruges",
+          "in_full_test": false
+        },
+        {
+          "title": "Lord of War",
+          "in_full_test": false
+        },
+        {
+          "title": "Arrival",
+          "in_full_test": false
+        },
+        {
+          "title": "12 Years a Slave",
+          "in_full_test": false
+        },
+        {
+          "title": "The Wrestler",
+          "in_full_test": false
+        },
+        {
+          "title": "Django Unchained",
+          "in_full_test": false
+        }
+      ]
+    },
+    {
+      "user": 4,
+      "history_tail": [
+        "Groundhog Day",
+        "The Full Monty",
+        "Grosse Pointe Blank",
+        "A League of Their Own",
+        "Being John Malkovich"
+      ],
+      "next_target": "Blow",
+      "next_hit@10": false,
+      "top10": [
+        {
+          "title": "Shakespeare in Love",
+          "in_full_test": false
+        },
+        {
+          "title": "Brazil",
+          "in_full_test": false
+        },
+        {
+          "title": "Who Framed Roger Rabbit",
+          "in_full_test": false
+        },
+        {
+          "title": "Lost in Translation",
+          "in_full_test": false
+        },
+        {
+          "title": "The Breakfast Club",
+          "in_full_test": true
+        },
+        {
+          "title": "Galaxy Quest",
+          "in_full_test": false
+        },
+        {
+          "title": "Raising Arizona",
+          "in_full_test": false
+        },
+        {
+          "title": "Ferris Bueller's Day Off",
+          "in_full_test": false
+        },
+        {
+          "title": "A Fish Called Wanda",
+          "in_full_test": false
+        },
+        {
+          "title": "Young Frankenstein",
+          "in_full_test": false
+        }
+      ]
+    },
+    {
+      "user": 5,
+      "history_tail": [
+        "Snow White and the Seven Dwarfs",
+        "Get Shorty",
+        "Little Women",
+        "The Secret Garden",
+        "Dead Man Walking"
+      ],
+      "next_target": "Pinocchio",
+      "next_hit@10": false,
+      "top10": [
+        {
+          "title": "Sleepless in Seattle",
+          "in_full_test": false
+        },
+        {
+          "title": "Four Weddings and a Funeral",
+          "in_full_test": false
+        },
+        {
+          "title": "Rob Roy",
+          "in_full_test": false
+        },
+        {
+          "title": "Philadelphia",
+          "in_full_test": false
+        },
+        {
+          "title": "Dave",
+          "in_full_test": false
+        },
+        {
+          "title": "Leaving Las Vegas",
+          "in_full_test": false
+        },
+        {
+          "title": "Heat",
+          "in_full_test": false
+        },
+        {
+          "title": "Jumanji",
+          "in_full_test": false
+        },
+        {
+          "title": "True Romance",
+          "in_full_test": false
+        },
+        {
+          "title": "The Piano",
+          "in_full_test": false
+        }
+      ]
+    }
+  ]
+}
