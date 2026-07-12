@@ -1,0 +1,4711 @@
+{
+  "protocol": "Day-3 temporal leave-last-20% split; frontier sample",
+  "n_users": 30,
+  "k_seed": 10,
+  "catalog_size": 9837,
+  "seed": 42,
+  "samples": [
+    {
+      "user": 4,
+      "seed": [
+        {
+          "title": "Psycho",
+          "year": "1960"
+        },
+        {
+          "title": "The Sixth Sense",
+          "year": "1999"
+        },
+        {
+          "title": "The Silence of the Lambs",
+          "year": "1991"
+        },
+        {
+          "title": "Fargo",
+          "year": "1996"
+        },
+        {
+          "title": "Election",
+          "year": "2005"
+        },
+        {
+          "title": "Groundhog Day",
+          "year": "1993"
+        },
+        {
+          "title": "The Full Monty",
+          "year": "1997"
+        },
+        {
+          "title": "Grosse Pointe Blank",
+          "year": "1997"
+        },
+        {
+          "title": "A League of Their Own",
+          "year": "1992"
+        },
+        {
+          "title": "Being John Malkovich",
+          "year": "1999"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "The Godfather",
+          "year": "1972",
+          "cat": 609
+        },
+        {
+          "title": "Monty Python and the Holy Grail",
+          "year": "1975",
+          "cat": 5282
+        },
+        {
+          "title": "Reservoir Dogs",
+          "year": "1992",
+          "cat": 2806
+        },
+        {
+          "title": "A Fish Called Wanda",
+          "year": "1988",
+          "cat": 5328
+        },
+        {
+          "title": "The Godfather: Part II",
+          "year": "1974",
+          "cat": 1007
+        },
+        {
+          "title": "Ferris Bueller's Day Off",
+          "year": "1986",
+          "cat": 4315
+        },
+        {
+          "title": "The Graduate",
+          "year": "1967",
+          "cat": 4623
+        },
+        {
+          "title": "L.A. Confidential",
+          "year": "1997",
+          "cat": 4530
+        },
+        {
+          "title": "Big",
+          "year": "1988",
+          "cat": 4558
+        },
+        {
+          "title": "The Terminator",
+          "year": "1984",
+          "cat": 1433
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Blow",
+          "year": "2001",
+          "cat": 4132
+        },
+        {
+          "title": "Traffic",
+          "year": "2000",
+          "cat": 6912
+        },
+        {
+          "title": "Unforgiven",
+          "year": "1992",
+          "cat": 4380
+        },
+        {
+          "title": "Billy Elliot",
+          "year": "2000",
+          "cat": 5732
+        },
+        {
+          "title": "Erin Brockovich",
+          "year": "2000",
+          "cat": 3232
+        },
+        {
+          "title": "Almost Famous",
+          "year": "2000",
+          "cat": 5919
+        },
+        {
+          "title": "Wonder Boys",
+          "year": "2000",
+          "cat": 9349
+        },
+        {
+          "title": "Monty Python and the Holy Grail",
+          "year": "1975",
+          "cat": 5282
+        },
+        {
+          "title": "The Gods Must Be Crazy",
+          "year": "1980",
+          "cat": 3135
+        },
+        {
+          "title": "The Breakfast Club",
+          "year": "1985",
+          "cat": 3844
+        },
+        {
+          "title": "Hairspray",
+          "year": "1988",
+          "cat": 9438
+        },
+        {
+          "title": "Innerspace",
+          "year": "1987",
+          "cat": 3838
+        },
+        {
+          "title": "Romancing the Stone",
+          "year": "1984",
+          "cat": 5869
+        },
+        {
+          "title": "Spaceballs",
+          "year": "1987",
+          "cat": 4130
+        },
+        {
+          "title": "Bridget Jones's Diary",
+          "year": "2001",
+          "cat": 3752
+        }
+      ]
+    },
+    {
+      "user": 8,
+      "seed": [
+        {
+          "title": "The Silence of the Lambs",
+          "year": "1991"
+        },
+        {
+          "title": "The Shawshank Redemption",
+          "year": "1994"
+        },
+        {
+          "title": "The Net",
+          "year": "1995"
+        },
+        {
+          "title": "Jurassic Park",
+          "year": "1993"
+        },
+        {
+          "title": "The Lion King",
+          "year": "1994"
+        },
+        {
+          "title": "The Firm",
+          "year": "1993"
+        },
+        {
+          "title": "Babe",
+          "year": "1995"
+        },
+        {
+          "title": "Get Shorty",
+          "year": "1995"
+        },
+        {
+          "title": "Speed",
+          "year": "1994"
+        },
+        {
+          "title": "The Usual Suspects",
+          "year": "1995"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "The Fugitive",
+          "year": "1993",
+          "cat": 3103
+        },
+        {
+          "title": "Forrest Gump",
+          "year": "1994",
+          "cat": 1069
+        },
+        {
+          "title": "Braveheart",
+          "year": "1995",
+          "cat": 1641
+        },
+        {
+          "title": "Aladdin",
+          "year": "1992",
+          "cat": 745
+        },
+        {
+          "title": "Terminator 2: Judgment Day",
+          "year": "1991",
+          "cat": 1140
+        },
+        {
+          "title": "Toy Story",
+          "year": "1995",
+          "cat": 227
+        },
+        {
+          "title": "Schindler's List",
+          "year": "1993",
+          "cat": 1327
+        },
+        {
+          "title": "Clear and Present Danger",
+          "year": "1994",
+          "cat": 4412
+        },
+        {
+          "title": "Beauty and the Beast",
+          "year": "1991",
+          "cat": 467
+        },
+        {
+          "title": "Crimson Tide",
+          "year": "1995",
+          "cat": 4437
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Schindler's List",
+          "year": "1993",
+          "cat": 1327
+        },
+        {
+          "title": "Four Weddings and a Funeral",
+          "year": "1994",
+          "cat": 4570
+        },
+        {
+          "title": "Jumanji",
+          "year": "1995",
+          "cat": 7081
+        }
+      ]
+    },
+    {
+      "user": 12,
+      "seed": [
+        {
+          "title": "10 Things I Hate About You",
+          "year": "1999"
+        },
+        {
+          "title": "Emma.",
+          "year": "2020"
+        },
+        {
+          "title": "Gone with the Wind",
+          "year": "1939"
+        },
+        {
+          "title": "Love Actually",
+          "year": "2003"
+        },
+        {
+          "title": "The Notebook",
+          "year": "2004"
+        },
+        {
+          "title": "Pride & Prejudice",
+          "year": "2005"
+        },
+        {
+          "title": "Romeo and Juliet",
+          "year": "1968"
+        },
+        {
+          "title": "She's All That",
+          "year": "1999"
+        },
+        {
+          "title": "First Knight",
+          "year": "1995"
+        },
+        {
+          "title": "Sweet Home Alabama",
+          "year": "2002"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Pretty Woman",
+          "year": "1990",
+          "cat": 1360
+        },
+        {
+          "title": "Bridget Jones's Diary",
+          "year": "2001",
+          "cat": 3752
+        },
+        {
+          "title": "When Harry Met Sally...",
+          "year": "1989",
+          "cat": 4823
+        },
+        {
+          "title": "Mary Poppins",
+          "year": "1964",
+          "cat": 1984
+        },
+        {
+          "title": "The Lion King",
+          "year": "1994",
+          "cat": 257
+        },
+        {
+          "title": "My Fair Lady",
+          "year": "1964",
+          "cat": 5579
+        },
+        {
+          "title": "Legally Blonde",
+          "year": "2001",
+          "cat": 2353
+        },
+        {
+          "title": "Clueless",
+          "year": "1995",
+          "cat": 2500
+        },
+        {
+          "title": "Lady and the Tramp",
+          "year": "1955",
+          "cat": 1162
+        },
+        {
+          "title": "Forrest Gump",
+          "year": "1994",
+          "cat": 1069
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "What Women Want",
+          "year": "2000",
+          "cat": 2946
+        },
+        {
+          "title": "Twilight",
+          "year": "2008",
+          "cat": 392
+        },
+        {
+          "title": "Titanic",
+          "year": "1997",
+          "cat": 397
+        },
+        {
+          "title": "Clueless",
+          "year": "1995",
+          "cat": 2500
+        }
+      ]
+    },
+    {
+      "user": 60,
+      "seed": [
+        {
+          "title": "A Time to Kill",
+          "year": "1996"
+        },
+        {
+          "title": "Glory",
+          "year": "1989"
+        },
+        {
+          "title": "The Hunchback of Notre Dame",
+          "year": "1996"
+        },
+        {
+          "title": "The Gods Must Be Crazy",
+          "year": "1980"
+        },
+        {
+          "title": "The Jungle Book",
+          "year": "1994"
+        },
+        {
+          "title": "JFK",
+          "year": "1991"
+        },
+        {
+          "title": "The Color Purple",
+          "year": "1985"
+        },
+        {
+          "title": "The Shawshank Redemption",
+          "year": "1994"
+        },
+        {
+          "title": "The Godfather",
+          "year": "1972"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Pulp Fiction",
+          "year": "1994",
+          "cat": 1322
+        },
+        {
+          "title": "The Silence of the Lambs",
+          "year": "1991",
+          "cat": 8566
+        },
+        {
+          "title": "Fargo",
+          "year": "1996",
+          "cat": 3789
+        },
+        {
+          "title": "The Godfather: Part II",
+          "year": "1974",
+          "cat": 1007
+        },
+        {
+          "title": "Schindler's List",
+          "year": "1993",
+          "cat": 1327
+        },
+        {
+          "title": "The Usual Suspects",
+          "year": "1995",
+          "cat": 3270
+        },
+        {
+          "title": "GoodFellas",
+          "year": "1990",
+          "cat": 1769
+        },
+        {
+          "title": "Forrest Gump",
+          "year": "1994",
+          "cat": 1069
+        },
+        {
+          "title": "Toy Story",
+          "year": "1995",
+          "cat": 227
+        },
+        {
+          "title": "American Beauty",
+          "year": "1999",
+          "cat": 3535
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Schindler's List",
+          "year": "1993",
+          "cat": 1327
+        },
+        {
+          "title": "The Dark Knight",
+          "year": "2008",
+          "cat": 221
+        }
+      ]
+    },
+    {
+      "user": 77,
+      "seed": [
+        {
+          "title": "The Lord of the Rings: The Return of the King",
+          "year": "2003"
+        },
+        {
+          "title": "The Lord of the Rings: The Two Towers",
+          "year": "2002"
+        },
+        {
+          "title": "The Lord of the Rings: The Fellowship of the Ring",
+          "year": "2001"
+        },
+        {
+          "title": "Gladiator",
+          "year": "2000"
+        },
+        {
+          "title": "The Dark Knight",
+          "year": "2008"
+        },
+        {
+          "title": "Pirates of the Caribbean: The Curse of the Black Pearl",
+          "year": "2003"
+        },
+        {
+          "title": "Spider-Man",
+          "year": "2002"
+        },
+        {
+          "title": "Batman Begins",
+          "year": "2005"
+        },
+        {
+          "title": "The Incredibles",
+          "year": "2004"
+        },
+        {
+          "title": "Harry Potter and the Chamber of Secrets",
+          "year": "2002"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Fight Club",
+          "year": "1999",
+          "cat": 407
+        },
+        {
+          "title": "Monsters, Inc.",
+          "year": "2001",
+          "cat": 197
+        },
+        {
+          "title": "Shrek",
+          "year": "2001",
+          "cat": 234
+        },
+        {
+          "title": "The Bourne Identity",
+          "year": "2002",
+          "cat": 2501
+        },
+        {
+          "title": "Ocean's Eleven",
+          "year": "2001",
+          "cat": 2122
+        },
+        {
+          "title": "Finding Nemo",
+          "year": "2003",
+          "cat": 417
+        },
+        {
+          "title": "Kill Bill: Vol. 1",
+          "year": "2003",
+          "cat": 1987
+        },
+        {
+          "title": "Minority Report",
+          "year": "2002",
+          "cat": 3894
+        },
+        {
+          "title": "Spider-Man 2",
+          "year": "2004",
+          "cat": 1373
+        },
+        {
+          "title": "Saving Private Ryan",
+          "year": "1998",
+          "cat": 779
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Interstellar",
+          "year": "2014",
+          "cat": 461
+        },
+        {
+          "title": "Star Wars: Episode II - Attack of the Clones",
+          "year": "2002",
+          "cat": 1615
+        },
+        {
+          "title": "Spider-Man 2",
+          "year": "2004",
+          "cat": 1373
+        }
+      ]
+    },
+    {
+      "user": 83,
+      "seed": [
+        {
+          "title": "Pride & Prejudice",
+          "year": "2005"
+        },
+        {
+          "title": "Valkyrie",
+          "year": "2008"
+        },
+        {
+          "title": "Pearl Harbor",
+          "year": "2001"
+        },
+        {
+          "title": "Gladiator",
+          "year": "2000"
+        },
+        {
+          "title": "The Truman Show",
+          "year": "1998"
+        },
+        {
+          "title": "Cashback",
+          "year": "2006"
+        },
+        {
+          "title": "Black Hawk Down",
+          "year": "2001"
+        },
+        {
+          "title": "Avatar",
+          "year": "2009"
+        },
+        {
+          "title": "The Patriot",
+          "year": "2000"
+        },
+        {
+          "title": "Full Metal Jacket",
+          "year": "1987"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "The Matrix",
+          "year": "1999",
+          "cat": 572
+        },
+        {
+          "title": "Fight Club",
+          "year": "1999",
+          "cat": 407
+        },
+        {
+          "title": "The Lord of the Rings: The Two Towers",
+          "year": "2002",
+          "cat": 479
+        },
+        {
+          "title": "The Godfather",
+          "year": "1972",
+          "cat": 609
+        },
+        {
+          "title": "Pulp Fiction",
+          "year": "1994",
+          "cat": 1322
+        },
+        {
+          "title": "The Silence of the Lambs",
+          "year": "1991",
+          "cat": 8566
+        },
+        {
+          "title": "The Departed",
+          "year": "2006",
+          "cat": 2342
+        },
+        {
+          "title": "Reservoir Dogs",
+          "year": "1992",
+          "cat": 2806
+        },
+        {
+          "title": "American Beauty",
+          "year": "1999",
+          "cat": 3535
+        },
+        {
+          "title": "Kill Bill: Vol. 1",
+          "year": "2003",
+          "cat": 1987
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Defiance",
+          "year": "2008",
+          "cat": 7795
+        },
+        {
+          "title": "Dead Poets Society",
+          "year": "1989",
+          "cat": 2156
+        },
+        {
+          "title": "Good Bye Lenin!",
+          "year": "2003",
+          "cat": 9050
+        },
+        {
+          "title": "V for Vendetta",
+          "year": "2006",
+          "cat": 1823
+        },
+        {
+          "title": "Billy Elliot",
+          "year": "2000",
+          "cat": 5732
+        },
+        {
+          "title": "Vanilla Sky",
+          "year": "2001",
+          "cat": 5621
+        },
+        {
+          "title": "Fantasia",
+          "year": "1940",
+          "cat": 1217
+        }
+      ]
+    },
+    {
+      "user": 98,
+      "seed": [
+        {
+          "title": "The Theory of Everything",
+          "year": "2014"
+        },
+        {
+          "title": "The Shining",
+          "year": "1980"
+        },
+        {
+          "title": "The Princess Bride",
+          "year": "1987"
+        },
+        {
+          "title": "Life of Pi",
+          "year": "2012"
+        },
+        {
+          "title": "Memento",
+          "year": "2000"
+        },
+        {
+          "title": "A Beautiful Mind",
+          "year": "2001"
+        },
+        {
+          "title": "Get Out",
+          "year": "2017"
+        },
+        {
+          "title": "Gravity",
+          "year": "2013"
+        },
+        {
+          "title": "Lilo & Stitch",
+          "year": "2002"
+        },
+        {
+          "title": "School of Rock",
+          "year": "2003"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "The Matrix",
+          "year": "1999",
+          "cat": 572
+        },
+        {
+          "title": "Fight Club",
+          "year": "1999",
+          "cat": 407
+        },
+        {
+          "title": "The Lord of the Rings: The Return of the King",
+          "year": "2003",
+          "cat": 419
+        },
+        {
+          "title": "Finding Nemo",
+          "year": "2003",
+          "cat": 417
+        },
+        {
+          "title": "The Dark Knight",
+          "year": "2008",
+          "cat": 221
+        },
+        {
+          "title": "Monsters, Inc.",
+          "year": "2001",
+          "cat": 197
+        },
+        {
+          "title": "The Lord of the Rings: The Fellowship of the Ring",
+          "year": "2001",
+          "cat": 369
+        },
+        {
+          "title": "Ocean's Eleven",
+          "year": "2001",
+          "cat": 2122
+        },
+        {
+          "title": "The Prestige",
+          "year": "2006",
+          "cat": 2528
+        },
+        {
+          "title": "The Lord of the Rings: The Two Towers",
+          "year": "2002",
+          "cat": 479
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Ratatouille",
+          "year": "2007",
+          "cat": 319
+        },
+        {
+          "title": "The Pursuit of Happyness",
+          "year": "2006",
+          "cat": 1607
+        },
+        {
+          "title": "The Others",
+          "year": "2001",
+          "cat": 3178
+        },
+        {
+          "title": "Little Miss Sunshine",
+          "year": "2006",
+          "cat": 6645
+        },
+        {
+          "title": "One Flew Over the Cuckoo's Nest",
+          "year": "1975",
+          "cat": 2967
+        },
+        {
+          "title": "Psycho",
+          "year": "1960",
+          "cat": 2300
+        },
+        {
+          "title": "Rear Window",
+          "year": "1954",
+          "cat": 4152
+        },
+        {
+          "title": "Fargo",
+          "year": "1996",
+          "cat": 3789
+        },
+        {
+          "title": "To Kill a Mockingbird",
+          "year": "1962",
+          "cat": 8472
+        },
+        {
+          "title": "Misery",
+          "year": "1990",
+          "cat": 3422
+        },
+        {
+          "title": "10 Cloverfield Lane",
+          "year": "2016",
+          "cat": 2737
+        }
+      ]
+    },
+    {
+      "user": 185,
+      "seed": [
+        {
+          "title": "Almost Famous",
+          "year": "2000"
+        },
+        {
+          "title": "High Fidelity",
+          "year": "2000"
+        },
+        {
+          "title": "The Bourne Identity",
+          "year": "2002"
+        },
+        {
+          "title": "The Emperor's New Groove",
+          "year": "2000"
+        },
+        {
+          "title": "Toy Story",
+          "year": "1995"
+        },
+        {
+          "title": "The Lion King",
+          "year": "1994"
+        },
+        {
+          "title": "Aladdin",
+          "year": "1992"
+        },
+        {
+          "title": "Beauty and the Beast",
+          "year": "1991"
+        },
+        {
+          "title": "The Jungle Book",
+          "year": "1967"
+        },
+        {
+          "title": "Singin' in the Rain",
+          "year": "1952"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "The Lord of the Rings: The Fellowship of the Ring",
+          "year": "2001",
+          "cat": 369
+        },
+        {
+          "title": "Shrek",
+          "year": "2001",
+          "cat": 234
+        },
+        {
+          "title": "Fight Club",
+          "year": "1999",
+          "cat": 407
+        },
+        {
+          "title": "Finding Nemo",
+          "year": "2003",
+          "cat": 417
+        },
+        {
+          "title": "The Lord of the Rings: The Return of the King",
+          "year": "2003",
+          "cat": 419
+        },
+        {
+          "title": "Pulp Fiction",
+          "year": "1994",
+          "cat": 1322
+        },
+        {
+          "title": "The Matrix",
+          "year": "1999",
+          "cat": 572
+        },
+        {
+          "title": "Forrest Gump",
+          "year": "1994",
+          "cat": 1069
+        },
+        {
+          "title": "Ocean's Eleven",
+          "year": "2001",
+          "cat": 2122
+        },
+        {
+          "title": "Monsters, Inc.",
+          "year": "2001",
+          "cat": 197
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "The Little Mermaid",
+          "year": "1989",
+          "cat": 374
+        },
+        {
+          "title": "Moulin Rouge!",
+          "year": "2001",
+          "cat": 5718
+        },
+        {
+          "title": "Jerry Maguire",
+          "year": "1996",
+          "cat": 5158
+        },
+        {
+          "title": "Shakespeare in Love",
+          "year": "1998",
+          "cat": 6783
+        }
+      ]
+    },
+    {
+      "user": 199,
+      "seed": [
+        {
+          "title": "Casablanca",
+          "year": "1942"
+        },
+        {
+          "title": "Starsky & Hutch",
+          "year": "2004"
+        },
+        {
+          "title": "Austin Powers: The Spy Who Shagged Me",
+          "year": "1999"
+        },
+        {
+          "title": "The Man Who Would Be King",
+          "year": "1975"
+        },
+        {
+          "title": "Road to Perdition",
+          "year": "2002"
+        },
+        {
+          "title": "Top Secret!",
+          "year": "1984"
+        },
+        {
+          "title": "The Man Who Shot Liberty Valance",
+          "year": "1962"
+        },
+        {
+          "title": "Patton",
+          "year": "1970"
+        },
+        {
+          "title": "Blazing Saddles",
+          "year": "1974"
+        },
+        {
+          "title": "Ben-Hur",
+          "year": "1959"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "The Godfather: Part II",
+          "year": "1974",
+          "cat": 1007
+        },
+        {
+          "title": "Back to the Future",
+          "year": "1985",
+          "cat": 1132
+        },
+        {
+          "title": "Ferris Bueller's Day Off",
+          "year": "1986",
+          "cat": 4315
+        },
+        {
+          "title": "2001: A Space Odyssey",
+          "year": "1968",
+          "cat": 2025
+        },
+        {
+          "title": "Indiana Jones and the Last Crusade",
+          "year": "1989",
+          "cat": 1865
+        },
+        {
+          "title": "One Flew Over the Cuckoo's Nest",
+          "year": "1975",
+          "cat": 2967
+        },
+        {
+          "title": "Toy Story",
+          "year": "1995",
+          "cat": 227
+        },
+        {
+          "title": "Big",
+          "year": "1988",
+          "cat": 4558
+        },
+        {
+          "title": "Forrest Gump",
+          "year": "1994",
+          "cat": 1069
+        },
+        {
+          "title": "Terminator 2: Judgment Day",
+          "year": "1991",
+          "cat": 1140
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Eternal Sunshine of the Spotless Mind",
+          "year": "2004",
+          "cat": 1793
+        },
+        {
+          "title": "Quick Change",
+          "year": "1990",
+          "cat": 8432
+        },
+        {
+          "title": "Ferris Bueller's Day Off",
+          "year": "1986",
+          "cat": 4315
+        },
+        {
+          "title": "The Pianist",
+          "year": "2002",
+          "cat": 1836
+        },
+        {
+          "title": "Shaun of the Dead",
+          "year": "2004",
+          "cat": 2421
+        },
+        {
+          "title": "Punch-Drunk Love",
+          "year": "2002",
+          "cat": 7689
+        },
+        {
+          "title": "No Country for Old Men",
+          "year": "2007",
+          "cat": 2961
+        },
+        {
+          "title": "United 93",
+          "year": "2006",
+          "cat": 7688
+        },
+        {
+          "title": "Into the Wild",
+          "year": "2007",
+          "cat": 4076
+        },
+        {
+          "title": "The Maltese Falcon",
+          "year": "1941",
+          "cat": 5827
+        },
+        {
+          "title": "Rocky",
+          "year": "1976",
+          "cat": 1117
+        },
+        {
+          "title": "The Hurt Locker",
+          "year": "2008",
+          "cat": 3102
+        },
+        {
+          "title": "Thank You for Smoking",
+          "year": "2006",
+          "cat": 6463
+        },
+        {
+          "title": "The Departed",
+          "year": "2006",
+          "cat": 2342
+        },
+        {
+          "title": "Hotel Rwanda",
+          "year": "2004",
+          "cat": 6565
+        },
+        {
+          "title": "There Will Be Blood",
+          "year": "2007",
+          "cat": 4141
+        },
+        {
+          "title": "Mystic River",
+          "year": "2003",
+          "cat": 4301
+        },
+        {
+          "title": "Million Dollar Baby",
+          "year": "2004",
+          "cat": 2735
+        },
+        {
+          "title": "Munich",
+          "year": "2005",
+          "cat": 8581
+        },
+        {
+          "title": "Hot Fuzz",
+          "year": "2007",
+          "cat": 3681
+        },
+        {
+          "title": "Flags of Our Fathers",
+          "year": "2006",
+          "cat": 4712
+        },
+        {
+          "title": "Dog Day Afternoon",
+          "year": "1975",
+          "cat": 6793
+        },
+        {
+          "title": "Forgetting Sarah Marshall",
+          "year": "2008",
+          "cat": 4764
+        },
+        {
+          "title": "Magnolia",
+          "year": "1999",
+          "cat": 6980
+        }
+      ]
+    },
+    {
+      "user": 200,
+      "seed": [
+        {
+          "title": "Blood Diamond",
+          "year": "2006"
+        },
+        {
+          "title": "The Last King of Scotland",
+          "year": "2006"
+        },
+        {
+          "title": "The Bridge on the River Kwai",
+          "year": "1957"
+        },
+        {
+          "title": "The Incredible Hulk",
+          "year": "2008"
+        },
+        {
+          "title": "Hellboy II: The Golden Army",
+          "year": "2008"
+        },
+        {
+          "title": "Wanted",
+          "year": "2008"
+        },
+        {
+          "title": "Fast Times at Ridgemont High",
+          "year": "1982"
+        },
+        {
+          "title": "Die Another Day",
+          "year": "2002"
+        },
+        {
+          "title": "50 First Dates",
+          "year": "2004"
+        },
+        {
+          "title": "Remember the Titans",
+          "year": "2000"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Monsters, Inc.",
+          "year": "2001",
+          "cat": 197
+        },
+        {
+          "title": "Saving Private Ryan",
+          "year": "1998",
+          "cat": 779
+        },
+        {
+          "title": "Shrek",
+          "year": "2001",
+          "cat": 234
+        },
+        {
+          "title": "The Godfather",
+          "year": "1972",
+          "cat": 609
+        },
+        {
+          "title": "Spider-Man",
+          "year": "2002",
+          "cat": 170
+        },
+        {
+          "title": "Spider-Man 2",
+          "year": "2004",
+          "cat": 1373
+        },
+        {
+          "title": "Snatch",
+          "year": "2000",
+          "cat": 2887
+        },
+        {
+          "title": "The Departed",
+          "year": "2006",
+          "cat": 2342
+        },
+        {
+          "title": "American Beauty",
+          "year": "1999",
+          "cat": 3535
+        },
+        {
+          "title": "The Usual Suspects",
+          "year": "1995",
+          "cat": 3270
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Runaway Bride",
+          "year": "1999",
+          "cat": 5836
+        },
+        {
+          "title": "Ray",
+          "year": "2004",
+          "cat": 6528
+        },
+        {
+          "title": "Dirty Dancing",
+          "year": "1987",
+          "cat": 2546
+        },
+        {
+          "title": "Finding Forrester",
+          "year": "2000",
+          "cat": 9707
+        },
+        {
+          "title": "Zoolander",
+          "year": "2001",
+          "cat": 5631
+        },
+        {
+          "title": "Meet the Fockers",
+          "year": "2004",
+          "cat": 4441
+        },
+        {
+          "title": "The World Is Not Enough",
+          "year": "1999",
+          "cat": 2824
+        },
+        {
+          "title": "A Knight's Tale",
+          "year": "2001",
+          "cat": 4018
+        },
+        {
+          "title": "Risky Business",
+          "year": "1983",
+          "cat": 6087
+        },
+        {
+          "title": "Hitch",
+          "year": "2005",
+          "cat": 4060
+        },
+        {
+          "title": "Mean Girls",
+          "year": "2004",
+          "cat": 1437
+        },
+        {
+          "title": "Never Been Kissed",
+          "year": "1999",
+          "cat": 7606
+        },
+        {
+          "title": "The Devil Wears Prada",
+          "year": "2006",
+          "cat": 1092
+        },
+        {
+          "title": "From Russia with Love",
+          "year": "1963",
+          "cat": 2243
+        },
+        {
+          "title": "October Sky",
+          "year": "1999",
+          "cat": 7646
+        },
+        {
+          "title": "The Whole Nine Yards",
+          "year": "2000",
+          "cat": 6967
+        },
+        {
+          "title": "That Thing You Do!",
+          "year": "1996",
+          "cat": 8384
+        },
+        {
+          "title": "Cruel Intentions",
+          "year": "1999",
+          "cat": 2982
+        },
+        {
+          "title": "Dr. No",
+          "year": "1962",
+          "cat": 2173
+        },
+        {
+          "title": "Dude, Where's My Car?",
+          "year": "2000",
+          "cat": 6206
+        },
+        {
+          "title": "Underworld",
+          "year": "2003",
+          "cat": 1711
+        },
+        {
+          "title": "Doctor Zhivago",
+          "year": "1965",
+          "cat": 4984
+        },
+        {
+          "title": "Father of the Bride",
+          "year": "1991",
+          "cat": 8505
+        },
+        {
+          "title": "She's All That",
+          "year": "1999",
+          "cat": 3504
+        },
+        {
+          "title": "The Sandlot",
+          "year": "1993",
+          "cat": 4756
+        },
+        {
+          "title": "Moonraker",
+          "year": "1979",
+          "cat": 3307
+        },
+        {
+          "title": "Diamonds Are Forever",
+          "year": "1971",
+          "cat": 2947
+        },
+        {
+          "title": "An Officer and a Gentleman",
+          "year": "1982",
+          "cat": 8458
+        },
+        {
+          "title": "Live and Let Die",
+          "year": "1973",
+          "cat": 3791
+        },
+        {
+          "title": "Mickey Blue Eyes",
+          "year": "1999",
+          "cat": 6301
+        },
+        {
+          "title": "Serendipity",
+          "year": "2001",
+          "cat": 4791
+        },
+        {
+          "title": "Layer Cake",
+          "year": "2004",
+          "cat": 5117
+        },
+        {
+          "title": "Meet Joe Black",
+          "year": "1998",
+          "cat": 1822
+        },
+        {
+          "title": "Pineapple Express",
+          "year": "2008",
+          "cat": 5464
+        },
+        {
+          "title": "Cool Runnings",
+          "year": "1993",
+          "cat": 4998
+        }
+      ]
+    },
+    {
+      "user": 209,
+      "seed": [
+        {
+          "title": "Watchmen",
+          "year": "2009"
+        },
+        {
+          "title": "Inception",
+          "year": "2010"
+        },
+        {
+          "title": "In Bruges",
+          "year": "2008"
+        },
+        {
+          "title": "Up",
+          "year": "2009"
+        },
+        {
+          "title": "Shutter Island",
+          "year": "2010"
+        },
+        {
+          "title": "The Sixth Sense",
+          "year": "1999"
+        },
+        {
+          "title": "Gladiator",
+          "year": "2000"
+        },
+        {
+          "title": "American Beauty",
+          "year": "1999"
+        },
+        {
+          "title": "Fight Club",
+          "year": "1999"
+        },
+        {
+          "title": "Gran Torino",
+          "year": "2008"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Pulp Fiction",
+          "year": "1994",
+          "cat": 1322
+        },
+        {
+          "title": "The Dark Knight",
+          "year": "2008",
+          "cat": 221
+        },
+        {
+          "title": "The Departed",
+          "year": "2006",
+          "cat": 2342
+        },
+        {
+          "title": "The Godfather",
+          "year": "1972",
+          "cat": 609
+        },
+        {
+          "title": "American History X",
+          "year": "1998",
+          "cat": 2034
+        },
+        {
+          "title": "Kill Bill: Vol. 1",
+          "year": "2003",
+          "cat": 1987
+        },
+        {
+          "title": "Eternal Sunshine of the Spotless Mind",
+          "year": "2004",
+          "cat": 1793
+        },
+        {
+          "title": "Finding Nemo",
+          "year": "2003",
+          "cat": 417
+        },
+        {
+          "title": "Memento",
+          "year": "2000",
+          "cat": 3176
+        },
+        {
+          "title": "The Usual Suspects",
+          "year": "1995",
+          "cat": 3270
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Skyfall",
+          "year": "2012",
+          "cat": 709
+        },
+        {
+          "title": "Hot Fuzz",
+          "year": "2007",
+          "cat": 3681
+        },
+        {
+          "title": "Snatch",
+          "year": "2000",
+          "cat": 2887
+        },
+        {
+          "title": "Indiana Jones and the Last Crusade",
+          "year": "1989",
+          "cat": 1865
+        },
+        {
+          "title": "Harry Potter and the Deathly Hallows: Part 2",
+          "year": "2011",
+          "cat": 253
+        }
+      ]
+    },
+    {
+      "user": 225,
+      "seed": [
+        {
+          "title": "My Cousin Vinny",
+          "year": "1992"
+        },
+        {
+          "title": "Heathers",
+          "year": "1989"
+        },
+        {
+          "title": "Say Anything...",
+          "year": "1989"
+        },
+        {
+          "title": "Can't Hardly Wait",
+          "year": "1998"
+        },
+        {
+          "title": "Back to the Future Part II",
+          "year": "1989"
+        },
+        {
+          "title": "The Full Monty",
+          "year": "1997"
+        },
+        {
+          "title": "An American Werewolf in London",
+          "year": "1981"
+        },
+        {
+          "title": "Jaws",
+          "year": "1975"
+        },
+        {
+          "title": "Alien",
+          "year": "1979"
+        },
+        {
+          "title": "Scream",
+          "year": "1996"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Ferris Bueller's Day Off",
+          "year": "1986",
+          "cat": 4315
+        },
+        {
+          "title": "Groundhog Day",
+          "year": "1993",
+          "cat": 2888
+        },
+        {
+          "title": "The Terminator",
+          "year": "1984",
+          "cat": 1433
+        },
+        {
+          "title": "Monty Python and the Holy Grail",
+          "year": "1975",
+          "cat": 5282
+        },
+        {
+          "title": "The Breakfast Club",
+          "year": "1985",
+          "cat": 3844
+        },
+        {
+          "title": "Indiana Jones and the Last Crusade",
+          "year": "1989",
+          "cat": 1865
+        },
+        {
+          "title": "Toy Story",
+          "year": "1995",
+          "cat": 227
+        },
+        {
+          "title": "When Harry Met Sally...",
+          "year": "1989",
+          "cat": 4823
+        },
+        {
+          "title": "Austin Powers: The Spy Who Shagged Me",
+          "year": "1999",
+          "cat": 3606
+        },
+        {
+          "title": "E.T. the Extra-Terrestrial",
+          "year": "1982",
+          "cat": 2367
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Poltergeist",
+          "year": "1982",
+          "cat": 2356
+        },
+        {
+          "title": "The Fly",
+          "year": "1986",
+          "cat": 3696
+        },
+        {
+          "title": "Friday the 13th Part 2",
+          "year": "1981",
+          "cat": 1885
+        },
+        {
+          "title": "Friday the 13th",
+          "year": "1980",
+          "cat": 1697
+        },
+        {
+          "title": "The Mummy",
+          "year": "1932",
+          "cat": 8377
+        },
+        {
+          "title": "The Fly",
+          "year": "1958",
+          "cat": 9469
+        },
+        {
+          "title": "A Nightmare on Elm Street 3: Dream Warriors",
+          "year": "1987",
+          "cat": 6832
+        }
+      ]
+    },
+    {
+      "user": 236,
+      "seed": [
+        {
+          "title": "Halloween",
+          "year": "1978"
+        },
+        {
+          "title": "The Texas Chain Saw Massacre",
+          "year": "1974"
+        },
+        {
+          "title": "Jaws",
+          "year": "1975"
+        },
+        {
+          "title": "The Rocky Horror Picture Show",
+          "year": "1975"
+        },
+        {
+          "title": "Young Frankenstein",
+          "year": "1974"
+        },
+        {
+          "title": "Bowfinger",
+          "year": "1999"
+        },
+        {
+          "title": "Office Space",
+          "year": "1999"
+        },
+        {
+          "title": "10 Things I Hate About You",
+          "year": "1999"
+        },
+        {
+          "title": "Dogma",
+          "year": "1999"
+        },
+        {
+          "title": "American Beauty",
+          "year": "1999"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Ferris Bueller's Day Off",
+          "year": "1986",
+          "cat": 4315
+        },
+        {
+          "title": "Reservoir Dogs",
+          "year": "1992",
+          "cat": 2806
+        },
+        {
+          "title": "Groundhog Day",
+          "year": "1993",
+          "cat": 2888
+        },
+        {
+          "title": "The Terminator",
+          "year": "1984",
+          "cat": 1433
+        },
+        {
+          "title": "Monty Python and the Holy Grail",
+          "year": "1975",
+          "cat": 5282
+        },
+        {
+          "title": "The Godfather",
+          "year": "1972",
+          "cat": 609
+        },
+        {
+          "title": "Big",
+          "year": "1988",
+          "cat": 4558
+        },
+        {
+          "title": "The Princess Bride",
+          "year": "1987",
+          "cat": 5221
+        },
+        {
+          "title": "The Godfather: Part II",
+          "year": "1974",
+          "cat": 1007
+        },
+        {
+          "title": "Being John Malkovich",
+          "year": "1999",
+          "cat": 4206
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Austin Powers: The Spy Who Shagged Me",
+          "year": "1999",
+          "cat": 3606
+        },
+        {
+          "title": "8MM",
+          "year": "1999",
+          "cat": 5854
+        },
+        {
+          "title": "Payback",
+          "year": "1999",
+          "cat": 3947
+        }
+      ]
+    },
+    {
+      "user": 252,
+      "seed": [
+        {
+          "title": "Brave",
+          "year": "2012"
+        },
+        {
+          "title": "The King's Speech",
+          "year": "2010"
+        },
+        {
+          "title": "Kubo and the Two Strings",
+          "year": "2016"
+        },
+        {
+          "title": "Hidden Figures",
+          "year": "2016"
+        },
+        {
+          "title": "Pleasantville",
+          "year": "1998"
+        },
+        {
+          "title": "Coraline",
+          "year": "2009"
+        },
+        {
+          "title": "The Lego Movie",
+          "year": "2014"
+        },
+        {
+          "title": "Hugo",
+          "year": "2011"
+        },
+        {
+          "title": "Frozen",
+          "year": "2013"
+        },
+        {
+          "title": "The Boss Baby",
+          "year": "2017"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Guardians of the Galaxy",
+          "year": "2014",
+          "cat": 1233
+        },
+        {
+          "title": "The Avengers",
+          "year": "2012",
+          "cat": 138
+        },
+        {
+          "title": "WALL\u00b7E",
+          "year": "2008",
+          "cat": 875
+        },
+        {
+          "title": "Up",
+          "year": "2009",
+          "cat": 483
+        },
+        {
+          "title": "Harry Potter and the Deathly Hallows: Part 1",
+          "year": "2010",
+          "cat": 306
+        },
+        {
+          "title": "Captain America: The Winter Soldier",
+          "year": "2014",
+          "cat": 1245
+        },
+        {
+          "title": "Scott Pilgrim vs. the World",
+          "year": "2010",
+          "cat": 2061
+        },
+        {
+          "title": "The Dark Knight Rises",
+          "year": "2012",
+          "cat": 211
+        },
+        {
+          "title": "How to Train Your Dragon",
+          "year": "2010",
+          "cat": 704
+        },
+        {
+          "title": "Inception",
+          "year": "2010",
+          "cat": 380
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Toy Story",
+          "year": "1995",
+          "cat": 227
+        },
+        {
+          "title": "The Truman Show",
+          "year": "1998",
+          "cat": 2471
+        },
+        {
+          "title": "The Lion King",
+          "year": "1994",
+          "cat": 257
+        },
+        {
+          "title": "Mrs. Doubtfire",
+          "year": "1993",
+          "cat": 3277
+        },
+        {
+          "title": "Ratatouille",
+          "year": "2007",
+          "cat": 319
+        },
+        {
+          "title": "Gandhi",
+          "year": "1982",
+          "cat": 4851
+        }
+      ]
+    },
+    {
+      "user": 279,
+      "seed": [
+        {
+          "title": "Gone Girl",
+          "year": "2014"
+        },
+        {
+          "title": "Indiana Jones and the Temple of Doom",
+          "year": "1984"
+        },
+        {
+          "title": "Prisoners",
+          "year": "2013"
+        },
+        {
+          "title": "Interstellar",
+          "year": "2014"
+        },
+        {
+          "title": "Ex Machina",
+          "year": "2014"
+        },
+        {
+          "title": "Mad Max: Fury Road",
+          "year": "2015"
+        },
+        {
+          "title": "Django Unchained",
+          "year": "2012"
+        },
+        {
+          "title": "Arrival",
+          "year": "2016"
+        },
+        {
+          "title": "The Revenant",
+          "year": "2015"
+        },
+        {
+          "title": "There Will Be Blood",
+          "year": "2007"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Fight Club",
+          "year": "1999",
+          "cat": 407
+        },
+        {
+          "title": "Kill Bill: Vol. 1",
+          "year": "2003",
+          "cat": 1987
+        },
+        {
+          "title": "Gladiator",
+          "year": "2000",
+          "cat": 1210
+        },
+        {
+          "title": "Reservoir Dogs",
+          "year": "1992",
+          "cat": 2806
+        },
+        {
+          "title": "Snatch",
+          "year": "2000",
+          "cat": 2887
+        },
+        {
+          "title": "Back to the Future",
+          "year": "1985",
+          "cat": 1132
+        },
+        {
+          "title": "Ocean's Eleven",
+          "year": "2001",
+          "cat": 2122
+        },
+        {
+          "title": "WALL\u00b7E",
+          "year": "2008",
+          "cat": 875
+        },
+        {
+          "title": "The Usual Suspects",
+          "year": "1995",
+          "cat": 3270
+        },
+        {
+          "title": "The Sixth Sense",
+          "year": "1999",
+          "cat": 2708
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Jurassic Park",
+          "year": "1993",
+          "cat": 2980
+        },
+        {
+          "title": "Deadpool",
+          "year": "2016",
+          "cat": 195
+        },
+        {
+          "title": "Gran Torino",
+          "year": "2008",
+          "cat": 3117
+        },
+        {
+          "title": "The Assassination of Jesse James by the Coward Robert Ford",
+          "year": "2007",
+          "cat": 5952
+        },
+        {
+          "title": "Top Gun",
+          "year": "1986",
+          "cat": 1712
+        },
+        {
+          "title": "Mission: Impossible",
+          "year": "1996",
+          "cat": 2032
+        },
+        {
+          "title": "The Last Samurai",
+          "year": "2003",
+          "cat": 2232
+        },
+        {
+          "title": "Birdman or (The Unexpected Virtue of Ignorance)",
+          "year": "2014",
+          "cat": 2859
+        },
+        {
+          "title": "Zombieland",
+          "year": "2009",
+          "cat": 795
+        },
+        {
+          "title": "Hell or High Water",
+          "year": "2016",
+          "cat": 4426
+        },
+        {
+          "title": "Skyfall",
+          "year": "2012",
+          "cat": 709
+        },
+        {
+          "title": "Zoolander",
+          "year": "2001",
+          "cat": 5631
+        },
+        {
+          "title": "Office Space",
+          "year": "1999",
+          "cat": 5194
+        },
+        {
+          "title": "The Grand Budapest Hotel",
+          "year": "2014",
+          "cat": 2332
+        },
+        {
+          "title": "It",
+          "year": "2017",
+          "cat": 829
+        }
+      ]
+    },
+    {
+      "user": 283,
+      "seed": [
+        {
+          "title": "Lethal Weapon 4",
+          "year": "1998"
+        },
+        {
+          "title": "The Silence of the Lambs",
+          "year": "1991"
+        },
+        {
+          "title": "The Shawshank Redemption",
+          "year": "1994"
+        },
+        {
+          "title": "Braveheart",
+          "year": "1995"
+        },
+        {
+          "title": "Fargo",
+          "year": "1996"
+        },
+        {
+          "title": "Good Will Hunting",
+          "year": "1997"
+        },
+        {
+          "title": "Apollo 13",
+          "year": "1995"
+        },
+        {
+          "title": "Forrest Gump",
+          "year": "1994"
+        },
+        {
+          "title": "Friday",
+          "year": "1995"
+        },
+        {
+          "title": "Austin Powers: International Man of Mystery",
+          "year": "1997"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Pulp Fiction",
+          "year": "1994",
+          "cat": 1322
+        },
+        {
+          "title": "Saving Private Ryan",
+          "year": "1998",
+          "cat": 779
+        },
+        {
+          "title": "The Usual Suspects",
+          "year": "1995",
+          "cat": 3270
+        },
+        {
+          "title": "The Matrix",
+          "year": "1999",
+          "cat": 572
+        },
+        {
+          "title": "Jurassic Park",
+          "year": "1993",
+          "cat": 2980
+        },
+        {
+          "title": "The Godfather",
+          "year": "1972",
+          "cat": 609
+        },
+        {
+          "title": "Schindler's List",
+          "year": "1993",
+          "cat": 1327
+        },
+        {
+          "title": "The Fugitive",
+          "year": "1993",
+          "cat": 3103
+        },
+        {
+          "title": "Terminator 2: Judgment Day",
+          "year": "1991",
+          "cat": 1140
+        },
+        {
+          "title": "Fight Club",
+          "year": "1999",
+          "cat": 407
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Happy Gilmore",
+          "year": "1996",
+          "cat": 4717
+        },
+        {
+          "title": "The Nutty Professor",
+          "year": "1996",
+          "cat": 4777
+        }
+      ]
+    },
+    {
+      "user": 296,
+      "seed": [
+        {
+          "title": "The Shawshank Redemption",
+          "year": "1994"
+        },
+        {
+          "title": "Schindler's List",
+          "year": "1993"
+        },
+        {
+          "title": "Inception",
+          "year": "2010"
+        },
+        {
+          "title": "Fight Club",
+          "year": "1999"
+        },
+        {
+          "title": "Good Will Hunting",
+          "year": "1997"
+        },
+        {
+          "title": "The Matrix",
+          "year": "1999"
+        },
+        {
+          "title": "Saving Private Ryan",
+          "year": "1998"
+        },
+        {
+          "title": "Pulp Fiction",
+          "year": "1994"
+        },
+        {
+          "title": "Braveheart",
+          "year": "1995"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "The Silence of the Lambs",
+          "year": "1991",
+          "cat": 8566
+        },
+        {
+          "title": "Forrest Gump",
+          "year": "1994",
+          "cat": 1069
+        },
+        {
+          "title": "The Godfather",
+          "year": "1972",
+          "cat": 609
+        },
+        {
+          "title": "The Usual Suspects",
+          "year": "1995",
+          "cat": 3270
+        },
+        {
+          "title": "The Lord of the Rings: The Return of the King",
+          "year": "2003",
+          "cat": 419
+        },
+        {
+          "title": "The Lord of the Rings: The Fellowship of the Ring",
+          "year": "2001",
+          "cat": 369
+        },
+        {
+          "title": "American History X",
+          "year": "1998",
+          "cat": 2034
+        },
+        {
+          "title": "The Sixth Sense",
+          "year": "1999",
+          "cat": 2708
+        },
+        {
+          "title": "American Beauty",
+          "year": "1999",
+          "cat": 3535
+        },
+        {
+          "title": "The Departed",
+          "year": "2006",
+          "cat": 2342
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "The Usual Suspects",
+          "year": "1995",
+          "cat": 3270
+        },
+        {
+          "title": "Forrest Gump",
+          "year": "1994",
+          "cat": 1069
+        }
+      ]
+    },
+    {
+      "user": 355,
+      "seed": [
+        {
+          "title": "Titanic",
+          "year": "1997"
+        },
+        {
+          "title": "Stargate",
+          "year": "1994"
+        },
+        {
+          "title": "Galaxy Quest",
+          "year": "1999"
+        },
+        {
+          "title": "Total Recall",
+          "year": "1990"
+        },
+        {
+          "title": "Forever Young",
+          "year": "1992"
+        },
+        {
+          "title": "Star Wars: Episode I - The Phantom Menace",
+          "year": "1999"
+        },
+        {
+          "title": "The Rocketeer",
+          "year": "1991"
+        },
+        {
+          "title": "Some Like It Hot",
+          "year": "1959"
+        },
+        {
+          "title": "Sabrina",
+          "year": "1954"
+        },
+        {
+          "title": "Funny Face",
+          "year": "1957"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Who Framed Roger Rabbit",
+          "year": "1988",
+          "cat": 1810
+        },
+        {
+          "title": "Groundhog Day",
+          "year": "1993",
+          "cat": 2888
+        },
+        {
+          "title": "Monty Python and the Holy Grail",
+          "year": "1975",
+          "cat": 5282
+        },
+        {
+          "title": "The Terminator",
+          "year": "1984",
+          "cat": 1433
+        },
+        {
+          "title": "Alien",
+          "year": "1979",
+          "cat": 1317
+        },
+        {
+          "title": "The Full Monty",
+          "year": "1997",
+          "cat": 9719
+        },
+        {
+          "title": "Starship Troopers",
+          "year": "1997",
+          "cat": 3414
+        },
+        {
+          "title": "Singin' in the Rain",
+          "year": "1952",
+          "cat": 4359
+        },
+        {
+          "title": "E.T. the Extra-Terrestrial",
+          "year": "1982",
+          "cat": 2367
+        },
+        {
+          "title": "Gattaca",
+          "year": "1997",
+          "cat": 3063
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Roman Holiday",
+          "year": "1953",
+          "cat": 4330
+        },
+        {
+          "title": "To Catch a Thief",
+          "year": "1955",
+          "cat": 6551
+        }
+      ]
+    },
+    {
+      "user": 359,
+      "seed": [
+        {
+          "title": "Dances with Wolves",
+          "year": "1990"
+        },
+        {
+          "title": "Toy Story",
+          "year": "1995"
+        },
+        {
+          "title": "Schindler's List",
+          "year": "1993"
+        },
+        {
+          "title": "American Beauty",
+          "year": "1999"
+        },
+        {
+          "title": "E.T. the Extra-Terrestrial",
+          "year": "1982"
+        },
+        {
+          "title": "Titanic",
+          "year": "1997"
+        },
+        {
+          "title": "Ghost",
+          "year": "1990"
+        },
+        {
+          "title": "Willy Wonka & the Chocolate Factory",
+          "year": "1971"
+        },
+        {
+          "title": "Shrek",
+          "year": "2001"
+        },
+        {
+          "title": "Rain Man",
+          "year": "1988"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Forrest Gump",
+          "year": "1994",
+          "cat": 1069
+        },
+        {
+          "title": "The Shawshank Redemption",
+          "year": "1994",
+          "cat": 657
+        },
+        {
+          "title": "The Godfather",
+          "year": "1972",
+          "cat": 609
+        },
+        {
+          "title": "The Matrix",
+          "year": "1999",
+          "cat": 572
+        },
+        {
+          "title": "The Sixth Sense",
+          "year": "1999",
+          "cat": 2708
+        },
+        {
+          "title": "Saving Private Ryan",
+          "year": "1998",
+          "cat": 779
+        },
+        {
+          "title": "The Usual Suspects",
+          "year": "1995",
+          "cat": 3270
+        },
+        {
+          "title": "Back to the Future",
+          "year": "1985",
+          "cat": 1132
+        },
+        {
+          "title": "Fight Club",
+          "year": "1999",
+          "cat": 407
+        },
+        {
+          "title": "Groundhog Day",
+          "year": "1993",
+          "cat": 2888
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Amadeus",
+          "year": "1984",
+          "cat": 4502
+        },
+        {
+          "title": "Dead Poets Society",
+          "year": "1989",
+          "cat": 2156
+        },
+        {
+          "title": "Traffic",
+          "year": "2000",
+          "cat": 6912
+        },
+        {
+          "title": "A Beautiful Mind",
+          "year": "2001",
+          "cat": 3152
+        },
+        {
+          "title": "Finding Nemo",
+          "year": "2003",
+          "cat": 417
+        }
+      ]
+    },
+    {
+      "user": 401,
+      "seed": [
+        {
+          "title": "Sweeney Todd: The Demon Barber of Fleet Street",
+          "year": "2007"
+        },
+        {
+          "title": "Treasure Planet",
+          "year": "2002"
+        },
+        {
+          "title": "Atlantis: The Lost Empire",
+          "year": "2001"
+        },
+        {
+          "title": "Coraline",
+          "year": "2009"
+        },
+        {
+          "title": "Inside Out",
+          "year": "2015"
+        },
+        {
+          "title": "Tangled",
+          "year": "2010"
+        },
+        {
+          "title": "The Hunchback of Notre Dame",
+          "year": "1996"
+        },
+        {
+          "title": "A Goofy Movie",
+          "year": "1995"
+        },
+        {
+          "title": "WALL\u00b7E",
+          "year": "2008"
+        },
+        {
+          "title": "Meet the Robinsons",
+          "year": "2007"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Enchanted",
+          "year": "2007",
+          "cat": 1341
+        },
+        {
+          "title": "The Man from Nowhere",
+          "year": "2010",
+          "cat": 1351
+        },
+        {
+          "title": "Doomsday",
+          "year": "2008",
+          "cat": 4415
+        },
+        {
+          "title": "Hansel & Gretel: Witch Hunters",
+          "year": "2013",
+          "cat": 811
+        },
+        {
+          "title": "Date Night",
+          "year": "2010",
+          "cat": 1953
+        },
+        {
+          "title": "Battlestar Galactica: The Plan",
+          "year": "2009",
+          "cat": 7988
+        },
+        {
+          "title": "Death Race 2000",
+          "year": "1975",
+          "cat": 7029
+        },
+        {
+          "title": "Paul Blart: Mall Cop",
+          "year": "2009",
+          "cat": 1539
+        },
+        {
+          "title": "Here Comes the Boom",
+          "year": "2012",
+          "cat": 5724
+        },
+        {
+          "title": "Robin Hood",
+          "year": "2010",
+          "cat": 1034
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Love Actually",
+          "year": "2003",
+          "cat": 3693
+        },
+        {
+          "title": "Ratatouille",
+          "year": "2007",
+          "cat": 319
+        },
+        {
+          "title": "The Incredibles",
+          "year": "2004",
+          "cat": 424
+        },
+        {
+          "title": "Monty Python and the Holy Grail",
+          "year": "1975",
+          "cat": 5282
+        }
+      ]
+    },
+    {
+      "user": 409,
+      "seed": [
+        {
+          "title": "The Naked Gun: From the Files of Police Squad!",
+          "year": "1988"
+        },
+        {
+          "title": "The Crush",
+          "year": "1993"
+        },
+        {
+          "title": "The Rocky Horror Picture Show",
+          "year": "1975"
+        },
+        {
+          "title": "The Godfather: Part II",
+          "year": "1974"
+        },
+        {
+          "title": "The Shawshank Redemption",
+          "year": "1994"
+        },
+        {
+          "title": "The Silence of the Lambs",
+          "year": "1991"
+        },
+        {
+          "title": "One Flew Over the Cuckoo's Nest",
+          "year": "1975"
+        },
+        {
+          "title": "Pulp Fiction",
+          "year": "1994"
+        },
+        {
+          "title": "Fargo",
+          "year": "1996"
+        },
+        {
+          "title": "The Hustler",
+          "year": "1961"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Ferris Bueller's Day Off",
+          "year": "1986",
+          "cat": 4315
+        },
+        {
+          "title": "Being John Malkovich",
+          "year": "1999",
+          "cat": 4206
+        },
+        {
+          "title": "Reservoir Dogs",
+          "year": "1992",
+          "cat": 2806
+        },
+        {
+          "title": "A Fish Called Wanda",
+          "year": "1988",
+          "cat": 5328
+        },
+        {
+          "title": "GoodFellas",
+          "year": "1990",
+          "cat": 1769
+        },
+        {
+          "title": "The Full Monty",
+          "year": "1997",
+          "cat": 9719
+        },
+        {
+          "title": "The Usual Suspects",
+          "year": "1995",
+          "cat": 3270
+        },
+        {
+          "title": "The Terminator",
+          "year": "1984",
+          "cat": 1433
+        },
+        {
+          "title": "Big",
+          "year": "1988",
+          "cat": 4558
+        },
+        {
+          "title": "Back to the Future",
+          "year": "1985",
+          "cat": 1132
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Raging Bull",
+          "year": "1980",
+          "cat": 5959
+        },
+        {
+          "title": "Amadeus",
+          "year": "1984",
+          "cat": 4502
+        },
+        {
+          "title": "Casablanca",
+          "year": "1942",
+          "cat": 4134
+        },
+        {
+          "title": "Glory",
+          "year": "1989",
+          "cat": 6286
+        },
+        {
+          "title": "The Graduate",
+          "year": "1967",
+          "cat": 4623
+        },
+        {
+          "title": "Taxi Driver",
+          "year": "1976",
+          "cat": 1820
+        },
+        {
+          "title": "The Wizard of Oz",
+          "year": "1939",
+          "cat": 1288
+        },
+        {
+          "title": "The Apostle",
+          "year": "2014",
+          "cat": 5176
+        },
+        {
+          "title": "Midnight Cowboy",
+          "year": "1969",
+          "cat": 6160
+        },
+        {
+          "title": "Psycho",
+          "year": "1960",
+          "cat": 2300
+        },
+        {
+          "title": "GoodFellas",
+          "year": "1990",
+          "cat": 1769
+        }
+      ]
+    },
+    {
+      "user": 416,
+      "seed": [
+        {
+          "title": "Secretary",
+          "year": "2002"
+        },
+        {
+          "title": "Brazil",
+          "year": "1985"
+        },
+        {
+          "title": "Bad Boy Bubby",
+          "year": "1993"
+        },
+        {
+          "title": "Pulp Fiction",
+          "year": "1994"
+        },
+        {
+          "title": "Being John Malkovich",
+          "year": "1999"
+        },
+        {
+          "title": "Fight Club",
+          "year": "1999"
+        },
+        {
+          "title": "Mulholland Drive",
+          "year": "2001"
+        },
+        {
+          "title": "Adaptation.",
+          "year": "2002"
+        },
+        {
+          "title": "Heavenly Creatures",
+          "year": "1994"
+        },
+        {
+          "title": "Fargo",
+          "year": "1996"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Reservoir Dogs",
+          "year": "1992",
+          "cat": 2806
+        },
+        {
+          "title": "Memento",
+          "year": "2000",
+          "cat": 3176
+        },
+        {
+          "title": "The Godfather",
+          "year": "1972",
+          "cat": 609
+        },
+        {
+          "title": "O Brother, Where Art Thou?",
+          "year": "2000",
+          "cat": 4976
+        },
+        {
+          "title": "Monty Python and the Holy Grail",
+          "year": "1975",
+          "cat": 5282
+        },
+        {
+          "title": "American Beauty",
+          "year": "1999",
+          "cat": 3535
+        },
+        {
+          "title": "The Usual Suspects",
+          "year": "1995",
+          "cat": 3270
+        },
+        {
+          "title": "The Matrix",
+          "year": "1999",
+          "cat": 572
+        },
+        {
+          "title": "The Silence of the Lambs",
+          "year": "1991",
+          "cat": 8566
+        },
+        {
+          "title": "The Big Lebowski",
+          "year": "1998",
+          "cat": 3617
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "A Clockwork Orange",
+          "year": "1971",
+          "cat": 1778
+        },
+        {
+          "title": "Psycho",
+          "year": "1960",
+          "cat": 2300
+        },
+        {
+          "title": "Good Bye Lenin!",
+          "year": "2003",
+          "cat": 9050
+        }
+      ]
+    },
+    {
+      "user": 437,
+      "seed": [
+        {
+          "title": "Philadelphia",
+          "year": "1993"
+        },
+        {
+          "title": "Glengarry Glen Ross",
+          "year": "1992"
+        },
+        {
+          "title": "Heavenly Creatures",
+          "year": "1994"
+        },
+        {
+          "title": "Kids",
+          "year": "1995"
+        },
+        {
+          "title": "Menace II Society",
+          "year": "1993"
+        },
+        {
+          "title": "Casino",
+          "year": "1995"
+        },
+        {
+          "title": "A Walk in the Clouds",
+          "year": "1995"
+        },
+        {
+          "title": "Dangerous Minds",
+          "year": "1995"
+        },
+        {
+          "title": "The Doors",
+          "year": "1991"
+        },
+        {
+          "title": "With Honors",
+          "year": "1994"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Pulp Fiction",
+          "year": "1994",
+          "cat": 1322
+        },
+        {
+          "title": "The Silence of the Lambs",
+          "year": "1991",
+          "cat": 8566
+        },
+        {
+          "title": "The Godfather",
+          "year": "1972",
+          "cat": 609
+        },
+        {
+          "title": "Forrest Gump",
+          "year": "1994",
+          "cat": 1069
+        },
+        {
+          "title": "The Godfather: Part II",
+          "year": "1974",
+          "cat": 1007
+        },
+        {
+          "title": "Reservoir Dogs",
+          "year": "1992",
+          "cat": 2806
+        },
+        {
+          "title": "Saving Private Ryan",
+          "year": "1998",
+          "cat": 779
+        },
+        {
+          "title": "Toy Story",
+          "year": "1995",
+          "cat": 227
+        },
+        {
+          "title": "A Fish Called Wanda",
+          "year": "1988",
+          "cat": 5328
+        },
+        {
+          "title": "The Fugitive",
+          "year": "1993",
+          "cat": 3103
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "A Clockwork Orange",
+          "year": "1971",
+          "cat": 1778
+        },
+        {
+          "title": "The Princess Bride",
+          "year": "1987",
+          "cat": 5221
+        },
+        {
+          "title": "Annie Hall",
+          "year": "1977",
+          "cat": 6909
+        },
+        {
+          "title": "The Sting",
+          "year": "1973",
+          "cat": 5781
+        },
+        {
+          "title": "When Harry Met Sally...",
+          "year": "1989",
+          "cat": 4823
+        },
+        {
+          "title": "Indiana Jones and the Last Crusade",
+          "year": "1989",
+          "cat": 1865
+        },
+        {
+          "title": "Back to the Future",
+          "year": "1985",
+          "cat": 1132
+        },
+        {
+          "title": "Pulp Fiction",
+          "year": "1994",
+          "cat": 1322
+        },
+        {
+          "title": "Groundhog Day",
+          "year": "1993",
+          "cat": 2888
+        },
+        {
+          "title": "The People vs. Larry Flynt",
+          "year": "1996",
+          "cat": 6662
+        }
+      ]
+    },
+    {
+      "user": 475,
+      "seed": [
+        {
+          "title": "Transformers: Revenge of the Fallen",
+          "year": "2009"
+        },
+        {
+          "title": "Man of Steel",
+          "year": "2013"
+        },
+        {
+          "title": "Atlantis: The Lost Empire",
+          "year": "2001"
+        },
+        {
+          "title": "The Chronicles of Narnia: Prince Caspian",
+          "year": "2008"
+        },
+        {
+          "title": "The Polar Express",
+          "year": "2004"
+        },
+        {
+          "title": "The Golden Compass",
+          "year": "2007"
+        },
+        {
+          "title": "The Hunger Games: Mockingjay - Part 2",
+          "year": "2015"
+        },
+        {
+          "title": "Surrogates",
+          "year": "2009"
+        },
+        {
+          "title": "Terminator 2: Judgment Day",
+          "year": "1991"
+        },
+        {
+          "title": "Back to the Future",
+          "year": "1985"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Ocean's Eleven",
+          "year": "2001",
+          "cat": 2122
+        },
+        {
+          "title": "300",
+          "year": "2007",
+          "cat": 1612
+        },
+        {
+          "title": "The Dark Knight",
+          "year": "2008",
+          "cat": 221
+        },
+        {
+          "title": "WALL\u00b7E",
+          "year": "2008",
+          "cat": 875
+        },
+        {
+          "title": "Minority Report",
+          "year": "2002",
+          "cat": 3894
+        },
+        {
+          "title": "Casino Royale",
+          "year": "2006",
+          "cat": 1255
+        },
+        {
+          "title": "The Bourne Identity",
+          "year": "2002",
+          "cat": 2501
+        },
+        {
+          "title": "Inception",
+          "year": "2010",
+          "cat": 380
+        },
+        {
+          "title": "Finding Nemo",
+          "year": "2003",
+          "cat": 417
+        },
+        {
+          "title": "Fight Club",
+          "year": "1999",
+          "cat": 407
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Batman",
+          "year": "1989",
+          "cat": 72
+        },
+        {
+          "title": "Aladdin",
+          "year": "1992",
+          "cat": 745
+        },
+        {
+          "title": "The Lion King",
+          "year": "1994",
+          "cat": 257
+        },
+        {
+          "title": "Die Hard: With a Vengeance",
+          "year": "1995",
+          "cat": 2171
+        },
+        {
+          "title": "The Terminator",
+          "year": "1984",
+          "cat": 1433
+        },
+        {
+          "title": "The Mask",
+          "year": "1994",
+          "cat": 1267
+        },
+        {
+          "title": "The Fifth Element",
+          "year": "1997",
+          "cat": 1954
+        },
+        {
+          "title": "The Truman Show",
+          "year": "1998",
+          "cat": 2471
+        },
+        {
+          "title": "The Bourne Identity",
+          "year": "2002",
+          "cat": 2501
+        },
+        {
+          "title": "Star Trek: Generations",
+          "year": "1994",
+          "cat": 8908
+        },
+        {
+          "title": "Jumanji",
+          "year": "1995",
+          "cat": 7081
+        },
+        {
+          "title": "Indiana Jones and the Temple of Doom",
+          "year": "1984",
+          "cat": 1191
+        },
+        {
+          "title": "Ace Ventura: When Nature Calls",
+          "year": "1995",
+          "cat": 3620
+        },
+        {
+          "title": "Back to the Future Part III",
+          "year": "1990",
+          "cat": 2355
+        },
+        {
+          "title": "Back to the Future Part II",
+          "year": "1989",
+          "cat": 2588
+        },
+        {
+          "title": "The Nutty Professor",
+          "year": "1996",
+          "cat": 4777
+        },
+        {
+          "title": "Star Trek: First Contact",
+          "year": "1996",
+          "cat": 5307
+        },
+        {
+          "title": "The Mummy",
+          "year": "1999",
+          "cat": 890
+        },
+        {
+          "title": "The Bourne Ultimatum",
+          "year": "2007",
+          "cat": 2323
+        },
+        {
+          "title": "Starship Troopers",
+          "year": "1997",
+          "cat": 3414
+        },
+        {
+          "title": "Star Trek II: The Wrath of Khan",
+          "year": "1982",
+          "cat": 8994
+        },
+        {
+          "title": "Enemy of the State",
+          "year": "1998",
+          "cat": 4230
+        },
+        {
+          "title": "The Cable Guy",
+          "year": "1996",
+          "cat": 4428
+        }
+      ]
+    },
+    {
+      "user": 493,
+      "seed": [
+        {
+          "title": "Aliens",
+          "year": "1986"
+        },
+        {
+          "title": "Full Metal Jacket",
+          "year": "1987"
+        },
+        {
+          "title": "Beverly Hills Cop",
+          "year": "1984"
+        },
+        {
+          "title": "Lethal Weapon",
+          "year": "1987"
+        },
+        {
+          "title": "The Rock",
+          "year": "1996"
+        },
+        {
+          "title": "Highlander",
+          "year": "1986"
+        },
+        {
+          "title": "Heat",
+          "year": "1995"
+        },
+        {
+          "title": "Face/Off",
+          "year": "1997"
+        },
+        {
+          "title": "RoboCop",
+          "year": "1987"
+        },
+        {
+          "title": "Predator",
+          "year": "1987"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Indiana Jones and the Last Crusade",
+          "year": "1989",
+          "cat": 1865
+        },
+        {
+          "title": "Alien",
+          "year": "1979",
+          "cat": 1317
+        },
+        {
+          "title": "Die Hard",
+          "year": "1988",
+          "cat": 2038
+        },
+        {
+          "title": "Jurassic Park",
+          "year": "1993",
+          "cat": 2980
+        },
+        {
+          "title": "Groundhog Day",
+          "year": "1993",
+          "cat": 2888
+        },
+        {
+          "title": "Reservoir Dogs",
+          "year": "1992",
+          "cat": 2806
+        },
+        {
+          "title": "The Silence of the Lambs",
+          "year": "1991",
+          "cat": 8566
+        },
+        {
+          "title": "GoodFellas",
+          "year": "1990",
+          "cat": 1769
+        },
+        {
+          "title": "Pulp Fiction",
+          "year": "1994",
+          "cat": 1322
+        },
+        {
+          "title": "Back to the Future",
+          "year": "1985",
+          "cat": 1132
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Superman",
+          "year": "1978",
+          "cat": 1614
+        },
+        {
+          "title": "Batman",
+          "year": "1989",
+          "cat": 72
+        },
+        {
+          "title": "Menace II Society",
+          "year": "1993",
+          "cat": 4631
+        },
+        {
+          "title": "El Mariachi",
+          "year": "1992",
+          "cat": 7450
+        },
+        {
+          "title": "Rush Hour 2",
+          "year": "2001",
+          "cat": 1491
+        },
+        {
+          "title": "Desperado",
+          "year": "1995",
+          "cat": 3727
+        }
+      ]
+    },
+    {
+      "user": 527,
+      "seed": [
+        {
+          "title": "Star Trek: Generations",
+          "year": "1994"
+        },
+        {
+          "title": "Clash of the Titans",
+          "year": "1981"
+        },
+        {
+          "title": "Spy Kids",
+          "year": "2001"
+        },
+        {
+          "title": "Mighty Joe Young",
+          "year": "1998"
+        },
+        {
+          "title": "The NeverEnding Story",
+          "year": "1984"
+        },
+        {
+          "title": "The Borrowers",
+          "year": "1997"
+        },
+        {
+          "title": "Escape from New York",
+          "year": "1981"
+        },
+        {
+          "title": "Bedknobs and Broomsticks",
+          "year": "1971"
+        },
+        {
+          "title": "Logan's Run",
+          "year": "1976"
+        },
+        {
+          "title": "The Running Man",
+          "year": "1987"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Groundhog Day",
+          "year": "1993",
+          "cat": 2888
+        },
+        {
+          "title": "Toy Story",
+          "year": "1995",
+          "cat": 227
+        },
+        {
+          "title": "The Terminator",
+          "year": "1984",
+          "cat": 1433
+        },
+        {
+          "title": "Monty Python and the Holy Grail",
+          "year": "1975",
+          "cat": 5282
+        },
+        {
+          "title": "Rocky",
+          "year": "1976",
+          "cat": 1117
+        },
+        {
+          "title": "Jaws",
+          "year": "1975",
+          "cat": 1303
+        },
+        {
+          "title": "Alien",
+          "year": "1979",
+          "cat": 1317
+        },
+        {
+          "title": "The Godfather",
+          "year": "1972",
+          "cat": 609
+        },
+        {
+          "title": "RoboCop",
+          "year": "1987",
+          "cat": 2387
+        },
+        {
+          "title": "Who Framed Roger Rabbit",
+          "year": "1988",
+          "cat": 1810
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Benji",
+          "year": "2018",
+          "cat": 5736
+        },
+        {
+          "title": "Willow",
+          "year": "1988",
+          "cat": 4787
+        },
+        {
+          "title": "Star Trek: The Motion Picture",
+          "year": "1979",
+          "cat": 4825
+        },
+        {
+          "title": "Conan the Barbarian",
+          "year": "1982",
+          "cat": 2640
+        },
+        {
+          "title": "Star Trek V: The Final Frontier",
+          "year": "1989",
+          "cat": 6239
+        },
+        {
+          "title": "Crocodile Dundee II",
+          "year": "1988",
+          "cat": 6557
+        },
+        {
+          "title": "The Karate Kid Part II",
+          "year": "1986",
+          "cat": 2612
+        },
+        {
+          "title": "Homeward Bound II: Lost in San Francisco",
+          "year": "1996",
+          "cat": 4567
+        },
+        {
+          "title": "The Blue Lagoon",
+          "year": "1980",
+          "cat": 2107
+        },
+        {
+          "title": "Free Willy",
+          "year": "1993",
+          "cat": 2248
+        },
+        {
+          "title": "Conan the Destroyer",
+          "year": "1984",
+          "cat": 4608
+        },
+        {
+          "title": "Firewalker",
+          "year": "1986",
+          "cat": 9381
+        },
+        {
+          "title": "Escape from L.A.",
+          "year": "1996",
+          "cat": 4309
+        },
+        {
+          "title": "Howard the Duck",
+          "year": "1986",
+          "cat": 9167
+        },
+        {
+          "title": "Misery",
+          "year": "1990",
+          "cat": 3422
+        },
+        {
+          "title": "Alien",
+          "year": "1979",
+          "cat": 1317
+        },
+        {
+          "title": "Jaws",
+          "year": "1975",
+          "cat": 1303
+        },
+        {
+          "title": "The Exorcist",
+          "year": "1973",
+          "cat": 756
+        },
+        {
+          "title": "The Shining",
+          "year": "1980",
+          "cat": 1251
+        },
+        {
+          "title": "The Omen",
+          "year": "1976",
+          "cat": 6506
+        },
+        {
+          "title": "Creepshow",
+          "year": "1982",
+          "cat": 3843
+        }
+      ]
+    },
+    {
+      "user": 560,
+      "seed": [
+        {
+          "title": "Nightcrawler",
+          "year": "2014"
+        },
+        {
+          "title": "Braveheart",
+          "year": "1995"
+        },
+        {
+          "title": "The Big Lebowski",
+          "year": "1998"
+        },
+        {
+          "title": "In Bruges",
+          "year": "2008"
+        },
+        {
+          "title": "Eastern Promises",
+          "year": "2007"
+        },
+        {
+          "title": "Inglourious Basterds",
+          "year": "2009"
+        },
+        {
+          "title": "Requiem for a Dream",
+          "year": "2000"
+        },
+        {
+          "title": "Moon",
+          "year": "2009"
+        },
+        {
+          "title": "The Girl with the Dragon Tattoo",
+          "year": "2011"
+        },
+        {
+          "title": "Lord of War",
+          "year": "2005"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "The Godfather",
+          "year": "1972",
+          "cat": 609
+        },
+        {
+          "title": "300",
+          "year": "2007",
+          "cat": 1612
+        },
+        {
+          "title": "Donnie Darko",
+          "year": "2001",
+          "cat": 3519
+        },
+        {
+          "title": "Batman Begins",
+          "year": "2005",
+          "cat": 109
+        },
+        {
+          "title": "Saving Private Ryan",
+          "year": "1998",
+          "cat": 779
+        },
+        {
+          "title": "Memento",
+          "year": "2000",
+          "cat": 3176
+        },
+        {
+          "title": "Pirates of the Caribbean: The Curse of the Black Pearl",
+          "year": "2003",
+          "cat": 268
+        },
+        {
+          "title": "GoodFellas",
+          "year": "1990",
+          "cat": 1769
+        },
+        {
+          "title": "Finding Nemo",
+          "year": "2003",
+          "cat": 417
+        },
+        {
+          "title": "Back to the Future",
+          "year": "1985",
+          "cat": 1132
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Fear and Loathing in Las Vegas",
+          "year": "1998",
+          "cat": 3382
+        },
+        {
+          "title": "Mars Attacks!",
+          "year": "1996",
+          "cat": 3745
+        },
+        {
+          "title": "Cloverfield",
+          "year": "2008",
+          "cat": 1642
+        },
+        {
+          "title": "The Grand Budapest Hotel",
+          "year": "2014",
+          "cat": 2332
+        },
+        {
+          "title": "Starship Troopers",
+          "year": "1997",
+          "cat": 3414
+        },
+        {
+          "title": "The Social Network",
+          "year": "2010",
+          "cat": 2287
+        },
+        {
+          "title": "The Thirteenth Floor",
+          "year": "1999",
+          "cat": 5792
+        },
+        {
+          "title": "Speed",
+          "year": "1994",
+          "cat": 2029
+        },
+        {
+          "title": "Green Room",
+          "year": "2015",
+          "cat": 7042
+        },
+        {
+          "title": "From Dusk Till Dawn",
+          "year": "1996",
+          "cat": 3724
+        },
+        {
+          "title": "Edward Scissorhands",
+          "year": "1990",
+          "cat": 1631
+        },
+        {
+          "title": "Shame",
+          "year": "2011",
+          "cat": 3802
+        },
+        {
+          "title": "This Is Spinal Tap",
+          "year": "1984",
+          "cat": 7977
+        },
+        {
+          "title": "The Ides of March",
+          "year": "2011",
+          "cat": 6399
+        },
+        {
+          "title": "Hollow Man",
+          "year": "2000",
+          "cat": 4784
+        },
+        {
+          "title": "The Nightmare Before Christmas",
+          "year": "1993",
+          "cat": 975
+        },
+        {
+          "title": "Boogie Nights",
+          "year": "1997",
+          "cat": 3770
+        },
+        {
+          "title": "2046",
+          "year": "2004",
+          "cat": 7316
+        },
+        {
+          "title": "Into the Wild",
+          "year": "2007",
+          "cat": 4076
+        },
+        {
+          "title": "Burn After Reading",
+          "year": "2008",
+          "cat": 6121
+        },
+        {
+          "title": "True Grit",
+          "year": "2010",
+          "cat": 5981
+        },
+        {
+          "title": "The Road",
+          "year": "2009",
+          "cat": 4726
+        },
+        {
+          "title": "Antichrist",
+          "year": "2009",
+          "cat": 5075
+        },
+        {
+          "title": "Citizen Kane",
+          "year": "1941",
+          "cat": 3872
+        },
+        {
+          "title": "Black Swan",
+          "year": "2010",
+          "cat": 2630
+        },
+        {
+          "title": "Stargate",
+          "year": "1994",
+          "cat": 3728
+        },
+        {
+          "title": "Indiana Jones and the Temple of Doom",
+          "year": "1984",
+          "cat": 1191
+        },
+        {
+          "title": "The Dreamers",
+          "year": "2003",
+          "cat": 3011
+        },
+        {
+          "title": "Closer",
+          "year": "2004",
+          "cat": 4895
+        },
+        {
+          "title": "Good Bye Lenin!",
+          "year": "2003",
+          "cat": 9050
+        }
+      ]
+    },
+    {
+      "user": 562,
+      "seed": [
+        {
+          "title": "The Hunchback of Notre Dame",
+          "year": "1996"
+        },
+        {
+          "title": "Inglourious Basterds",
+          "year": "2009"
+        },
+        {
+          "title": "Slumdog Millionaire",
+          "year": "2008"
+        },
+        {
+          "title": "Hard Candy",
+          "year": "2005"
+        },
+        {
+          "title": "Toy Story 3",
+          "year": "2010"
+        },
+        {
+          "title": "You've Got Mail",
+          "year": "1998"
+        },
+        {
+          "title": "Sleepless in Seattle",
+          "year": "1993"
+        },
+        {
+          "title": "Silver Linings Playbook",
+          "year": "2012"
+        },
+        {
+          "title": "Crazy, Stupid, Love.",
+          "year": "2011"
+        },
+        {
+          "title": "Coyote Ugly",
+          "year": "2000"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "The Godfather",
+          "year": "1972",
+          "cat": 609
+        },
+        {
+          "title": "Saving Private Ryan",
+          "year": "1998",
+          "cat": 779
+        },
+        {
+          "title": "Reservoir Dogs",
+          "year": "1992",
+          "cat": 2806
+        },
+        {
+          "title": "Back to the Future",
+          "year": "1985",
+          "cat": 1132
+        },
+        {
+          "title": "The Big Lebowski",
+          "year": "1998",
+          "cat": 3617
+        },
+        {
+          "title": "Memento",
+          "year": "2000",
+          "cat": 3176
+        },
+        {
+          "title": "Monty Python and the Holy Grail",
+          "year": "1975",
+          "cat": 5282
+        },
+        {
+          "title": "GoodFellas",
+          "year": "1990",
+          "cat": 1769
+        },
+        {
+          "title": "The Lord of the Rings: The Fellowship of the Ring",
+          "year": "2001",
+          "cat": 369
+        },
+        {
+          "title": "The Lord of the Rings: The Return of the King",
+          "year": "2003",
+          "cat": 419
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Definitely, Maybe",
+          "year": "2008",
+          "cat": 6375
+        },
+        {
+          "title": "Life As We Know It",
+          "year": "2010",
+          "cat": 2069
+        },
+        {
+          "title": "Yes Man",
+          "year": "2008",
+          "cat": 754
+        },
+        {
+          "title": "50 First Dates",
+          "year": "2004",
+          "cat": 2854
+        },
+        {
+          "title": "Serendipity",
+          "year": "2001",
+          "cat": 4791
+        },
+        {
+          "title": "27 Dresses",
+          "year": "2008",
+          "cat": 6550
+        },
+        {
+          "title": "The Count of Monte Cristo",
+          "year": "2002",
+          "cat": 3563
+        },
+        {
+          "title": "She's All That",
+          "year": "1999",
+          "cat": 3504
+        },
+        {
+          "title": "The Sweetest Thing",
+          "year": "2002",
+          "cat": 7373
+        },
+        {
+          "title": "Fast Times at Ridgemont High",
+          "year": "1982",
+          "cat": 3380
+        },
+        {
+          "title": "Friday the 13th",
+          "year": "1980",
+          "cat": 1697
+        },
+        {
+          "title": "Monster",
+          "year": "2003",
+          "cat": 7884
+        },
+        {
+          "title": "Sixteen Candles",
+          "year": "1984",
+          "cat": 4803
+        },
+        {
+          "title": "Good Morning, Vietnam",
+          "year": "1987",
+          "cat": 6333
+        },
+        {
+          "title": "Awakenings",
+          "year": "1990",
+          "cat": 5906
+        },
+        {
+          "title": "The Texas Chain Saw Massacre",
+          "year": "1974",
+          "cat": 766
+        },
+        {
+          "title": "Shakespeare in Love",
+          "year": "1998",
+          "cat": 6783
+        },
+        {
+          "title": "Training Day",
+          "year": "2001",
+          "cat": 2372
+        },
+        {
+          "title": "Aladdin",
+          "year": "1992",
+          "cat": 745
+        },
+        {
+          "title": "Rounders",
+          "year": "1998",
+          "cat": 5735
+        },
+        {
+          "title": "A Bug's Life",
+          "year": "1998",
+          "cat": 640
+        },
+        {
+          "title": "Boys Don't Cry",
+          "year": "1999",
+          "cat": 6134
+        },
+        {
+          "title": "Field of Dreams",
+          "year": "1989",
+          "cat": 6819
+        },
+        {
+          "title": "Highlander",
+          "year": "1986",
+          "cat": 2543
+        },
+        {
+          "title": "Total Recall",
+          "year": "1990",
+          "cat": 3336
+        },
+        {
+          "title": "Driving Miss Daisy",
+          "year": "1989",
+          "cat": 8206
+        },
+        {
+          "title": "Bowling for Columbine",
+          "year": "2002",
+          "cat": 9332
+        },
+        {
+          "title": "Gremlins",
+          "year": "1984",
+          "cat": 3078
+        }
+      ]
+    },
+    {
+      "user": 581,
+      "seed": [
+        {
+          "title": "The Lord of the Rings: The Two Towers",
+          "year": "2002"
+        },
+        {
+          "title": "Eternal Sunshine of the Spotless Mind",
+          "year": "2004"
+        },
+        {
+          "title": "The Martian",
+          "year": "2015"
+        },
+        {
+          "title": "Interstellar",
+          "year": "2014"
+        },
+        {
+          "title": "Whiplash",
+          "year": "2014"
+        },
+        {
+          "title": "Inception",
+          "year": "2010"
+        },
+        {
+          "title": "Shrek",
+          "year": "2001"
+        },
+        {
+          "title": "Monsters, Inc.",
+          "year": "2001"
+        },
+        {
+          "title": "Finding Nemo",
+          "year": "2003"
+        },
+        {
+          "title": "Spider-Man",
+          "year": "2002"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "The Matrix",
+          "year": "1999",
+          "cat": 572
+        },
+        {
+          "title": "The Dark Knight",
+          "year": "2008",
+          "cat": 221
+        },
+        {
+          "title": "The Departed",
+          "year": "2006",
+          "cat": 2342
+        },
+        {
+          "title": "Pulp Fiction",
+          "year": "1994",
+          "cat": 1322
+        },
+        {
+          "title": "The Silence of the Lambs",
+          "year": "1991",
+          "cat": 8566
+        },
+        {
+          "title": "Saving Private Ryan",
+          "year": "1998",
+          "cat": 779
+        },
+        {
+          "title": "A Beautiful Mind",
+          "year": "2001",
+          "cat": 3152
+        },
+        {
+          "title": "Gladiator",
+          "year": "2000",
+          "cat": 1210
+        },
+        {
+          "title": "Ocean's Eleven",
+          "year": "2001",
+          "cat": 2122
+        },
+        {
+          "title": "American History X",
+          "year": "1998",
+          "cat": 2034
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "A Beautiful Mind",
+          "year": "2001",
+          "cat": 3152
+        },
+        {
+          "title": "Cast Away",
+          "year": "2000",
+          "cat": 1829
+        },
+        {
+          "title": "V for Vendetta",
+          "year": "2006",
+          "cat": 1823
+        },
+        {
+          "title": "Harry Potter and the Chamber of Secrets",
+          "year": "2002",
+          "cat": 159
+        },
+        {
+          "title": "Iron Man",
+          "year": "2008",
+          "cat": 427
+        },
+        {
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "year": "2004",
+          "cat": 192
+        }
+      ]
+    },
+    {
+      "user": 603,
+      "seed": [
+        {
+          "title": "Mars Attacks!",
+          "year": "1996"
+        },
+        {
+          "title": "Boiling Point",
+          "year": "2021"
+        },
+        {
+          "title": "The Siege",
+          "year": "1998"
+        },
+        {
+          "title": "Alien Resurrection",
+          "year": "1997"
+        },
+        {
+          "title": "U Turn",
+          "year": "1997"
+        },
+        {
+          "title": "Blown Away",
+          "year": "1994"
+        },
+        {
+          "title": "Double Team",
+          "year": "1997"
+        },
+        {
+          "title": "Toy Story",
+          "year": "1995"
+        },
+        {
+          "title": "The Full Monty",
+          "year": "1997"
+        },
+        {
+          "title": "Trust",
+          "year": "2021"
+        }
+      ],
+      "specialized_itemknn": [
+        {
+          "title": "Monty Python and the Holy Grail",
+          "year": "1975",
+          "cat": 5282
+        },
+        {
+          "title": "Fargo",
+          "year": "1996",
+          "cat": 3789
+        },
+        {
+          "title": "GoodFellas",
+          "year": "1990",
+          "cat": 1769
+        },
+        {
+          "title": "Blade Runner",
+          "year": "1982",
+          "cat": 2023
+        },
+        {
+          "title": "The Silence of the Lambs",
+          "year": "1991",
+          "cat": 8566
+        },
+        {
+          "title": "2001: A Space Odyssey",
+          "year": "1968",
+          "cat": 2025
+        },
+        {
+          "title": "The Usual Suspects",
+          "year": "1995",
+          "cat": 3270
+        },
+        {
+          "title": "Shakespeare in Love",
+          "year": "1998",
+          "cat": 6783
+        },
+        {
+          "title": "Citizen Kane",
+          "year": "1941",
+          "cat": 3872
+        },
+        {
+          "title": "The Princess Bride",
+          "year": "1987",
+          "cat": 5221
+        }
+      ],
+      "ground_truth": [
+        {
+          "title": "Wag the Dog",
+          "year": "1997",
+          "cat": 5143
+        },
+        {
+          "title": "Grosse Pointe Blank",
+          "year": "1997",
+          "cat": 8410
+        },
+        {
+          "title": "Austin Powers: International Man of Mystery",
+          "year": "1997",
+          "cat": 3263
+        },
+        {
+          "title": "Dazed and Confused",
+          "year": "1993",
+          "cat": 8696
+        },
+        {
+          "title": "There's Something About Mary",
+          "year": "1998",
+          "cat": 3356
+        },
+        {
+          "title": "mother!",
+          "year": "2017",
+          "cat": 4265
+        },
+        {
+          "title": "101 Dalmatians",
+          "year": "1996",
+          "cat": 827
+        },
+        {
+          "title": "Analyze This",
+          "year": "1999",
+          "cat": 6365
+        },
+        {
+          "title": "Jawbreaker",
+          "year": "1999",
+          "cat": 5288
+        },
+        {
+          "title": "The Silence of the Lambs",
+          "year": "1991",
+          "cat": 8566
+        },
+        {
+          "title": "Babe",
+          "year": "1995",
+          "cat": 4630
+        },
+        {
+          "title": "Fargo",
+          "year": "1996",
+          "cat": 3789
+        },
+        {
+          "title": "GoodFellas",
+          "year": "1990",
+          "cat": 1769
+        },
+        {
+          "title": "Breaking the Waves",
+          "year": "1996",
+          "cat": 8582
+        },
+        {
+          "title": "Affliction",
+          "year": "1998",
+          "cat": 8964
+        },
+        {
+          "title": "To Die For",
+          "year": "1995",
+          "cat": 9808
+        },
+        {
+          "title": "Casino",
+          "year": "1995",
+          "cat": 3196
+        },
+        {
+          "title": "My Own Private Idaho",
+          "year": "1991",
+          "cat": 5922
+        },
+        {
+          "title": "Philadelphia",
+          "year": "1993",
+          "cat": 6395
+        },
+        {
+          "title": "Gattaca",
+          "year": "1997",
+          "cat": 3063
+        },
+        {
+          "title": "Boogie Nights",
+          "year": "1997",
+          "cat": 3770
+        },
+        {
+          "title": "Bad Lieutenant",
+          "year": "1992",
+          "cat": 9084
+        },
+        {
+          "title": "Kids",
+          "year": "1995",
+          "cat": 6302
+        },
+        {
+          "title": "Stealing Beauty",
+          "year": "1996",
+          "cat": 5255
+        },
+        {
+          "title": "Traffic",
+          "year": "2000",
+          "cat": 6912
+        },
+        {
+          "title": "Charlie's Angels",
+          "year": "2000",
+          "cat": 2309
+        },
+        {
+          "title": "Proof of Life",
+          "year": "2000",
+          "cat": 9661
+        },
+        {
+          "title": "The Others",
+          "year": "2001",
+          "cat": 3178
+        },
+        {
+          "title": "Sexy Beast",
+          "year": "2000",
+          "cat": 7559
+        },
+        {
+          "title": "Bully",
+          "year": "2001",
+          "cat": 4541
+        },
+        {
+          "title": "Brother",
+          "year": "2000",
+          "cat": 9198
+        },
+        {
+          "title": "The Apartment",
+          "year": "1960",
+          "cat": 6810
+        },
+        {
+          "title": "Memento",
+          "year": "2000",
+          "cat": 3176
+        },
+        {
+          "title": "The Lion in Winter",
+          "year": "1968",
+          "cat": 9112
+        },
+        {
+          "title": "2001: A Space Odyssey",
+          "year": "1968",
+          "cat": 2025
+        },
+        {
+          "title": "Lolita",
+          "year": "1962",
+          "cat": 2671
+        },
+        {
+          "title": "Kramer vs. Kramer",
+          "year": "1979",
+          "cat": 5467
+        },
+        {
+          "title": "The Misfits",
+          "year": "2021",
+          "cat": 404
+        },
+        {
+          "title": "Tom Jones",
+          "year": "1963",
+          "cat": 8564
+        },
+        {
+          "title": "Snatch",
+          "year": "2000",
+          "cat": 2887
+        },
+        {
+          "title": "The Stepford Wives",
+          "year": "2004",
+          "cat": 5642
+        },
+        {
+          "title": "The Fury",
+          "year": "1978",
+          "cat": 7107
+        },
+        {
+          "title": "Suspiria",
+          "year": "1977",
+          "cat": 5666
+        },
+        {
+          "title": "Training Day",
+          "year": "2001",
+          "cat": 2372
+        },
+        {
+          "title": "The Wild Bunch",
+          "year": "1969",
+          "cat": 8975
+        },
+        {
+          "title": "Citizen Kane",
+          "year": "1941",
+          "cat": 3872
+        },
+        {
+          "title": "Dirty Harry",
+          "year": "1971",
+          "cat": 6031
+        },
+        {
+          "title": "Cape Fear",
+          "year": "1962",
+          "cat": 9123
+        },
+        {
+          "title": "It's a Mad, Mad, Mad, Mad World",
+          "year": "1963",
+          "cat": 5894
+        },
+        {
+          "title": "Cape Fear",
+          "year": "1991",
+          "cat": 7446
+        },
+        {
+          "title": "Heathers",
+          "year": "1989",
+          "cat": 4424
+        }
+      ]
+    }
+  ]
+}
