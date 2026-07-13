@@ -16,3 +16,6 @@ mlruns/
 models/
 results/**/*.npy
 results/emb_cache/
+# Day-9 runtime serving artifacts (implicit-feedback ground truth, regenerated)
+results/feedback_events.jsonl
+volumes/redis/

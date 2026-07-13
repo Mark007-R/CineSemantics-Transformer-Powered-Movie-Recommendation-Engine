@@ -1,0 +1,31 @@
+# CineSemantics production API image (Day-9 Phase 7).
+# Serves the integrated champions (e5-base retrieval + HNSW + ItemKNN CF) behind
+# FastAPI, with the Redis-backed cache / feedback log. Catalog embeddings and CF
+# artifacts are mounted at runtime (see docker-compose.yml) so the image stays code-only.
+FROM python:3.11-slim
+
+WORKDIR /app
+
+ENV PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    REDIS_URL=redis://redis:6379/0 \
+    HF_HOME=/app/.hf
+
+# system libs needed by faiss / pillow
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential curl && rm -rf /var/lib/apt/lists/*
+
+COPY requirements-api.txt .
+RUN pip install --no-cache-dir -r requirements-api.txt
+
+# code only; data/, models/, results/emb_cache/ are bind-mounted at runtime
+COPY api.py ./api.py
+COPY src ./src
+COPY utils ./utils
+
+EXPOSE 8000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
