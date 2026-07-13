@@ -210,8 +210,18 @@ def main():
         </div>
     """, unsafe_allow_html=True)
     
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(TAB_NAMES)
-    
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(TAB_NAMES)
+
+    with tab6:
+        # Day-9 Phase-7: personalized picks from the Day-3 ItemKNN champion +
+        # live offline-metrics panel + implicit-feedback logging. Rendered by tab
+        # context (order-independent), so this stays out of the tab1-5 logic.
+        try:
+            from recommend_tab import render_recommend_tab
+            render_recommend_tab(st.session_state)
+        except Exception as _e:
+            st.error(f"Recommendations unavailable: {_e}")
+
     with tab1:
         col1, col2, col3, col4 = st.columns(4)
         try:

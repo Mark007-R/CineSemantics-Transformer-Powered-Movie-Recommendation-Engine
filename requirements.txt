@@ -24,3 +24,7 @@ implicit
 fastapi
 uvicorn
 pydantic
+# Day-9 Phase-7 production wrapper: Redis cache + serving.
+# NOTE: fastapi 0.115.x needs starlette <0.42 (newer starlette removed
+# Router(on_startup=...) and breaks app startup) — pin if you hit a boot error.
+redis

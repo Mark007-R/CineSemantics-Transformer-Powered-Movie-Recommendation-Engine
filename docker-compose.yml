@@ -60,6 +60,44 @@ services:
       - "etcd"
       - "minio"
 
+  # ---- Day-9 Phase-7 production wrapper: Redis cache + FastAPI service ----
+  redis:
+    container_name: cine-redis
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "60", "1", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  api:
+    container_name: cine-api
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      MILVUS_HOST: standalone
+      MILVUS_PORT: "19530"
+    ports:
+      - "8000:8000"
+    volumes:
+      # heavy artifacts (gitignored) are mounted, not baked into the image
+      - ./data:/app/data:ro
+      - ./models:/app/models
+      - ./results:/app/results
+      - ./posters:/app/posters:ro
+    depends_on:
+      redis:
+        condition: service_healthy
+      standalone:
+        condition: service_healthy
+
 networks:
   default:
     name: milvus

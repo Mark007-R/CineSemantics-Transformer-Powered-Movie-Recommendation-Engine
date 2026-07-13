@@ -1,0 +1,16 @@
+# CineSemantics production API (Day-9 Phase 7) — pinned to the versions the app
+# was built and tested against. starlette is pinned to fastapi 0.115.x's supported
+# range (a newer starlette removed Router(on_startup=...) and breaks app startup).
+fastapi==0.115.6
+starlette>=0.40,<0.42
+uvicorn[standard]==0.34.0
+pydantic>=2.7,<3
+redis>=5.0
+pandas>=2.0
+numpy>=1.26,<2.1
+scikit-learn>=1.3
+scipy>=1.11
+sentence-transformers>=2.6
+torch>=2.1
+faiss-cpu>=1.7
+pillow>=10.0

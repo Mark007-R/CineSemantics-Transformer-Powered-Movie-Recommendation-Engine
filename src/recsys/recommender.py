@@ -179,11 +179,21 @@ class ItemKNNRecommender:
         return [(int(i), float(sims[i])) for i in order]
 
     # ------------------------------------------------------------- persist
-    def save(self, path: Path | str | None = None):
+    def save(self, path: Path | str | None = None, display: dict | None = None):
         d = Path(path) if path else _MODELS
         d.mkdir(parents=True, exist_ok=True)
         save_npz(d / "cf_interactions.npz", self.R)
-        (d / "cf_meta.json").write_text(json.dumps({"item_universe": self.item_universe}))
+        # meta carries the load-critical `item_universe` AND optional display fields
+        # (champion name, sizes, headline NDCG) so the /metrics panel and the loader
+        # read the same file. A prior artifact wrote only display fields, which broke
+        # ItemKNNRecommender.load(); persisting both keeps the served recommender working.
+        meta = {"item_universe": self.item_universe,
+                "n_users": int(self.R.shape[0]) if self.R is not None else None,
+                "n_items": len(self.item_universe),
+                "champion": "ItemKNN (item-item cosine)"}
+        if display:
+            meta.update(display)
+        (d / "cf_meta.json").write_text(json.dumps(meta))
         return d
 
     @classmethod

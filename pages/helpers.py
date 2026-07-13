@@ -36,10 +36,11 @@ CATEGORIES = [
 
 TAB_NAMES = [
     "Discover",
-    "Smart Search", 
+    "Smart Search",
     "Visual Search",
     "Watchlist",
-    "Favorites"
+    "Favorites",
+    "✨ For You"
 ]
 
 MAX_SEARCH_HISTORY = 10
