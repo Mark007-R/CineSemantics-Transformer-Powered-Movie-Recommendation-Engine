@@ -1,0 +1,320 @@
+[
+  {
+    "user": 1,
+    "model": "SASRec",
+    "liked_sample": [
+      "L.A. Confidential",
+      "A Few Good Men",
+      "RoboCop",
+      "Kiss the Girls",
+      "Wild Things"
+    ],
+    "cards": [
+      {
+        "recommended": "Peter Pan",
+        "genre": "Animation, Family, Adventure, Fantasy",
+        "because_you_liked": "Sleeping Beauty",
+        "similarity": 0.569,
+        "explanation": "Because you liked \"Sleeping Beauty\", you may enjoy \"Peter Pan\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Mary Poppins",
+        "genre": "Comedy, Family, Fantasy",
+        "because_you_liked": "The Wizard of Oz",
+        "similarity": 0.456,
+        "explanation": "Because you liked \"The Wizard of Oz\", you may enjoy \"Mary Poppins\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "The Little Mermaid",
+        "genre": "Animation, Family, Fantasy",
+        "because_you_liked": "The Jungle Book",
+        "similarity": 0.503,
+        "explanation": "Because you liked \"The Jungle Book\", you may enjoy \"The Little Mermaid\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Hercules",
+        "genre": "Animation, Family, Fantasy, Adventure, Comedy, Romance",
+        "because_you_liked": "Dumbo",
+        "similarity": 0.386,
+        "explanation": "Because you liked \"Dumbo\", you may enjoy \"Hercules\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Cocoon",
+        "genre": "Comedy, Drama, Science Fiction",
+        "because_you_liked": "Crocodile Dundee",
+        "similarity": 0.417,
+        "explanation": "Because you liked \"Crocodile Dundee\", you may enjoy \"Cocoon\".",
+        "in_held_out": false
+      }
+    ]
+  },
+  {
+    "user": 2,
+    "model": "SASRec",
+    "liked_sample": [
+      "The Departed",
+      "The Dark Knight",
+      "Inglourious Basterds",
+      "Inside Job",
+      "Warrior"
+    ],
+    "cards": [
+      {
+        "recommended": "Up",
+        "genre": "Animation, Comedy, Family, Adventure",
+        "because_you_liked": "Inception",
+        "similarity": 0.428,
+        "explanation": "Because you liked \"Inception\", you may enjoy \"Up\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Interstellar",
+        "genre": "Adventure, Drama, Science Fiction",
+        "because_you_liked": "Inception",
+        "similarity": 0.4,
+        "explanation": "Because you liked \"Inception\", you may enjoy \"Interstellar\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "WALL\u00b7E",
+        "genre": "Animation, Family, Science Fiction",
+        "because_you_liked": "Inception",
+        "similarity": 0.444,
+        "explanation": "Because you liked \"Inception\", you may enjoy \"WALL\u00b7E\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Iron Man",
+        "genre": "Action, Science Fiction, Adventure",
+        "because_you_liked": "The Dark Knight",
+        "similarity": 0.433,
+        "explanation": "Because you liked \"The Dark Knight\", you may enjoy \"Iron Man\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Big Hero 6",
+        "genre": "Adventure, Family, Animation, Action, Comedy",
+        "because_you_liked": "Shutter Island",
+        "similarity": 0.294,
+        "explanation": "Because you liked \"Shutter Island\", you may enjoy \"Big Hero 6\".",
+        "in_held_out": false
+      }
+    ]
+  },
+  {
+    "user": 4,
+    "model": "SASRec",
+    "liked_sample": [
+      "Groundhog Day",
+      "The Full Monty",
+      "Grosse Pointe Blank",
+      "A League of Their Own",
+      "Being John Malkovich"
+    ],
+    "cards": [
+      {
+        "recommended": "The Godfather",
+        "genre": "Drama, Crime",
+        "because_you_liked": "GoodFellas",
+        "similarity": 0.546,
+        "explanation": "Because you liked \"GoodFellas\", you may enjoy \"The Godfather\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Pulp Fiction",
+        "genre": "Thriller, Crime",
+        "because_you_liked": "The Silence of the Lambs",
+        "similarity": 0.64,
+        "explanation": "Because you liked \"The Silence of the Lambs\", you may enjoy \"Pulp Fiction\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "One Flew Over the Cuckoo's Nest",
+        "genre": "Drama",
+        "because_you_liked": "American Beauty",
+        "similarity": 0.444,
+        "explanation": "Because you liked \"American Beauty\", you may enjoy \"One Flew Over the Cuckoo's Nest\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "The Shawshank Redemption",
+        "genre": "Drama, Crime",
+        "because_you_liked": "The Silence of the Lambs",
+        "similarity": 0.537,
+        "explanation": "Because you liked \"The Silence of the Lambs\", you may enjoy \"The Shawshank Redemption\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "The Godfather: Part II",
+        "genre": "Drama, Crime",
+        "because_you_liked": "GoodFellas",
+        "similarity": 0.569,
+        "explanation": "Because you liked \"GoodFellas\", you may enjoy \"The Godfather: Part II\".",
+        "in_held_out": false
+      }
+    ]
+  },
+  {
+    "user": 5,
+    "model": "SASRec",
+    "liked_sample": [
+      "Snow White and the Seven Dwarfs",
+      "Get Shorty",
+      "Little Women",
+      "The Secret Garden",
+      "Dead Man Walking"
+    ],
+    "cards": [
+      {
+        "recommended": "Jurassic Park",
+        "genre": "Adventure, Science Fiction",
+        "because_you_liked": "The Fugitive",
+        "similarity": 0.547,
+        "explanation": "Because you liked \"The Fugitive\", you may enjoy \"Jurassic Park\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Crimson Tide",
+        "genre": "War, Thriller, Action, Drama",
+        "because_you_liked": "The Fugitive",
+        "similarity": 0.453,
+        "explanation": "Because you liked \"The Fugitive\", you may enjoy \"Crimson Tide\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Forrest Gump",
+        "genre": "Comedy, Drama, Romance",
+        "because_you_liked": "Braveheart",
+        "similarity": 0.532,
+        "explanation": "Because you liked \"Braveheart\", you may enjoy \"Forrest Gump\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Terminator 2: Judgment Day",
+        "genre": "Action, Thriller, Science Fiction",
+        "because_you_liked": "Braveheart",
+        "similarity": 0.536,
+        "explanation": "Because you liked \"Braveheart\", you may enjoy \"Terminator 2: Judgment Day\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "The Silence of the Lambs",
+        "genre": "Crime, Drama, Thriller",
+        "because_you_liked": "Pulp Fiction",
+        "similarity": 0.64,
+        "explanation": "Because you liked \"Pulp Fiction\", you may enjoy \"The Silence of the Lambs\".",
+        "in_held_out": false
+      }
+    ]
+  },
+  {
+    "user": 6,
+    "model": "SASRec",
+    "liked_sample": [
+      "Powder",
+      "Something to Talk About",
+      "Cutthroat Island",
+      "A Little Princess",
+      "Phenomenon"
+    ],
+    "cards": [
+      {
+        "recommended": "Eraser",
+        "genre": "Action, Drama, Mystery, Thriller",
+        "because_you_liked": "Phenomenon",
+        "similarity": 0.32,
+        "explanation": "Because you liked \"Phenomenon\", you may enjoy \"Eraser\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "The Rock",
+        "genre": "Action, Adventure, Thriller",
+        "because_you_liked": "Twister",
+        "similarity": 0.294,
+        "explanation": "Because you liked \"Twister\", you may enjoy \"The Rock\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Leaving Las Vegas",
+        "genre": "Drama, Romance",
+        "because_you_liked": "Dead Man Walking",
+        "similarity": 0.445,
+        "explanation": "Because you liked \"Dead Man Walking\", you may enjoy \"Leaving Las Vegas\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Executive Decision",
+        "genre": "Action, Adventure, Drama, Thriller",
+        "because_you_liked": "Phenomenon",
+        "similarity": 0.333,
+        "explanation": "Because you liked \"Phenomenon\", you may enjoy \"Executive Decision\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "The Hunchback of Notre Dame",
+        "genre": "Drama, Animation, Family",
+        "because_you_liked": "Sabrina",
+        "similarity": 0.265,
+        "explanation": "Because you liked \"Sabrina\", you may enjoy \"The Hunchback of Notre Dame\".",
+        "in_held_out": true
+      }
+    ]
+  },
+  {
+    "user": 7,
+    "model": "SASRec",
+    "liked_sample": [
+      "Erin Brockovich",
+      "The Terminator",
+      "2001: A Space Odyssey",
+      "Chicago",
+      "School of Rock"
+    ],
+    "cards": [
+      {
+        "recommended": "Inglourious Basterds",
+        "genre": "Drama, Action, Thriller, War",
+        "because_you_liked": "The Lord of the Rings: The Fellowship of the Ring",
+        "similarity": 0.361,
+        "explanation": "Because you liked \"The Lord of the Rings: The Fellowship of the Ring\", you may enjoy \"Inglourious Basterds\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Iron Man",
+        "genre": "Action, Science Fiction, Adventure",
+        "because_you_liked": "Pirates of the Caribbean: The Curse of the Black Pearl",
+        "similarity": 0.407,
+        "explanation": "Because you liked \"Pirates of the Caribbean: The Curse of the Black Pearl\", you may enjoy \"Iron Man\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Finding Nemo",
+        "genre": "Animation, Family",
+        "because_you_liked": "Monsters, Inc.",
+        "similarity": 0.594,
+        "explanation": "Because you liked \"Monsters, Inc.\", you may enjoy \"Finding Nemo\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "Up",
+        "genre": "Animation, Comedy, Family, Adventure",
+        "because_you_liked": "The Lord of the Rings: The Return of the King",
+        "similarity": 0.332,
+        "explanation": "Because you liked \"The Lord of the Rings: The Return of the King\", you may enjoy \"Up\".",
+        "in_held_out": false
+      },
+      {
+        "recommended": "The Bourne Identity",
+        "genre": "Action, Drama, Mystery, Thriller",
+        "because_you_liked": "Ocean's Eleven",
+        "similarity": 0.544,
+        "explanation": "Because you liked \"Ocean's Eleven\", you may enjoy \"The Bourne Identity\".",
+        "in_held_out": false
+      }
+    ]
+  }
+]

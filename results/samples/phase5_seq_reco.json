@@ -1,0 +1,444 @@
+{
+  "SASRec": [
+    {
+      "user": 1,
+      "liked_train_tail": [
+        "L.A. Confidential",
+        "A Few Good Men",
+        "RoboCop",
+        "Kiss the Girls",
+        "Wild Things"
+      ],
+      "next_item_target": "Mr. Smith Goes to Washington",
+      "top10": [
+        {
+          "title": "Peter Pan",
+          "genre": "Animation, Family, Adventure, Fantasy",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Mary Poppins",
+          "genre": "Comedy, Family, Fantasy",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Little Mermaid",
+          "genre": "Animation, Family, Fantasy",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Hercules",
+          "genre": "Animation, Family, Fantasy, Adventure, Comedy, Romance",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Cocoon",
+          "genre": "Comedy, Drama, Science Fiction",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Emma.",
+          "genre": "Comedy, Romance",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Lady and the Tramp",
+          "genre": "Family, Animation, Romance",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Galaxy Quest",
+          "genre": "Comedy, Family, Science Fiction, Adventure",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Sabrina",
+          "genre": "Comedy, Drama, Romance",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Breakfast Club",
+          "genre": "Comedy, Drama",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        }
+      ]
+    },
+    {
+      "user": 2,
+      "liked_train_tail": [
+        "The Departed",
+        "The Dark Knight",
+        "Inglourious Basterds",
+        "Inside Job",
+        "Warrior"
+      ],
+      "next_item_target": "Good Will Hunting",
+      "top10": [
+        {
+          "title": "Up",
+          "genre": "Animation, Comedy, Family, Adventure",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Interstellar",
+          "genre": "Adventure, Drama, Science Fiction",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "WALL\u00b7E",
+          "genre": "Animation, Family, Science Fiction",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Iron Man",
+          "genre": "Action, Science Fiction, Adventure",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Big Hero 6",
+          "genre": "Adventure, Family, Animation, Action, Comedy",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Lord of the Rings: The Fellowship of the Ring",
+          "genre": "Adventure, Fantasy, Action",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Lord of the Rings: The Two Towers",
+          "genre": "Adventure, Fantasy, Action",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Kingsman: The Secret Service",
+          "genre": "Crime, Comedy, Action, Adventure",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Avatar",
+          "genre": "Action, Adventure, Fantasy, Science Fiction",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "V for Vendetta",
+          "genre": "Action, Thriller, Fantasy",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        }
+      ]
+    },
+    {
+      "user": 4,
+      "liked_train_tail": [
+        "Groundhog Day",
+        "The Full Monty",
+        "Grosse Pointe Blank",
+        "A League of Their Own",
+        "Being John Malkovich"
+      ],
+      "next_item_target": "Blow",
+      "top10": [
+        {
+          "title": "The Godfather",
+          "genre": "Drama, Crime",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Pulp Fiction",
+          "genre": "Thriller, Crime",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "One Flew Over the Cuckoo's Nest",
+          "genre": "Drama",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Shawshank Redemption",
+          "genre": "Drama, Crime",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Godfather: Part II",
+          "genre": "Drama, Crime",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Blade Runner",
+          "genre": "Science Fiction, Drama, Thriller",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Schindler's List",
+          "genre": "Drama, History, War",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Usual Suspects",
+          "genre": "Drama, Crime, Thriller",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Alien",
+          "genre": "Horror, Science Fiction",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Forrest Gump",
+          "genre": "Comedy, Drama, Romance",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        }
+      ]
+    }
+  ],
+  "BERT4Rec": [
+    {
+      "user": 1,
+      "liked_train_tail": [
+        "L.A. Confidential",
+        "A Few Good Men",
+        "RoboCop",
+        "Kiss the Girls",
+        "Wild Things"
+      ],
+      "next_item_target": "Mr. Smith Goes to Washington",
+      "top10": [
+        {
+          "title": "The Shawshank Redemption",
+          "genre": "Drama, Crime",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Schindler's List",
+          "genre": "Drama, History, War",
+          "hit_fulllist": true,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Terminator 2: Judgment Day",
+          "genre": "Action, Thriller, Science Fiction",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Fight Club",
+          "genre": "Drama",
+          "hit_fulllist": true,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Pulp Fiction",
+          "genre": "Thriller, Crime",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Silence of the Lambs",
+          "genre": "Crime, Drama, Thriller",
+          "hit_fulllist": true,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Lord of the Rings: The Return of the King",
+          "genre": "Adventure, Fantasy, Action",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Apollo 13",
+          "genre": "Drama, History, Adventure",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Aladdin",
+          "genre": "Animation, Family, Adventure, Fantasy, Romance",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Memento",
+          "genre": "Mystery, Thriller",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        }
+      ]
+    },
+    {
+      "user": 2,
+      "liked_train_tail": [
+        "The Departed",
+        "The Dark Knight",
+        "Inglourious Basterds",
+        "Inside Job",
+        "Warrior"
+      ],
+      "next_item_target": "Good Will Hunting",
+      "top10": [
+        {
+          "title": "Forrest Gump",
+          "genre": "Comedy, Drama, Romance",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Shawshank Redemption",
+          "genre": "Drama, Crime",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Toy Story",
+          "genre": "Animation, Adventure, Family, Comedy",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Jurassic Park",
+          "genre": "Adventure, Science Fiction",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Terminator 2: Judgment Day",
+          "genre": "Action, Thriller, Science Fiction",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Matrix",
+          "genre": "Action, Science Fiction",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Schindler's List",
+          "genre": "Drama, History, War",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Pulp Fiction",
+          "genre": "Thriller, Crime",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Fight Club",
+          "genre": "Drama",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Fargo",
+          "genre": "Crime, Drama, Thriller",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        }
+      ]
+    },
+    {
+      "user": 4,
+      "liked_train_tail": [
+        "Groundhog Day",
+        "The Full Monty",
+        "Grosse Pointe Blank",
+        "A League of Their Own",
+        "Being John Malkovich"
+      ],
+      "next_item_target": "Blow",
+      "top10": [
+        {
+          "title": "Forrest Gump",
+          "genre": "Comedy, Drama, Romance",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Shawshank Redemption",
+          "genre": "Drama, Crime",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Toy Story",
+          "genre": "Animation, Adventure, Family, Comedy",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Jurassic Park",
+          "genre": "Adventure, Science Fiction",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Schindler's List",
+          "genre": "Drama, History, War",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Terminator 2: Judgment Day",
+          "genre": "Action, Thriller, Science Fiction",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Matrix",
+          "genre": "Action, Science Fiction",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Pulp Fiction",
+          "genre": "Thriller, Crime",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "Fight Club",
+          "genre": "Drama",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        },
+        {
+          "title": "The Usual Suspects",
+          "genre": "Drama, Crime, Thriller",
+          "hit_fulllist": false,
+          "hit_nextitem": false
+        }
+      ]
+    }
+  ]
+}

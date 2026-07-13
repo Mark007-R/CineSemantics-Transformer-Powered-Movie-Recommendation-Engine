@@ -1,0 +1,229 @@
+{
+  "day": 7,
+  "project": "CineSemantics",
+  "phase": "Phase 5 - sequential transformers (SASRec / BERT4Rec)",
+  "date": "2026-07-13",
+  "eval": {
+    "protocol": "Day-3 temporal split (seq_eval from cf_split); next-item leave-one-out + full-list",
+    "n_users": 547,
+    "candidate_items": 2607
+  },
+  "inner_val_ndcg": {
+    "SASRec": 0.0659,
+    "BERT4Rec": 0.046
+  },
+  "nextitem": {
+    "Popularity": {
+      "ndcg@10": 0.0549,
+      "hr@10": 0.0987,
+      "recall@20": 0.1444,
+      "map@20": 0.045,
+      "precision@10": 0.0099,
+      "catalog_coverage": 0.0053,
+      "intra_list_diversity@10": 0.7782,
+      "novelty@10": 1.797,
+      "fit_seconds": 0.0
+    },
+    "Markov": {
+      "ndcg@10": 0.0559,
+      "hr@10": 0.1042,
+      "recall@20": 0.1371,
+      "map@20": 0.0436,
+      "precision@10": 0.0104,
+      "catalog_coverage": 0.1276,
+      "intra_list_diversity@10": 0.8101,
+      "novelty@10": 4.69,
+      "fit_seconds": 0.06
+    },
+    "ItemKNN": {
+      "ndcg@10": 0.0778,
+      "hr@10": 0.1572,
+      "recall@20": 0.2395,
+      "map@20": 0.0594,
+      "precision@10": 0.0157,
+      "catalog_coverage": 0.0378,
+      "intra_list_diversity@10": 0.7872,
+      "novelty@10": 2.696,
+      "fit_seconds": 0.03
+    },
+    "ALS-tuned": {
+      "ndcg@10": 0.0811,
+      "hr@10": 0.1664,
+      "recall@20": 0.2559,
+      "map@20": 0.0616,
+      "precision@10": 0.0166,
+      "catalog_coverage": 0.0495,
+      "intra_list_diversity@10": 0.7764,
+      "novelty@10": 2.935,
+      "fit_seconds": 0.33
+    },
+    "SASRec": {
+      "ndcg@10": 0.0667,
+      "hr@10": 0.1316,
+      "recall@20": 0.192,
+      "map@20": 0.0514,
+      "precision@10": 0.0132,
+      "catalog_coverage": 0.0338,
+      "intra_list_diversity@10": 0.7798,
+      "novelty@10": 3.116,
+      "fit_seconds": 20.05
+    },
+    "BERT4Rec": {
+      "ndcg@10": 0.0524,
+      "hr@10": 0.1024,
+      "recall@20": 0.1316,
+      "map@20": 0.0393,
+      "precision@10": 0.0102,
+      "catalog_coverage": 0.0051,
+      "intra_list_diversity@10": 0.8047,
+      "novelty@10": 1.871,
+      "fit_seconds": 10.31
+    },
+    "SASRec+dense": {
+      "ndcg@10": 0.0609,
+      "hr@10": 0.1261,
+      "recall@20": 0.2139,
+      "map@20": 0.0475,
+      "precision@10": 0.0126,
+      "catalog_coverage": 0.0536,
+      "intra_list_diversity@10": 0.7792,
+      "novelty@10": 3.699,
+      "fit_seconds": 24.37
+    }
+  },
+  "fulllist": {
+    "Popularity": {
+      "ndcg@10": 0.0719,
+      "hr@10": 0.3309,
+      "recall@20": 0.0993,
+      "map@20": 0.0343,
+      "precision@10": 0.0492,
+      "catalog_coverage": 0.0053,
+      "intra_list_diversity@10": 0.7782,
+      "novelty@10": 1.797,
+      "fit_seconds": 0.0
+    },
+    "Markov": {
+      "ndcg@10": 0.0706,
+      "hr@10": 0.3236,
+      "recall@20": 0.0919,
+      "map@20": 0.0339,
+      "precision@10": 0.0453,
+      "catalog_coverage": 0.1276,
+      "intra_list_diversity@10": 0.8101,
+      "novelty@10": 4.69,
+      "fit_seconds": 0.06
+    },
+    "ItemKNN": {
+      "ndcg@10": 0.1059,
+      "hr@10": 0.4735,
+      "recall@20": 0.1675,
+      "map@20": 0.0507,
+      "precision@10": 0.0793,
+      "catalog_coverage": 0.0378,
+      "intra_list_diversity@10": 0.7872,
+      "novelty@10": 2.696,
+      "fit_seconds": 0.03
+    },
+    "ALS-tuned": {
+      "ndcg@10": 0.1058,
+      "hr@10": 0.5082,
+      "recall@20": 0.1763,
+      "map@20": 0.0537,
+      "precision@10": 0.0773,
+      "catalog_coverage": 0.0495,
+      "intra_list_diversity@10": 0.7764,
+      "novelty@10": 2.935,
+      "fit_seconds": 0.33
+    },
+    "SASRec": {
+      "ndcg@10": 0.0848,
+      "hr@10": 0.3931,
+      "recall@20": 0.1366,
+      "map@20": 0.0424,
+      "precision@10": 0.0644,
+      "catalog_coverage": 0.0338,
+      "intra_list_diversity@10": 0.7798,
+      "novelty@10": 3.116,
+      "fit_seconds": 20.05
+    },
+    "BERT4Rec": {
+      "ndcg@10": 0.0716,
+      "hr@10": 0.3382,
+      "recall@20": 0.0934,
+      "map@20": 0.0311,
+      "precision@10": 0.0521,
+      "catalog_coverage": 0.0051,
+      "intra_list_diversity@10": 0.8047,
+      "novelty@10": 1.871,
+      "fit_seconds": 10.31
+    },
+    "SASRec+dense": {
+      "ndcg@10": 0.0838,
+      "hr@10": 0.3693,
+      "recall@20": 0.137,
+      "map@20": 0.0436,
+      "precision@10": 0.062,
+      "catalog_coverage": 0.0536,
+      "intra_list_diversity@10": 0.7792,
+      "novelty@10": 3.699,
+      "fit_seconds": 24.37
+    }
+  },
+  "sequential_champion": "SASRec",
+  "significance": {
+    "SASRec": {
+      "nextitem_vs_itemknn_p": 0.0855,
+      "fulllist_vs_itemknn_p": 0.0001
+    },
+    "BERT4Rec": {
+      "nextitem_vs_itemknn_p": 0.0052,
+      "fulllist_vs_itemknn_p": 0.0
+    },
+    "SASRec+dense": {
+      "nextitem_vs_itemknn_p": 0.037,
+      "fulllist_vs_itemknn_p": 0.0012
+    },
+    "Markov": {
+      "nextitem_vs_itemknn_p": 0.0273,
+      "fulllist_vs_itemknn_p": 0.0
+    },
+    "SASRec_vs_Markov_nextitem_p": 0.3188
+  },
+  "debiasing": [
+    {
+      "system": "SASRec",
+      "beta": 0.0,
+      "fulllist_ndcg@10": 0.0848,
+      "catalog_coverage": 0.0338
+    },
+    {
+      "system": "SASRec",
+      "beta": 0.25,
+      "fulllist_ndcg@10": 0.0781,
+      "catalog_coverage": 0.0386
+    },
+    {
+      "system": "SASRec",
+      "beta": 0.5,
+      "fulllist_ndcg@10": 0.0752,
+      "catalog_coverage": 0.045
+    },
+    {
+      "system": "SASRec",
+      "beta": 1.0,
+      "fulllist_ndcg@10": 0.0512,
+      "catalog_coverage": 0.0572
+    },
+    {
+      "system": "SASRec",
+      "beta": 2.0,
+      "fulllist_ndcg@10": 0.0044,
+      "catalog_coverage": 0.0318
+    }
+  ],
+  "cf_reference": {
+    "ItemKNN_fulllist_ndcg@10": 0.1059,
+    "ALS_tuned_fulllist_ndcg@10": 0.1058
+  }
+}
