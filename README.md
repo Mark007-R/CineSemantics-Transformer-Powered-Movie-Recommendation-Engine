@@ -1,4 +1,4 @@
-# CineSemantics — Transformer Movie Recommendation Engine
+# Semantic-Movie-Recommender
 
 Semantic + multimodal retrieval and personalized recommendation over a **9,826-movie
 TMDB catalog** (posters included), served through a Streamlit UI and a FastAPI
