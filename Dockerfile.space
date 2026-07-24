@@ -33,6 +33,10 @@ COPY models ./models
 COPY results/emb_cache/intfloat__e5-base-v2.npy ./results/emb_cache/intfloat__e5-base-v2.npy
 COPY results/leaderboard.csv results/phase5_metrics.json results/phase6_metrics.json ./results/
 
+# HF Spaces may run the container as a non-root user: make HOME (=/app) writable
+# so streamlit can create .streamlit/ and the HF cache stays usable.
+RUN mkdir -p /app/.streamlit && chmod -R a+rwX /app
+
 EXPOSE 7860
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 \

@@ -1,5 +1,7 @@
 # Semantic-Movie-Recommender
 
+> 🔗 **Live demo:** https://iambatman07-semantic-movie-recommender.hf.space · [HF Space](https://huggingface.co/spaces/IamBatman07/Semantic-Movie-Recommender) — the Milvus-free champion stack (`src/serving/space_app.py`)
+
 Semantic + multimodal retrieval and personalized recommendation over a **9,826-movie
 TMDB catalog** (posters included), served through a Streamlit UI and a FastAPI
 inference service backed by Milvus / faiss HNSW.
