@@ -1,0 +1,42 @@
+# CineSemantics Hugging Face Space image — Streamlit demo of the champion stack
+# (src/serving/space_app.py): e5-base-v2 + faiss HNSW + metadata rerank + ItemKNN,
+# no Milvus. Built FROM THE SPACE REPO, which additionally carries the artifacts
+# that are gitignored on GitHub (pushed to the Space via git-LFS):
+#   results/emb_cache/intfloat__e5-base-v2.npy   catalog embeddings (~29 MB)
+#   models/cf_interactions.npz + cf_meta.json    ItemKNN CF champion
+#   data/eval/cf_split.json                      CF split (self-heal fallback)
+FROM python:3.11-slim
+
+WORKDIR /app
+
+ENV PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    HOME=/app \
+    HF_HOME=/app/.hf \
+    STREAMLIT_BROWSER_GATHERUSAGESTATS=false
+
+# libgomp1: faiss-cpu runtime; curl: healthcheck
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgomp1 curl && rm -rf /var/lib/apt/lists/*
+
+COPY requirements-space.txt .
+RUN pip install --no-cache-dir -r requirements-space.txt
+
+# Bake the query-encoder weights into the image so cold starts don't re-download.
+RUN python -c "from sentence_transformers import SentenceTransformer; \
+SentenceTransformer('intfloat/e5-base-v2')"
+
+COPY src ./src
+COPY data/9000plus.csv ./data/9000plus.csv
+COPY data/eval/cf_split.json ./data/eval/cf_split.json
+COPY models ./models
+COPY results/emb_cache/intfloat__e5-base-v2.npy ./results/emb_cache/intfloat__e5-base-v2.npy
+COPY results/leaderboard.csv results/phase5_metrics.json results/phase6_metrics.json ./results/
+
+EXPOSE 7860
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 \
+    CMD curl -f http://localhost:7860/_stcore/health || exit 1
+
+CMD ["streamlit", "run", "src/serving/space_app.py", \
+     "--server.port=7860", "--server.address=0.0.0.0", "--server.headless=true"]

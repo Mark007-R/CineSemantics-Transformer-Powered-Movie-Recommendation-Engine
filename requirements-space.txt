@@ -1,0 +1,12 @@
+# CineSemantics Hugging Face Space (Streamlit demo, src/serving/space_app.py).
+# Same stack as requirements-api.txt minus the API layer (fastapi/uvicorn/redis),
+# plus streamlit. Serves e5-base-v2 + faiss HNSW + ItemKNN from on-disk artifacts.
+streamlit>=1.39
+pandas>=2.0
+numpy>=1.26,<2.1
+scikit-learn>=1.3
+scipy>=1.11
+sentence-transformers>=2.6
+torch>=2.1
+faiss-cpu>=1.7
+pillow>=10.0
