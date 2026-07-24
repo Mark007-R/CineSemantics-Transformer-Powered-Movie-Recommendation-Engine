@@ -1,10 +1,12 @@
 # CineSemantics Hugging Face Space image — Streamlit demo of the champion stack
 # (src/serving/space_app.py): e5-base-v2 + faiss HNSW + metadata rerank + ItemKNN,
-# no Milvus. Built FROM THE SPACE REPO, which additionally carries the artifacts
-# that are gitignored on GitHub (pushed to the Space via git-LFS):
-#   results/emb_cache/intfloat__e5-base-v2.npy   catalog embeddings (~29 MB)
+# no Milvus. Built FROM THE SPACE REPO, which additionally carries the small
+# artifacts that are gitignored on GitHub:
 #   models/cf_interactions.npz + cf_meta.json    ItemKNN CF champion
 #   data/eval/cf_split.json                      CF split (self-heal fallback)
+# The ~29 MB catalog-embedding cache is NOT shipped: it is regenerated during
+# the image build (see the encode_catalog RUN below) with the exact same
+# ChampionEmbedder code path, so the served vectors match the eval harness.
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -30,8 +32,15 @@ COPY src ./src
 COPY data/9000plus.csv ./data/9000plus.csv
 COPY data/eval/cf_split.json ./data/eval/cf_split.json
 COPY models ./models
-COPY results/emb_cache/intfloat__e5-base-v2.npy ./results/emb_cache/intfloat__e5-base-v2.npy
 COPY results/leaderboard.csv results/phase5_metrics.json results/phase6_metrics.json ./results/
+
+# Build the catalog-embedding cache at image-build time (~9,826 movies, one-off).
+# encode_catalog writes results/emb_cache/intfloat__e5-base-v2.npy + .time.json,
+# exactly the files the app's cache-first loader expects at startup.
+RUN python -c "import pandas as pd; \
+from src.retrieval.embedder import ChampionEmbedder; \
+emb = ChampionEmbedder().encode_catalog(pd.read_csv('data/9000plus.csv').fillna('')); \
+print('catalog embedded:', emb.shape)"
 
 # HF Spaces may run the container as a non-root user: make HOME (=/app) writable
 # so streamlit can create .streamlit/ and the HF cache stays usable.
