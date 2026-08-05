@@ -1,5 +1,0 @@
-beta,ranker,fl_ndcg@10,ni_ndcg@10,catalog_coverage,novelty@10
-0.0,BERT4Rec,0.0933,0.0797,0.0639,3.866
-0.5,BERT4Rec,0.0792,0.067,0.0775,4.571
-1.0,BERT4Rec,0.0528,0.0427,0.0829,5.851
-2.0,BERT4Rec,0.0113,0.0064,0.0497,8.287
