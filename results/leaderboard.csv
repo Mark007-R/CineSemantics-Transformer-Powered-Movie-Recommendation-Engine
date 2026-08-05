@@ -1,0 +1,13 @@
+day,system,ndcg@10,recall@20,catalog_coverage,note
+3,ItemKNN (champion),0.1059,0.1675,0.0378,Day-3 CF champion
+6,ALS default,0.0861,0.1494,0.0663,untuned
+6,ALS optuna,0.1058,0.1763,0.0495,"40-trial HPO, inner-val"
+6,ItemKNN+debias(beta=0.25),0.0254,0.0608,0.0832,diversity/debias fix
+6,ItemKNN+debias(beta=0.5),0.0044,0.0071,0.0478,diversity/debias fix
+6,ItemKNN+debias(beta=0.75),0.0043,0.0058,0.0413,diversity/debias fix
+6,ItemKNN+MMR(lambda=0.7),0.1032,0.1649,0.0366,diversity/debias fix
+6,ItemKNN+MMR(lambda=0.5),0.0978,0.1522,0.0362,diversity/debias fix
+6,ItemKNN+MMR(lambda=0.3),0.0928,0.1399,0.0372,diversity/debias fix
+8,ItemKNN (frontier sample n=30),0.0889,0.1040,,"Day-8 head-to-head sample; grounded 0% off-catalog"
+8,Popularity (frontier sample n=30),0.0488,0.0735,,Day-8 reference
+8,Claude zero-shot (frontier sample n=30),0.0905,0.1439,,"Day-8; 3.9% off-catalog (12/360 genuine + 2 title-variant), ~5000x slower, $0.023/query"

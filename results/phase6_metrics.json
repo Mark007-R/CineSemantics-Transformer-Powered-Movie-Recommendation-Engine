@@ -1,0 +1,96 @@
+{
+  "day": 8,
+  "project": "CineSemantics",
+  "phase": "Phase 6 - frontier comparison + ablation",
+  "date": "2026-07-12",
+  "ablation_ladder": [
+    {
+      "rung": "1",
+      "system": "semantic (MiniLM centroid)",
+      "ndcg@10": "0.0123",
+      "recall@20": "0.0243",
+      "catalog_coverage": "0.1481",
+      "source": "fresh"
+    },
+    {
+      "rung": "2",
+      "system": "+better_embeddings (e5-base-v2 centroid)",
+      "ndcg@10": "0.0196",
+      "recall@20": "0.0399",
+      "catalog_coverage": "0.1945",
+      "source": "fresh"
+    },
+    {
+      "rung": "3",
+      "system": "+CF (ItemKNN)",
+      "ndcg@10": "0.1059",
+      "recall@20": "0.1675",
+      "catalog_coverage": "0.1419",
+      "source": "fresh"
+    },
+    {
+      "rung": "4",
+      "system": "+tuning (ALS Optuna-tuned)",
+      "ndcg@10": "0.1058",
+      "recall@20": "0.1763",
+      "catalog_coverage": "0.0495",
+      "source": "carried:Day6"
+    },
+    {
+      "rung": "5",
+      "system": "+sequential (BERT4Rec)",
+      "ndcg@10": "0.0933",
+      "recall@20": "0.1688",
+      "catalog_coverage": "0.0639",
+      "source": "carried:Day7"
+    },
+    {
+      "rung": "6",
+      "system": "+diversity (ItemKNN + MMR)",
+      "ndcg@10": "0.1017",
+      "recall@20": "0.1659",
+      "catalog_coverage": "0.1392",
+      "source": "fresh"
+    }
+  ],
+  "frontier": {
+    "n_users": 30,
+    "protocol": "Day-3 temporal leave-last-20%; 30-user deterministic sample (seed 42)",
+    "systems": {
+      "specialized: ItemKNN champion (Day 3)": {
+        "ndcg@10": 0.0889,
+        "recall@20": 0.104,
+        "precision@10": 0.0633,
+        "off_catalog_pct": 0.0,
+        "latency_ms": 0.401,
+        "cost_usd_per_query": 0.0
+      },
+      "reference: Popularity": {
+        "ndcg@10": 0.0488,
+        "recall@20": 0.0735,
+        "precision@10": 0.02,
+        "off_catalog_pct": 0.0,
+        "latency_ms": 0.01,
+        "cost_usd_per_query": 0.0
+      },
+      "claude-opus-4-8 (this session, zero-shot, no catalog access)": {
+        "ndcg@10": 0.0905,
+        "recall@20": 0.1439,
+        "precision@10": 0.06,
+        "off_catalog_pct": 3.9,
+        "latency_ms": 2100.0,
+        "cost_usd_per_query": 0.02295
+      }
+    },
+    "hallucination_pct": 3.9,
+    "hallucination_breakdown": {
+      "total_reco": 360,
+      "off_catalog": 14,
+      "genuine_absent": 12,
+      "title_variant": 2
+    },
+    "gpt54": "NOT RUN - no OpenAI key configured in autonomous env; only Claude executed",
+    "latency_cost_note": "specialized latency measured; LLM latency/cost ESTIMATED from Opus-class serving"
+  },
+  "genuine_insight": "CF is the only ablation rung that moves NDCG (0.020->0.106, ~5x); a frontier LLM matches ItemKNN's ranking on popular-title seeds (0.0905 vs 0.0889) but is unservable for 3.9% of picks (grounding failure the CF system cannot have), ~5000x slower, and $0.023/query vs $0."
+}
