@@ -1,4 +1,0 @@
-model,factors,regularization,iterations,alpha,ndcg@10,recall@20,map@20,precision@10,catalog_coverage,candidate_coverage,intra_list_diversity@10,novelty@10
-ALS_default,64,0.05,20,15.0,0.0861,0.1494,0.0447,0.0589,0.0663,0.2501,0.7953,3.376
-ALS_optuna,27,0.04315,35,3.75,0.1058,0.1763,0.0537,0.0773,0.0495,0.1868,0.7764,2.935
-ItemKNN_champion,,,,,0.1059,0.1675,0.0507,0.0793,0.0378,0.1427,0.7872,2.696
