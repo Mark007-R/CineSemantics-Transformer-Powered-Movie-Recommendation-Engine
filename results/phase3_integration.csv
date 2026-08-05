@@ -1,4 +1,0 @@
-stage,ndcg@10,recall@20,p95_ms,day_ref
-exact cosine (reference),0.0482,0.0205,,Day-2 e5 0.0482
-HNSW ANN (production index),0.0481,0.0205,1.701,Day-4 HNSW ~exact
-HNSW + metadata rerank (production),0.0683,0.0271,,Day-4 metadata rerank 0.0683
