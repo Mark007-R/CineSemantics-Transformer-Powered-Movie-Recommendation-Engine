@@ -32,7 +32,6 @@ COPY src ./src
 COPY data/9000plus.csv ./data/9000plus.csv
 COPY data/eval/cf_split.json ./data/eval/cf_split.json
 COPY models ./models
-COPY results/leaderboard.csv results/phase5_metrics.json results/phase6_metrics.json ./results/
 
 # Build the catalog-embedding cache at image-build time (~9,826 movies, one-off).
 # encode_catalog writes results/emb_cache/intfloat__e5-base-v2.npy + .time.json,
