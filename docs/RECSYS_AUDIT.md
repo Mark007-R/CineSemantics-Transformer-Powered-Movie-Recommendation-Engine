@@ -137,6 +137,4 @@ venv/Scripts/python.exe src/eval/baseline.py     # embed catalog + score baselin
 ```
 
 Artifacts: `data/eval/` (relevance + alignment + manifest),
-`results/baseline_metrics.json`, `results/baseline_leaderboard.csv`,
-`results/samples/baseline_more_like_this.json`,
-`results/figures/baseline_ndcg.png`.
+`results/baseline_metrics.json`, `results/baseline_leaderboard.csv`.
