@@ -1,7 +1,0 @@
-rung,system,capability,ndcg@10,recall@20,map@20,precision@10,catalog_coverage,n_users,source
-1,semantic (MiniLM centroid),content retrieval,0.0123,0.0243,0.0046,0.0099,0.1481,547,fresh
-2,+better_embeddings (e5-base-v2 centroid),stronger content encoder,0.0196,0.0399,0.0084,0.0154,0.1945,547,fresh
-3,+CF (ItemKNN),interaction signal / personalization,0.1059,0.1675,0.0507,0.0793,0.1419,547,fresh
-4,+tuning (ALS Optuna-tuned),tuned matrix factorization,0.1058,0.1763,0.0537,0.0773,0.0495,547,carried:Day6
-5,+sequential (BERT4Rec),sequential transformer,0.0933,0.1688,0.0485,0.0673,0.0639,547,carried:Day7
-6,+diversity (ItemKNN + MMR),MMR genre re-rank,0.1017,0.1659,0.0478,0.0766,0.1392,547,fresh

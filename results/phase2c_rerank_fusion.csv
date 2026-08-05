@@ -1,5 +1,0 @@
-variant,ndcg@10,recall@20,map@20,precision@10,rerank_p95_ms,notes
-champion_semantic (e5-base-v2),0.0482,0.0205,0.0116,0.041,2.746,"Day-2 champion, pure cosine"
-metadata_rerank (Day-2 carried),0.0683,0.0271,0.017,0.0539,48.775,cosine + genre-Jaccard + pop prior
-cross_encoder_rerank top-15,0.0503,0.0205,0.012,0.0428,604.743,"ms-marco-MiniLM-L-6; 40.13ms/pair, 16080 pairs"
-cross_encoder_rerank top-50,0.049,0.0219,0.0119,0.0419,1892.637,"ms-marco-MiniLM-L-6; 37.80ms/pair, 53600 pairs"

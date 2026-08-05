@@ -1,4 +1,0 @@
-system,grounded,ndcg@10,recall@20,precision@10,off_catalog_pct,latency_ms,cost_usd_per_query,note
-specialized: ItemKNN champion (Day 3),yes,0.0889,0.104,0.0633,0.0,0.401,0.0,"catalog-grounded, personalized, measured"
-reference: Popularity,yes,0.0488,0.0735,0.02,0.0,0.01,0.0,non-personalized reference
-"claude-opus-4-8 (this session, zero-shot, no catalog access)",no,0.0905,0.1439,0.06,3.9,2100.0,0.02295,"zero-shot, no catalog access; latency/cost ESTIMATED"

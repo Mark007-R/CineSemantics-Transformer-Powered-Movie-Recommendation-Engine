@@ -171,9 +171,6 @@ clickable, in-stock* items, grounding + latency + cost win.
     └── serving/     cache · feedback · telemetry · offline_metrics
 ```
 
-Model details for the production ranker are in [`docs/MODEL_CARD.md`](docs/MODEL_CARD.md);
-the original audit that started the sprint is in [`docs/RECSYS_AUDIT.md`](docs/RECSYS_AUDIT.md).
-
 ---
 
 ## Quickstart
