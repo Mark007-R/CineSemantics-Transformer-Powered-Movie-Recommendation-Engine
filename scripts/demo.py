@@ -44,17 +44,24 @@ def main():
     print("  (milvus_vectordb.py:354). No user model. No offline metrics. At all.")
 
     banner(2, "THE NUMBER - measured honestly, retrieval loses to popularity")
-    lb = pd.read_csv(RESULTS / "baseline_leaderboard.csv")
-    print(lb.to_string(index=False))
-    sem = lb.loc[lb.system == "Semantic", "ndcg@10"].iloc[0]
-    pop = lb.loc[lb.system == "Popularity", "ndcg@10"].iloc[0]
-    print(f"\n  -> Semantic NDCG@10 {sem} LOST to Popularity {pop} by {pop/sem:.1f}x.")
+    lb_path = RESULTS / "baseline_leaderboard.csv"
+    if lb_path.exists():
+        lb = pd.read_csv(lb_path)
+        print(lb.to_string(index=False))
+        sem = lb.loc[lb.system == "Semantic", "ndcg@10"].iloc[0]
+        pop = lb.loc[lb.system == "Popularity", "ndcg@10"].iloc[0]
+        print(f"\n  -> Semantic NDCG@10 {sem} LOST to Popularity {pop} by {pop/sem:.1f}x.")
+    else:
+        print("  (skipped - run src/eval/baseline.py to regenerate the leaderboard)")
 
     banner(3, "THE FIX - collaborative filtering (the missing recommender)")
-    cf = pd.read_csv(RESULTS / "phase2b_cf.csv")[
-        ["system", "ndcg@10", "recall@20"]]
-    print(cf.to_string(index=False))
-    print("\n  -> ItemKNN 0.1059 = +47% over popularity ON THE PERSONALIZED SPLIT.")
+    cf_path = RESULTS / "phase2b_cf.csv"
+    if cf_path.exists():
+        cf = pd.read_csv(cf_path)[["system", "ndcg@10", "recall@20"]]
+        print(cf.to_string(index=False))
+        print("\n  -> ItemKNN 0.1059 = +47% over popularity ON THE PERSONALIZED SPLIT.")
+    else:
+        print("  (skipped - run src/recsys/cf_compare.py to regenerate the CF table)")
 
     banner(4, "GROUNDED - live personalized recs (100% real catalog titles)")
     emb = ChampionEmbedder().encode_catalog(catalog)      # cached -> instant
