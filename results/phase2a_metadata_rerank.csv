@@ -1,4 +1,0 @@
-variant,ndcg@10_test,recall@20_test
-substring_genre_filter (current),0.0443,0.0202
-champion_pure_semantic,0.0439,0.0192
-"metadata_aware_rerank (a=0.0,b=0.1)",0.1755,0.0677
