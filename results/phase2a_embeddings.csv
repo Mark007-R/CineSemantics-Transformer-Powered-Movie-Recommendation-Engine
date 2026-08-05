@@ -1,0 +1,6 @@
+model,hf_id,dim,encode_sec_9837docs,encode_ms_per_doc,ndcg@10,recall@20,map@20,precision@10,catalog_coverage,intra_list_diversity@10,search_ms_per_query
+e5-base-v2,intfloat/e5-base-v2,768,486.2,49.421,0.0482,0.0205,0.0116,0.041,0.4723,0.5558,1.102
+mpnet-base-v2,sentence-transformers/all-mpnet-base-v2,768,469.3,47.712,0.048,0.0218,0.0119,0.042,0.4819,0.6821,1.013
+bge-base-en-v1.5,BAAI/bge-base-en-v1.5,768,476.3,48.416,0.0393,0.0166,0.0098,0.032,0.5052,0.5936,1.523
+bge-small-en-v1.5,BAAI/bge-small-en-v1.5,384,136.8,13.911,0.0376,0.0153,0.0097,0.0299,0.515,0.6015,0.696
+MiniLM-L6-v2 (current),sentence-transformers/all-MiniLM-L6-v2,384,71.9,7.307,0.0295,0.0109,0.0072,0.0237,0.5341,0.6775,0.707
